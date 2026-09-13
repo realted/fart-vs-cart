@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [{
+    "label": "Build ray tracer", "type": "shell",
+    "command": "powershell.exe",
+    "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/build.ps1"],
+    "group": {"kind": "build", "isDefault": true},
+    "problemMatcher": ["$gcc"]
+  }]
+}
