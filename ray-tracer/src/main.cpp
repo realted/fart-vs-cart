@@ -7,6 +7,7 @@
 #include <random>
 #include <stdexcept>
 #include <vector>
+#include <memory>
 
 struct Vec3 {
     double x, y, z;
@@ -18,13 +19,8 @@ struct Vec3 {
 double dot(Vec3 a, Vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
 Vec3 unit(Vec3 v) { return v*(1/std::sqrt(dot(v,v))); }
 struct Ray { Vec3 origin, direction; };
-struct Sphere { Vec3 center; double radius; Vec3 color; bool metal; };
-const std::vector<Sphere> scene = {
-    {{0,-100.5,-1},100,{0.65,0.68,0.72},false},
-    {{0,0,-1.2},0.5,{0.16,0.48,0.85},true},
-    {{-1.05,0,-1.6},0.5,{0.85,0.3,0.16},false},
-    {{1.05,0,-1.4},0.5,{0.86,0.8,0.65},false}
-};
+
+// This is what happens to rays that are diffused
 std::mt19937 generator(42);
 std::uniform_real_distribution<double> distribution(0,1);
 double random01() { return distribution(generator); }
@@ -35,39 +31,118 @@ Vec3 randomUnit() {
         if(lengthSquared>1e-12 && lengthSquared<1) return unit(v);
     }
 }
+
+struct Material {
+    Vec3 color;
+    bool metal;
+    Vec3 emission;
+};
+
+// Create a profile for every object. The information about how the ray hit the object.
+struct HitProfile {
+    double dst;
+    Vec3 hitPoint;
+    Vec3 normal;
+    Material material;
+};
+
+// Object class to generalize cases. Does the ray hit the object? 
+class Object{
+public:
+    virtual bool intersect(const Ray& ray, HitProfile& hit) const = 0;
+    virtual ~Object() = default;
+};
+
+// Sphere is an object that inherits the interesction property. Here, we initialize the characteristics of the sphere.
+// We then determine if the sphere will be hit by a ray or not. 
+class Sphere : public Object {
+public:
+    Vec3 center;
+    double radius;
+    Material material;
+
+    Sphere(Vec3 c, double r, Material mat)
+        : center(c), radius(r), material(mat) {}
+
+    bool intersect(const Ray& ray, HitProfile& hit) const override {
+        Vec3 offset = ray.origin - center;
+        double a=dot(ray.direction,ray.direction), halfB=dot(offset,ray.direction);
+        double c=dot(offset,offset)-radius*radius;
+        double discriminant=halfB*halfB-a*c;
+
+        // The discriminant between a line and a sphere is a quadratic. Discriminant less than zero means no real solutions. (i.e. does not intersect)
+        if (discriminant < 0){
+            return false;
+        }
+
+        double dst=(-halfB-std::sqrt(discriminant))/a;
+
+        if(dst<=0.001) dst=(-halfB+std::sqrt(discriminant))/a;
+        if (dst<=0.001){
+            return false;
+        }
+
+        // Fill the properties of the sphere
+        hit.dst = dst;
+        hit.hitPoint = ray.origin + ray.direction * dst;
+        hit.normal = (hit.hitPoint - center) * (1.0 / radius);
+        hit.material.color = material.color;
+        hit.material.metal = material.metal;
+        hit.material.emission = material.emission;
+
+        return true;
+    }
+};
+
+// Initialize objects
+const std::vector<std::shared_ptr<Object>> objects = {
+    std::make_shared<Sphere>(Vec3{0,0,-1.2},0.5,Material{Vec3{0.16,0.48,0.85},false,{0,0,0}}),
+    std::make_shared<Sphere>(Vec3{-1.05,0,-1.6},0.5,Material{Vec3{1,0.6,0},true,{0,0,0}}),
+    std::make_shared<Sphere>(Vec3{0,-10.5,-1},10,Material{Vec3{0.65,0.68,0.72},false,{0,0,0}}),
+    std::make_shared<Sphere>(Vec3{0,1.5,-1.2},0.7,Material{Vec3{1,1,1},false,{20,20,20}})
+};
+
+// Trace function acts as the main logic for how rays behave.
 Vec3 trace(Ray ray, int depth) {
     if(depth==0) return {0,0,0};
-    double nearest=std::numeric_limits<double>::infinity();
-    const Sphere* hit=nullptr;
-    for(const auto& sphere: scene) {
-        Vec3 offset=ray.origin-sphere.center;
-        double a=dot(ray.direction,ray.direction), halfB=dot(offset,ray.direction);
-        double c=dot(offset,offset)-sphere.radius*sphere.radius;
-        double discriminant=halfB*halfB-a*c;
-        if(discriminant<0) continue;
-        double t=(-halfB-std::sqrt(discriminant))/a;
-        if(t<=0.001) t=(-halfB+std::sqrt(discriminant))/a;
-        if(t>0.001 && t<nearest) { nearest=t; hit=&sphere; }
-    }
-    if(hit) {
-        Vec3 point=ray.origin+ray.direction*nearest;
-        Vec3 normal=(point-hit->center)*(1/hit->radius);
-        Vec3 direction;
-        if(hit->metal) {
-            Vec3 incoming=unit(ray.direction);
-            direction=incoming-normal*(2*dot(incoming,normal));
-        } else {
-            direction=normal+randomUnit();
-            if(dot(direction,direction)<1e-12) direction=normal;
+    double nearest = std::numeric_limits<double>::infinity();
+    bool didHit = false;
+    HitProfile closestHit;
+    for (const auto& object : objects) {
+        HitProfile tempHit;
+
+        if (object->intersect(ray, tempHit)) {
+            if (tempHit.dst < nearest) {
+                nearest = tempHit.dst;
+                closestHit = tempHit;
+                didHit = true;
+            }
         }
-        return hit->color*trace({point,direction},depth-1);
+    }
+
+    if(didHit) {
+        Vec3 direction;
+        Vec3 emitted = closestHit.material.emission;
+        if (dot(emitted, emitted) > 0) {
+            return emitted;
+        }
+        if(closestHit.material.metal) {
+            Vec3 incoming=unit(ray.direction);
+            direction=incoming-closestHit.normal*(2*dot(incoming,closestHit.normal));
+        } else {
+            direction=closestHit.normal+randomUnit();
+            if(dot(direction,direction)<1e-12) direction=closestHit.normal;
+        }
+        return emitted+closestHit.material.color*trace({closestHit.hitPoint,direction},depth-1);
     }
     double blend=0.5*(unit(ray.direction).y+1);
     return Vec3{1,1,1}*(1-blend)+Vec3{0.45,0.65,1}*blend;
 }
+
 void writeLE(std::ostream& out, std::uint32_t value, int bytes) {
     for(int i=0;i<bytes;++i) out.put(static_cast<char>((value>>(8*i))&255));
 }
+
 int main(int argc, char** argv) {
     try {
         const char* path=argc>1?argv[1]:"render.bmp";

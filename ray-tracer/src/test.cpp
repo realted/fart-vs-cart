@@ -97,9 +97,9 @@ public:
 // Initialize objects
 const std::vector<std::shared_ptr<Object>> objects = {
     std::make_shared<Sphere>(Vec3{0,0,-1.2},0.5,Material{Vec3{0.16,0.48,0.85},false,{0,0,0}}),
-    std::make_shared<Sphere>(Vec3{-1.05,0,-1.6},0.5,Material{Vec3{1,0.6,0},true,{0,0,0}}),
-    std::make_shared<Sphere>(Vec3{0,-10.5,-1},10,Material{Vec3{0.65,0.68,0.72},false,{0,0,0}}),
-    std::make_shared<Sphere>(Vec3{0,1.5,-1.2},0.7,Material{Vec3{1,1,1},false,{20,20,20}})
+    std::make_shared<Sphere>(Vec3{-1.05,-0.05,-1.6},0.5,Material{Vec3{1,0.6,0},true,{0,0,0}}),
+    std::make_shared<Sphere>(Vec3{0,-20.5,-1},20,Material{Vec3{0.65,0.68,0.72},false,{0,0,0}}),
+    std::make_shared<Sphere>(Vec3{1,1.2,-1.2},0.5,Material{Vec3{1,1,1},false,{5,5,5}})
 };
 
 // Trace function acts as the main logic for how rays behave.
@@ -133,10 +133,12 @@ Vec3 trace(Ray ray, int depth) {
             direction=closestHit.normal+randomUnit();
             if(dot(direction,direction)<1e-12) direction=closestHit.normal;
         }
-        return emitted+closestHit.material.color*trace({closestHit.hitPoint,direction},depth-1);
+        Vec3 bounceColor=closestHit.material.color*trace({closestHit.hitPoint,direction},depth-1);
+        return emitted+bounceColor;
     }
-    double blend=0.5*(unit(ray.direction).y+1);
-    return Vec3{1,1,1}*(1-blend)+Vec3{0.45,0.65,1}*blend;
+    double reg_blend=0.5*(unit(ray.direction).y+1);
+    double sharp_blend = 1.0/(1+std::exp(-10.0*ray.direction.y));
+    return Vec3{1,1,1}*(1-reg_blend)+Vec3{0.45,0.65,1}*reg_blend;
 }
 
 void writeLE(std::ostream& out, std::uint32_t value, int bytes) {

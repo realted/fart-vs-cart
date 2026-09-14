@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+      "name": "Windows GCC SDL2",
+      "cppStandard": "c++17",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/sdl2-sdk/include",
+        "${workspaceFolder}/sdl2-sdk/include/SDL2"
+      ],
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
+}
