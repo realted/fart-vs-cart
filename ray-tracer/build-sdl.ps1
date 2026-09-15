@@ -1,5 +1,5 @@
 param(
-    [string]$Source = 'src/test.cpp',
+    [string]$Source = 'src/main.cpp',
     [switch]$Run,
     [string[]]$ProgramArgs = @()
 )

@@ -8,17 +8,11 @@
 #include <stdexcept>
 #include <vector>
 #include <memory>
-
-struct Vec3 {
-    double x, y, z;
-    Vec3 operator+(Vec3 v) const { return {x+v.x,y+v.y,z+v.z}; }
-    Vec3 operator-(Vec3 v) const { return {x-v.x,y-v.y,z-v.z}; }
-    Vec3 operator*(double s) const { return {x*s,y*s,z*s}; }
-    Vec3 operator*(Vec3 v) const { return {x*v.x,y*v.y,z*v.z}; }
-};
-double dot(Vec3 a, Vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
-Vec3 unit(Vec3 v) { return v*(1/std::sqrt(dot(v,v))); }
-struct Ray { Vec3 origin, direction; };
+#include <SDL2/SDL.h>
+#include <string>
+#include <windows.h>
+#include "objects.hpp"
+#include "obj_loader.h"
 
 // This is what happens to rays that are diffused
 std::mt19937 generator(42);
@@ -28,78 +22,26 @@ Vec3 randomUnit() {
     for (;;) {
         Vec3 v{2*random01()-1,2*random01()-1,2*random01()-1};
         double lengthSquared=dot(v,v);
-        if(lengthSquared>1e-12 && lengthSquared<1) return unit(v);
+        if(lengthSquared>1e-10 && lengthSquared<1) return unit(v);
     }
 }
 
-struct Material {
-    Vec3 color;
-    bool metal;
-    Vec3 emission;
-};
-
-// Create a profile for every object. The information about how the ray hit the object.
-struct HitProfile {
-    double dst;
-    Vec3 hitPoint;
-    Vec3 normal;
-    Material material;
-};
-
-// Object class to generalize cases. Does the ray hit the object? 
-class Object{
-public:
-    virtual bool intersect(const Ray& ray, HitProfile& hit) const = 0;
-    virtual ~Object() = default;
-};
-
-// Sphere is an object that inherits the interesction property. Here, we initialize the characteristics of the sphere.
-// We then determine if the sphere will be hit by a ray or not. 
-class Sphere : public Object {
-public:
-    Vec3 center;
-    double radius;
-    Material material;
-
-    Sphere(Vec3 c, double r, Material mat)
-        : center(c), radius(r), material(mat) {}
-
-    bool intersect(const Ray& ray, HitProfile& hit) const override {
-        Vec3 offset = ray.origin - center;
-        double a=dot(ray.direction,ray.direction), halfB=dot(offset,ray.direction);
-        double c=dot(offset,offset)-radius*radius;
-        double discriminant=halfB*halfB-a*c;
-
-        // The discriminant between a line and a sphere is a quadratic. Discriminant less than zero means no real solutions. (i.e. does not intersect)
-        if (discriminant < 0){
-            return false;
-        }
-
-        double dst=(-halfB-std::sqrt(discriminant))/a;
-
-        if(dst<=0.001) dst=(-halfB+std::sqrt(discriminant))/a;
-        if (dst<=0.001){
-            return false;
-        }
-
-        // Fill the properties of the sphere
-        hit.dst = dst;
-        hit.hitPoint = ray.origin + ray.direction * dst;
-        hit.normal = (hit.hitPoint - center) * (1.0 / radius);
-        hit.material.color = material.color;
-        hit.material.metal = material.metal;
-        hit.material.emission = material.emission;
-
-        return true;
-    }
-};
+// MODEL SETTINGS: edit these values, then rebuild SDL.cpp.
+// R"(...)" accepts Windows paths without doubling each backslash.
+// Leave modelPath empty to render the original demonstration triangle.
+const std::string modelPath = R"(C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\models\utah_teapot.obj)";
+const double modelScale = 0.2;
+const Vec3 modelPosition = {1.0, -0.15, -1.2}; // X, Y, Z
+const Material modelMaterial = {{0.8, 0.2, 0.5}, false, {0, 0, 0}};
 
 // Initialize objects
-const std::vector<std::shared_ptr<Object>> objects = {
+std::vector<std::shared_ptr<Object>> objects = {
     std::make_shared<Sphere>(Vec3{0,0,-1.2},0.5,Material{Vec3{0.16,0.48,0.85},false,{0,0,0}}),
-    std::make_shared<Sphere>(Vec3{-1.05,0,-1.6},0.5,Material{Vec3{1,0.6,0},true,{0,0,0}}),
-    std::make_shared<Sphere>(Vec3{0,-10.5,-1},10,Material{Vec3{0.65,0.68,0.72},false,{0,0,0}}),
-    std::make_shared<Sphere>(Vec3{0,1.5,-1.2},0.7,Material{Vec3{1,1,1},false,{20,20,20}})
+    std::make_shared<Sphere>(Vec3{-1.05,-0.05,-1.6},0.5,Material{Vec3{1,0.6,0},true,{0,0,0}}),
+    //std::make_shared<Sphere>(Vec3{0,-20.5,-1},20,Material{Vec3{0.65,0.68,0.72},false,{0,0,0}}),
+    std::make_shared<Plane>(Vec3{0,-0.5,0},Vec3{1,0,0},Vec3{0,0,1},Material{Vec3{0.1,0.78,0.2},false,{0,0,0}}),
+    std::make_shared<Triangle>(Vec3{0.4,-0.3,-0.3},Vec3{1.0,-0.3,-0.3},Vec3{0.7,0.4,-0.3},Material{Vec3{0.8,0.2,0.5},false,{0,0,0}}),
+    std::make_shared<Sphere>(Vec3{1,1.2,-1.2},0.5,Material{Vec3{1,1,1},false,{10,10,10}})
 };
 
 // Trace function acts as the main logic for how rays behave.
@@ -107,9 +49,9 @@ Vec3 trace(Ray ray, int depth) {
     if(depth==0) return {0,0,0};
     double nearest = std::numeric_limits<double>::infinity();
     bool didHit = false;
-    HitProfile closestHit;
+    HitProfile closestHit{};
     for (const auto& object : objects) {
-        HitProfile tempHit;
+        HitProfile tempHit{};
 
         if (object->intersect(ray, tempHit)) {
             if (tempHit.dst < nearest) {
@@ -131,47 +73,123 @@ Vec3 trace(Ray ray, int depth) {
             direction=incoming-closestHit.normal*(2*dot(incoming,closestHit.normal));
         } else {
             direction=closestHit.normal+randomUnit();
-            if(dot(direction,direction)<1e-12) direction=closestHit.normal;
+            if(dot(direction,direction)<1e-10) direction=closestHit.normal;
         }
-        return emitted+closestHit.material.color*trace({closestHit.hitPoint,direction},depth-1);
+        Vec3 bounceColor=closestHit.material.color*trace({closestHit.hitPoint,direction},depth-1);
+        return emitted+bounceColor;
     }
-    double blend=0.5*(unit(ray.direction).y+1);
-    return Vec3{1,1,1}*(1-blend)+Vec3{0.45,0.65,1}*blend;
-}
-
-void writeLE(std::ostream& out, std::uint32_t value, int bytes) {
-    for(int i=0;i<bytes;++i) out.put(static_cast<char>((value>>(8*i))&255));
+    double reg_blend=0.5*(unit(ray.direction).y+1);
+    double sharp_blend = 1.0/(1+std::exp(-10.0*ray.direction.y));
+    return Vec3{1,1,1}*(1-reg_blend)+Vec3{0.45,0.65,1}*reg_blend;
 }
 
 int main(int argc, char** argv) {
+    SDL_Window* window=nullptr;
+    SDL_Renderer* renderer=nullptr;
+    SDL_Texture* texture=nullptr;
+    int result=0;
     try {
-        const char* path=argc>1?argv[1]:"render.bmp";
-        int width=argc>2?std::stoi(argv[2]):640;
-        int samples=argc>3?std::stoi(argv[3]):32;
-        if(width<16 || width>8192 || samples<1 || samples>4096)
-            throw std::runtime_error("Width must be 16..8192 and samples 1..4096.");
-        int height=width*9/16, stride=(width*3+3)&~3;
-        std::ofstream out(path,std::ios::binary);
-        if(!out) throw std::runtime_error("Cannot open output image.");
-        out.write("BM",2); writeLE(out,54+stride*height,4); writeLE(out,0,4); writeLE(out,54,4);
-        writeLE(out,40,4); writeLE(out,width,4); writeLE(out,height,4);
-        writeLE(out,1,2); writeLE(out,24,2); writeLE(out,0,4); writeLE(out,stride*height,4);
-        for(int i=0;i<4;++i) writeLE(out,0,4);
-        auto channel=[](double c) { return static_cast<unsigned char>(256*std::clamp(std::sqrt(c),0.0,0.999)); };
-        for(int y=0;y<height;++y) {
-            for(int x=0;x<width;++x) {
-                Vec3 color{0,0,0};
-                for(int s=0;s<samples;++s) {
-                    double u=(x+random01())/width, v=(y+random01())/height;
-                    color=color+trace({{0,0.35,1.3},{(2*u-1)*double(width)/height,(2*v-1)-0.15,-2.3}},12);
-                }
-                color=color*(1.0/samples);
-                out.put(channel(color.z)); out.put(channel(color.y)); out.put(channel(color.x));
-            }
-            for(int p=width*3;p<stride;++p) out.put(0);
+        int width=argc>1?std::stoi(argv[1]):640;
+        int samples=argc>2?std::stoi(argv[2]):64;
+        bool autoClose=false;
+        std::string objPath=modelPath;
+        double objScale=modelScale;
+        Vec3 objPosition=modelPosition;
+        for(int i=3;i<argc;++i) {
+            std::string option=argv[i];
+            if(option=="--auto-close") autoClose=true;
+            else if(option=="--obj" && i+1<argc) objPath=argv[++i];
+            else if(option=="--scale" && i+1<argc) objScale=std::stod(argv[++i]);
+            else if(option=="--position" && i+3<argc) {
+                objPosition.x=std::stod(argv[++i]);
+                objPosition.y=std::stod(argv[++i]);
+                objPosition.z=std::stod(argv[++i]);
+            } else throw std::runtime_error("Usage: SDL.exe [width samples] [--obj file.obj] [--scale s] [--position x y z] [--auto-close]");
         }
-        out.close();
-        if(!out) throw std::runtime_error("Failed writing image.");
-        std::cout<<"Rendered "<<width<<"x"<<height<<" at "<<samples<<" samples/pixel to "<<path<<'\n';
-    } catch(const std::exception& error) { std::cerr<<error.what()<<'\n'; return 1; }
+        if(!objPath.empty()) {
+            auto mesh=loadObj(objPath,modelMaterial,objScale,objPosition);
+            // Replace the original demonstration triangle with the imported model.
+            objects.erase(objects.begin()+3);
+            objects.insert(objects.end(),mesh.begin(),mesh.end());
+        }
+        if(width<16 || width>4096 || samples<1 || samples>4096)
+            throw std::runtime_error("Width must be 16..4096; samples must be 1..4096.");
+        int height=width*9/16;
+        SDL_SetMainReady();
+        auto check=[](bool ok) { if(!ok) throw std::runtime_error(SDL_GetError()); };
+        check(SDL_Init(SDL_INIT_VIDEO)==0);
+        window=SDL_CreateWindow("Progressive ray tracer",SDL_WINDOWPOS_CENTERED,
+            SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_SHOWN);
+        check(window!=nullptr);
+        renderer=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+        if(!renderer) renderer=SDL_CreateRenderer(window,-1,SDL_RENDERER_SOFTWARE);
+        check(renderer!=nullptr);
+        texture=SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGB24,
+            SDL_TEXTUREACCESS_STREAMING,width,height);
+        check(texture!=nullptr);
+        std::vector<Vec3> accumulation(static_cast<size_t>(width)*height,Vec3{0,0,0});
+        std::vector<unsigned char> pixels(static_cast<size_t>(width)*height*3,0);
+        auto channel=[](double c) {
+            if(!std::isfinite(c) || c<=0) return static_cast<unsigned char>(0);
+            return static_cast<unsigned char>(256*std::clamp(std::sqrt(c),0.0,0.999));
+        };
+        bool running=true;
+        auto events=[&]() {
+            SDL_Event event;
+            while(SDL_PollEvent(&event)) {
+                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
+                    running=false;
+            }
+        };
+        auto present=[&]() {
+            check(SDL_UpdateTexture(texture,nullptr,pixels.data(),width*3)==0);
+            check(SDL_RenderClear(renderer)==0);
+            check(SDL_RenderCopy(renderer,texture,nullptr,nullptr)==0);
+            SDL_RenderPresent(renderer);
+        };
+        present();
+        for(int sample=0;sample<samples && running;++sample) {
+            //Sleep(500);
+            for(int y=0;y<height && running;++y) {
+                events(); // Poll each row, not only once per full image.
+                if(!running) break;
+                for(int x=0;x<width;++x) {
+                    double u=(x+random01())/width;
+                    // SDL row zero is the TOP. Original BMP camera y increases upward.
+                    double v=1.0-(y+random01())/height;
+                    Vec3 value=trace({{0,0.35,1.3},
+                        {(2*u-1)*double(width)/height,(2*v-1)-0.15,-2.3}},12);
+                    size_t index=static_cast<size_t>(y)*width+x;
+                    accumulation[index]=accumulation[index]+value;
+                    Vec3 color=accumulation[index]*(1.0/(sample+1));
+                    pixels[index*3]=channel(color.x);     // RGB, not BMP's BGR
+                    pixels[index*3+1]=channel(color.y);
+                    pixels[index*3+2]=channel(color.z);
+                }
+            }
+            if(!running) break;
+            present();
+            std::string title="Ray tracer: "+std::to_string(sample+1)+" / "+std::to_string(samples)+" samples";
+            SDL_SetWindowTitle(window,title.c_str());
+        }
+        if(running) {
+            std::cout<<"Completed "<<width<<"x"<<height<<" at "<<samples<<" samples/pixel.\n";
+            SDL_SetWindowTitle(window,"Render complete - Escape or close to exit");
+        }
+        while(running && !autoClose) {
+            events();
+            check(SDL_RenderClear(renderer)==0);
+            check(SDL_RenderCopy(renderer,texture,nullptr,nullptr)==0);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(16);
+        }
+    } catch(const std::exception& error) {
+        std::cerr<<error.what()<<'\n'; result=1;
+    }
+    if(texture) SDL_DestroyTexture(texture);
+    if(renderer) SDL_DestroyRenderer(renderer);
+    if(window) SDL_DestroyWindow(window);
+    SDL_Quit();
+    return result;
 }
+
