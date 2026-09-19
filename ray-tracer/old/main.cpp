@@ -29,26 +29,144 @@ Vec3 randomUnit() {
 // MODEL SETTINGS: edit these values, then rebuild SDL.cpp.
 // R"(...)" accepts Windows paths without doubling each backslash.
 // Leave modelPath empty to render the original demonstration triangle.
-const std::string modelPath = R"(C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\models\utah_teapot.obj)";
-const double modelScale = 0.2;
-const Vec3 modelPosition = {1.0, -0.15, -1.2}; // X, Y, Z
+const std::string modelPath = R"(C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\models\bewear.obj)";
+const double modelScale = 0.006;
+const Vec3 modelPosition = {1.3, -0.49, -2.5};
 const Material modelMaterial = {{0.8, 0.2, 0.5}, false, {0, 0, 0}};
+
+auto light1 = std::make_shared<Sphere>(
+    Vec3{1, 1.2, -1.2}, 0.5,
+    Material{{1, 1, 1}, false, {10, 10, 10}}
+);
+
+auto light2 = std::make_shared<Sphere>(
+    Vec3{-2, 1.5, -2}, 0.3,
+    Material{{1, 1, 1}, false, {8, 3, 1}}
+);
+
+std::vector<std::shared_ptr<Sphere>> lights = {
+    light1, light2
+};
 
 // Initialize objects
 std::vector<std::shared_ptr<Object>> objects = {
     std::make_shared<Sphere>(Vec3{0,0,-1.2},0.5,Material{Vec3{0.16,0.48,0.85},false,{0,0,0}}),
     std::make_shared<Sphere>(Vec3{-1.05,-0.05,-1.6},0.5,Material{Vec3{1,0.6,0},true,{0,0,0}}),
+    light1,
+    light2,
     //std::make_shared<Sphere>(Vec3{0,-20.5,-1},20,Material{Vec3{0.65,0.68,0.72},false,{0,0,0}}),
     std::make_shared<Plane>(Vec3{0,-0.5,0},Vec3{1,0,0},Vec3{0,0,1},Material{Vec3{0.1,0.78,0.2},false,{0,0,0}}),
-    std::make_shared<Triangle>(Vec3{0.4,-0.3,-0.3},Vec3{1.0,-0.3,-0.3},Vec3{0.7,0.4,-0.3},Material{Vec3{0.8,0.2,0.5},false,{0,0,0}}),
-    std::make_shared<Sphere>(Vec3{1,1.2,-1.2},0.5,Material{Vec3{1,1,1},false,{10,10,10}})
+    //std::make_shared<Triangle>(Vec3{0.4,-0.3,-0.3},Vec3{1.0,-0.3,-0.3},Vec3{0.7,0.4,-0.3},Material{Vec3{0.8,0.2,0.5},false,{0,0,0}}),
+    //std::make_shared<Sphere>(Vec3{1,1.2,-1.2},0.5,Material{Vec3{1,1,1},false,{10,10,10}})
 };
 
+Vec3 sampleDirectLightSphere(const HitProfile& hit, const Sphere& light) {
+    constexpr double pi = 3.141592653589793;
+    constexpr double epsilon = 0.001;
+
+    // Uniformly sample the sphere's entire surface.
+    Vec3 lightNormal = randomUnit();
+    Vec3 lightPoint =
+        light.center + lightNormal * light.radius;
+
+    Vec3 toLight = lightPoint - hit.hitPoint;
+    double distanceSquared = dot(toLight, toLight);
+
+    if (distanceSquared <= epsilon * epsilon)
+        return {0, 0, 0};
+
+    Vec3 lightDir = toLight * (1.0 / std::sqrt(distanceSquared));
+
+    double surfaceCos = std::max(0.0, dot(hit.normal, lightDir));
+    double lightCos = std::max(
+        0.0, dot(lightNormal, lightDir * -1.0)
+    );
+
+    // Reject directions below the surface and the light's far side.
+    if (surfaceCos <= 0 || lightCos <= 0)
+        return {0, 0, 0};
+
+    // Aim from the offset origin toward the sampled endpoint.
+    Vec3 origin = hit.hitPoint + hit.normal * epsilon;
+    Vec3 shadowVector = lightPoint - origin;
+    double shadowDistance = std::sqrt(dot(shadowVector, shadowVector));
+
+    if (shadowDistance <= epsilon)
+        return {0, 0, 0};
+
+    Ray shadowRay{
+        origin,
+        shadowVector * (1.0 / shadowDistance)
+    };
+
+    for (const auto& object : objects) {
+        HitProfile blocker{};
+
+        if (object->intersect(shadowRay, blocker) &&
+            blocker.dst < shadowDistance - epsilon) {
+            return {0, 0, 0};
+        }
+    }
+
+    double area = 4.0 * pi
+        * light.radius * light.radius;
+
+    double weight =
+        area * surfaceCos * lightCos / (pi * distanceSquared);
+
+    return hit.material.color * light.material.emission * weight;
+}
+
+Vec3 sphereHalo(const Ray& ray) {
+    const double softness = 0.20; // Halo width relative to apparent radius.
+    const double strength = 1.0;
+
+    Vec3 result{0, 0, 0};
+    Vec3 direction = unit(ray.direction);
+
+    for (const auto& light : lights) {
+        Vec3 toCenter = light->center - ray.origin;
+        double distance = std::sqrt(dot(toCenter, toCenter));
+
+        if (light->radius <= 0 || distance <= light->radius)
+            continue;
+
+        Vec3 centerDirection = toCenter * (1.0 / distance);
+        double alignment = dot(direction, centerDirection);
+
+        if (alignment <= 0)
+            continue; // Light is behind this ray.
+
+        // Angular distance from the light's center.
+        double angle = std::acos(
+            std::clamp(alignment, -1.0, 1.0)
+        );
+
+        // Apparent angular radius of the actual sphere.
+        double angularRadius = std::asin(
+            std::clamp(light->radius / distance, 0.0, 1.0)
+        );
+
+        double outsideEdge = std::max(0.0, angle - angularRadius);
+        double haloWidth = std::max(angularRadius * softness, 1e-6);
+        double t = outsideEdge / haloWidth;
+
+        // Smooth fade beyond the sphere's edge.
+        double fade = std::exp(-0.5 * t * t);
+
+        result = result
+            + light->material.emission * (strength * fade);
+    }
+
+    return result;
+}
+
 // Trace function acts as the main logic for how rays behave.
-Vec3 trace(Ray ray, int depth) {
+Vec3 trace(Ray ray, int depth, bool allowSampledLightEmission = true, bool cameraRay = false) {
     if(depth==0) return {0,0,0};
     double nearest = std::numeric_limits<double>::infinity();
     bool didHit = false;
+    const Object* closestObject = nullptr;
     HitProfile closestHit{};
     for (const auto& object : objects) {
         HitProfile tempHit{};
@@ -57,30 +175,58 @@ Vec3 trace(Ray ray, int depth) {
             if (tempHit.dst < nearest) {
                 nearest = tempHit.dst;
                 closestHit = tempHit;
+                closestObject = object.get();
                 didHit = true;
             }
         }
     }
 
     if(didHit) {
-        Vec3 direction;
+        constexpr double epsilon = 0.001;
+        Vec3 origin = closestHit.hitPoint + closestHit.normal * epsilon;
         Vec3 emitted = closestHit.material.emission;
+
+        bool isSampledLight = std::any_of(
+            lights.begin(), lights.end(),
+            [closestObject](const auto& light) {
+                return light.get() == closestObject;
+            }
+        );
+
         if (dot(emitted, emitted) > 0) {
+            if (isSampledLight && !allowSampledLightEmission)
+                return {0, 0, 0};
+
             return emitted;
         }
+
         if(closestHit.material.metal) {
             Vec3 incoming=unit(ray.direction);
-            direction=incoming-closestHit.normal*(2*dot(incoming,closestHit.normal));
-        } else {
-            direction=closestHit.normal+randomUnit();
-            if(dot(direction,direction)<1e-10) direction=closestHit.normal;
+            Vec3 reflected=incoming-closestHit.normal*(2*dot(incoming,closestHit.normal));
+            return closestHit.material.color* trace({origin, reflected}, depth - 1, true);
         }
-        Vec3 bounceColor=closestHit.material.color*trace({closestHit.hitPoint,direction},depth-1);
-        return emitted+bounceColor;
+        
+        Vec3 direct{0, 0, 0};
+
+        for (const auto& light : lights) {
+            direct = direct + sampleDirectLightSphere(closestHit, *light);
+        }
+
+        Vec3 direction = closestHit.normal + randomUnit();
+        if (dot(direction, direction) < 1e-10)
+            direction = closestHit.normal;
+        
+        direction = unit(direction);
+        Vec3 indirect = closestHit.material.color
+            * trace({origin, direction}, depth - 1, false);
+        return direct+indirect;
     }
+
     double reg_blend=0.5*(unit(ray.direction).y+1);
-    double sharp_blend = 1.0/(1+std::exp(-10.0*ray.direction.y));
-    return Vec3{1,1,1}*(1-reg_blend)+Vec3{0.45,0.65,1}*reg_blend;
+    Vec3 sky = Vec3{1,1,1}*(1-reg_blend)+Vec3{0.45,0.65,1}*reg_blend;
+
+
+    return cameraRay ? sky + sphereHalo(ray) : sky;
 }
 
 int main(int argc, char** argv) {
@@ -106,12 +252,9 @@ int main(int argc, char** argv) {
                 objPosition.z=std::stod(argv[++i]);
             } else throw std::runtime_error("Usage: SDL.exe [width samples] [--obj file.obj] [--scale s] [--position x y z] [--auto-close]");
         }
-        if(!objPath.empty()) {
-            auto mesh=loadObj(objPath,modelMaterial,objScale,objPosition);
-            // Replace the original demonstration triangle with the imported model.
-            objects.erase(objects.begin()+3);
-            objects.insert(objects.end(),mesh.begin(),mesh.end());
-        }
+        auto mesh=loadObj(objPath,modelMaterial,objScale,objPosition);
+        objects.insert(objects.end(),mesh.begin(),mesh.end());
+        
         if(width<16 || width>4096 || samples<1 || samples>4096)
             throw std::runtime_error("Width must be 16..4096; samples must be 1..4096.");
         int height=width*9/16;
@@ -158,7 +301,7 @@ int main(int argc, char** argv) {
                     // SDL row zero is the TOP. Original BMP camera y increases upward.
                     double v=1.0-(y+random01())/height;
                     Vec3 value=trace({{0,0.35,1.3},
-                        {(2*u-1)*double(width)/height,(2*v-1)-0.15,-2.3}},12);
+                        {(2*u-1)*double(width)/height,(2*v-1)-0.15,-2.3}},12,true,true);
                     size_t index=static_cast<size_t>(y)*width+x;
                     accumulation[index]=accumulation[index]+value;
                     Vec3 color=accumulation[index]*(1.0/(sample+1));
