@@ -1,9 +1,12 @@
-cmake_minimum_required(VERSION 3.16)
-project(RayTracer LANGUAGES CXX)
-add_executable(raytracer src/main.cpp)
-target_compile_features(raytracer PRIVATE cxx_std_17)
-if(MSVC)
-    target_compile_options(raytracer PRIVATE /W4)
-else()
-    target_compile_options(raytracer PRIVATE -Wall -Wextra -Wpedantic)
-endif()
+cmake_minimum_required(VERSION 3.24)
+project(RayTracer LANGUAGES CXX CUDA)
+
+add_executable(raytracer_cuda src/cuda/main.cu)
+
+set_target_properties(raytracer_cuda PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CUDA_STANDARD 17
+    CUDA_STANDARD_REQUIRED ON
+    CUDA_ARCHITECTURES 86
+)

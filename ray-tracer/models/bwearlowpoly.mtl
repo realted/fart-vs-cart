@@ -1,0 +1,22 @@
+# Blender 5.2.1 LTS MTL File: 'bwear.blend'
+# www.blender.org
+
+newmtl Body
+Ns 51.670273
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd bewear/source/3DS - Pokemon Sun Moon - 760 Bewear/Pokemon SuMo/Bewear/images/pm0853_00_Body1.png
+
+newmtl Eye
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd bewear/source/3DS - Pokemon Sun Moon - 760 Bewear/Pokemon SuMo/Bewear/images/pm0853_00_Eye1.png

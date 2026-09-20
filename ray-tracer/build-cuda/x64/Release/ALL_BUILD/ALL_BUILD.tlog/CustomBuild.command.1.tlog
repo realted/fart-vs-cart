@@ -1,0 +1,10 @@
+^C:\USERS\TED\DESKTOP\Y4PROJ\FART_VS_CART\RAY-TRACER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/Ted/Desktop/y4proj/fart_vs_cart/ray-tracer -BC:/Users/Ted/Desktop/y4proj/fart_vs_cart/ray-tracer/build-cuda --check-stamp-file C:/Users/Ted/Desktop/y4proj/fart_vs_cart/ray-tracer/build-cuda/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

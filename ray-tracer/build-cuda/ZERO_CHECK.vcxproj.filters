@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\build-cuda\CMakeFiles\00eb3778165a612e2250640961c7217f\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{EBF75881-D74F-3D50-AB0A-6B72566735FC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

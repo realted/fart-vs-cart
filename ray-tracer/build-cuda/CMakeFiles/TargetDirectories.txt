@@ -1,0 +1,3 @@
+C:/Users/Ted/Desktop/y4proj/fart_vs_cart/ray-tracer/build-cuda/CMakeFiles/raytracer_cuda.dir
+C:/Users/Ted/Desktop/y4proj/fart_vs_cart/ray-tracer/build-cuda/CMakeFiles/ALL_BUILD.dir
+C:/Users/Ted/Desktop/y4proj/fart_vs_cart/ray-tracer/build-cuda/CMakeFiles/ZERO_CHECK.dir

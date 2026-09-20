@@ -26,27 +26,21 @@ Vec3 randomUnit() {
     }
 }
 
-// Model Initialization
-const std::string modelPath = R"(C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\models\bwearlowpoly.obj)";
-const double modelScale = 0.0065;
-const Vec3 modelPosition = {0.0, -0.497, -1.225};
-const Material modelMaterial = {
-    {0.92, 0.92, 0.92}, false, {0, 0, 0}
-};
 
 // Light Initialization
 auto light1 = std::make_shared<Sphere>(
     Vec3{0.0, 1.35, -0.7},
     0.25,
-    Material{{1, 1, 1}, false, {15, 15, 15}}
+    Material{{1, 1, 1}, false, {25, 25, 25}}
 );
 
 std::vector<std::shared_ptr<Sphere>> lights = {light1};
 
+
+
 // List of wall objects for the scene
 std::vector<std::shared_ptr<Object>> objects = [] {
     std::vector<std::shared_ptr<Object>> scene;
-
     Material pink  {{0.75, 0.18, 0.35}, false, {0,0,0}};
     Material dark  {{0.035, 0.025, 0.03}, false, {0,0,0}};
     Material cream {{0.80, 0.72, 0.62}, false, {0,0,0}};
@@ -81,6 +75,13 @@ std::vector<std::shared_ptr<Object>> objects = [] {
     Vec3{2.6, 0, 0},
     Vec3{0, 0, 4},
     lightdark
+    ));
+
+    // Metallic Sphere
+    scene.push_back(std::make_shared<Sphere>(
+    Vec3{0.0, 0.0, -1.225},
+    0.5,
+    Material{Vec3{0.5, 0.5, 0.5}, true, {0, 0, 0}}
     ));
 
     scene.push_back(std::make_shared<Square>(
@@ -201,7 +202,6 @@ Vec3 trace(Ray ray, int depth, bool allowSampledLightEmission = true, bool camer
         
         direction = unit(direction);
         //Vec3 indirect = closestHit.material.color*trace({origin, direction}, depth-1, false);
-        //return direct + indirect;
         return direct;
     }
 
@@ -221,23 +221,7 @@ int main(int argc, char** argv) {
         int width=argc>1?std::stoi(argv[1]):640;
         int samples=argc>2?std::stoi(argv[2]):256;
         bool autoClose=false;
-        std::string objPath=modelPath;
-        double objScale=modelScale;
-        Vec3 objPosition=modelPosition;
-        for(int i=3;i<argc;++i) {
-            std::string option=argv[i];
-            if(option=="--auto-close") autoClose=true;
-            else if(option=="--obj" && i+1<argc) objPath=argv[++i];
-            else if(option=="--scale" && i+1<argc) objScale=std::stod(argv[++i]);
-            else if(option=="--position" && i+3<argc) {
-                objPosition.x=std::stod(argv[++i]);
-                objPosition.y=std::stod(argv[++i]);
-                objPosition.z=std::stod(argv[++i]);
-            } else throw std::runtime_error("Usage: SDL.exe [width samples] [--obj file.obj] [--scale s] [--position x y z] [--auto-close]");
-        }
-        auto mesh=loadObj(objPath,modelMaterial,objScale,objPosition);
-        objects.insert(objects.end(),mesh.begin(),mesh.end());
-        
+
         if(width<16 || width>4096 || samples<1 || samples>4096)
             throw std::runtime_error("Width must be 16..4096; samples must be 1..4096.");
         int height=width;
