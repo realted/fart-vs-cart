@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\src\render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1661423B-35AE-34E1-A4D4-108F1633BE74}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

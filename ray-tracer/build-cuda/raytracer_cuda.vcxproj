@@ -108,7 +108,7 @@
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
       <Optimization>Od</Optimization>
-      <Runtime>MDd</Runtime>
+      <Runtime>MTd</Runtime>
       <RuntimeChecks>RTC1</RuntimeChecks>
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <UseHostInclude>false</UseHostInclude>
@@ -162,7 +162,7 @@
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
       <Optimization>O2</Optimization>
-      <Runtime>MD</Runtime>
+      <Runtime>MT</Runtime>
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <UseHostInclude>false</UseHostInclude>
     </CudaCompile>
@@ -215,7 +215,7 @@
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
       <Optimization>O1</Optimization>
-      <Runtime>MD</Runtime>
+      <Runtime>MT</Runtime>
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <UseHostInclude>false</UseHostInclude>
     </CudaCompile>
@@ -268,7 +268,7 @@
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
       <Optimization>O2</Optimization>
-      <Runtime>MD</Runtime>
+      <Runtime>MT</Runtime>
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <UseHostInclude>false</UseHostInclude>
     </CudaCompile>

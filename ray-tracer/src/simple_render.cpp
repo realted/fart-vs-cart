@@ -26,7 +26,6 @@ Vec3 randomUnit() {
     }
 }
 
-
 // Light Initialization
 auto light1 = std::make_shared<Sphere>(
     Vec3{0.0, 1.35, -0.7},
@@ -35,8 +34,6 @@ auto light1 = std::make_shared<Sphere>(
 );
 
 std::vector<std::shared_ptr<Sphere>> lights = {light1};
-
-
 
 // List of wall objects for the scene
 std::vector<std::shared_ptr<Object>> objects = [] {

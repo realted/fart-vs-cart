@@ -174,9 +174,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\build-cuda\raytracer_cuda.vcxproj">
-      <Project>{947A1F31-D1E7-3E91-B6CC-1E5F4A47D267}</Project>
-      <Name>raytracer_cuda</Name>
+    <ProjectReference Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\build-cuda\cuda_sdl_demo.vcxproj">
+      <Project>{3749EE48-D96C-371A-846D-013E184F1215}</Project>
+      <Name>cuda_sdl_demo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\build-cuda\raytracer_cpu.vcxproj">
+      <Project>{88C54D86-B34A-3C9B-98B2-84DC7D89511A}</Project>
+      <Name>raytracer_cpu</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

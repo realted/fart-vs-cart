@@ -200,9 +200,9 @@ Vec3 trace(Ray ray, int depth, bool allowSampledLightEmission = true, bool camer
             direction = closestHit.normal;
         
         direction = unit(direction);
-        //Vec3 indirect = closestHit.material.color*trace({origin, direction}, depth-1, false);
-        //return direct + indirect;
-        return direct;
+        Vec3 indirect = closestHit.material.color*trace({origin, direction}, depth-1, false);
+        return direct + indirect;
+        //return direct;
     }
 
     double reg_blend = 0.5*(unit(ray.direction).y+1);
