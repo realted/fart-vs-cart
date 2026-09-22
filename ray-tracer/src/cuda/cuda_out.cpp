@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
         const int width = 800, height = 600;
         std::vector<unsigned char> pixels(size_t(width)*height*3);
         initializeScene();
+        initializeRandom(width, height);
         renderCudaImage(pixels.data(),width,height);
         SDL_SetMainReady();
         auto check = [](bool ok) { if (!ok) throw std::runtime_error(SDL_GetError()); };
@@ -51,6 +52,10 @@ int main(int argc, char** argv) {
     try { destroyScene(); }
     catch (const std::exception& e) {
         std::fprintf(stderr, "Scene cleanup: %s\n", e.what()); result = 1;
+    }
+    try {destroyRandom();}
+    catch (const std::exception& e) {
+        std::fprintf(stderr, "Random cleanup: %s\n", e.what()); result = 1;
     }
     if (texture) SDL_DestroyTexture(texture);
     if (renderer) SDL_DestroyRenderer(renderer);
