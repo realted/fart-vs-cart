@@ -42,6 +42,14 @@ namespace{
     int lightCount = 0;
 
     // GPU globals used by trace().
+    // Persistent image buffers; one sample is added by each render call.
+    Vec3* d_accumulation = nullptr;
+    unsigned char* d_pixels = nullptr;
+    int renderWidth = 0, renderHeight = 0;
+    int rngWidth = 0, rngHeight = 0;
+    int completedSamples = 0;
+
+    // GPU globals used by trace().
     __device__ Object **sceneObjects = nullptr;
     __device__ int sceneObjectCount = 0;
     __device__ Sphere **sceneLights = nullptr;
@@ -112,7 +120,7 @@ namespace{
         // Metallic sphere.
         ObjectDesc light1{};
         sphere.type = ObjectType::Sphere;
-        sphere.material = Material{{1, 1, 1}, false, {10, 10, 10}};
+        sphere.material = Material{{1, 1, 1}, false, {25, 25, 25}};
         sphere.position = {0.0, 1.35, -0.7};
         sphere.radius = 0.25;
         scene.push_back(sphere);
@@ -344,10 +352,21 @@ namespace{
     {
         if (!isfinite(value) || value <= 0.0)
             return 0;
-        return static_cast<unsigned char>(255.0 * fmin(value, 1.0));
+        // Gamma 2 display conversion happens AFTER averaging linear samples.
+        return static_cast<unsigned char>(256.0 * fmin(sqrt(value), 0.999));
     }
 
-    __global__ void genIm(unsigned char *pixels, int width, int height) {
+    __device__ void accumulatePixel(Vec3* sums, unsigned char* pixels,
+                                    size_t index, Vec3 sample, int sampleCount) {
+        sums[index] = sums[index] + sample;
+        Vec3 average = sums[index] * (1.0 / sampleCount);
+        pixels[index*3] = channel(average.x);
+        pixels[index*3+1] = channel(average.y);
+        pixels[index*3+2] = channel(average.z);
+    }
+
+    __global__ void genIm(Vec3* sums, unsigned char *pixels,
+                         int width, int height, int sampleCount) {
         int x = blockIdx.x * blockDim.x + threadIdx.x;
         int y = blockIdx.y * blockDim.y + threadIdx.y;
         if (x >= width || y >= height)
@@ -359,10 +378,8 @@ namespace{
         Ray ray{{0, 0.45, 2.6},
                 {(2 * u - 1) * 0.5 * double(width) / height, (2 * v - 1) * 0.5, -1.0}};
         Vec3 color = trace(ray, 12);
-        size_t i = 3 * (size_t(y) * width + x);
-        pixels[i] = channel(color.x);
-        pixels[i + 1] = channel(color.y);
-        pixels[i + 2] = channel(color.z);
+        size_t index = size_t(y) * width + x;
+        accumulatePixel(sums, pixels, index, color, sampleCount);
     }
 } // namespace
 
@@ -470,7 +487,8 @@ void initializeScene(){
 
 void initializeRandom(int width, int height)
 {
-    if (width < 2 || height < 2)
+    if (width < 2 || height < 2 ||
+        size_t(width) > std::numeric_limits<size_t>::max()/size_t(height)/sizeof(RandomState))
         throw std::runtime_error("Invalid random-state dimensions");
 
     if (d_randomStates)
@@ -500,33 +518,84 @@ void initializeRandom(int width, int height)
     }
 
     d_randomStates = states;
+    rngWidth = width;
+    rngHeight = height;
 }
 
-void renderCudaImage(unsigned char *cpuPixels, int width, int height)
-{
-    if (!d_objects)
-        throw std::runtime_error("Call initializeScene() before rendering");
-    if (!cpuPixels || width < 2 || height < 2 ||
-        size_t(width) > std::numeric_limits<size_t>::max() / size_t(height) / 3)
-        throw std::runtime_error("Invalid image buffer or dimensions");
-    size_t bytes = size_t(width) * height * 3;
-    unsigned char *gpuPixels = nullptr;
-    check(cudaMalloc(reinterpret_cast<void **>(&gpuPixels), bytes));
-    try
-    {
-        dim3 threads(16, 16);
-        dim3 blocks((unsigned(width) + 15) / 16, (unsigned(height) + 15) / 16);
-        genIm<<<blocks, threads>>>(gpuPixels, width, height);
-        check(cudaGetLastError());
-        check(cudaDeviceSynchronize());
-        check(cudaMemcpy(cpuPixels, gpuPixels, bytes, cudaMemcpyDeviceToHost));
-    }
-    catch (...)
-    {
-        cudaFree(gpuPixels);
+// Allocate once for the chosen resolution, after initializeRandom().
+void initializeRenderBuffers(int width, int height) {
+    if (d_accumulation || d_pixels)
+        throw std::runtime_error("Render buffers are already initialized");
+    if (!d_randomStates || width != rngWidth || height != rngHeight)
+        throw std::runtime_error("Initialize random states at the rendering resolution first");
+    if (width < 2 || height < 2 ||
+        size_t(width) > std::numeric_limits<size_t>::max()/size_t(height)/sizeof(Vec3))
+        throw std::runtime_error("Invalid render-buffer dimensions");
+    size_t count = size_t(width)*height;
+    Vec3* sums = nullptr;
+    unsigned char* pixels = nullptr;
+    try {
+        check(cudaMalloc(reinterpret_cast<void**>(&sums), count*sizeof(Vec3)));
+        check(cudaMalloc(reinterpret_cast<void**>(&pixels), count*3));
+        check(cudaMemset(sums, 0, count*sizeof(Vec3)));
+        check(cudaMemset(pixels, 0, count*3));
+    } catch (...) {
+        cudaFree(sums);
+        cudaFree(pixels);
         throw;
     }
-    check(cudaFree(gpuPixels));
+    d_accumulation = sums;
+    d_pixels = pixels;
+    renderWidth = width;
+    renderHeight = height;
+    completedSamples = 0;
+}
+
+// Clear the old image and restart the same random sequence (seed 42).
+// Call after changing camera/scene/lighting, before adding more samples.
+void resetAccumulation() {
+    if (!d_accumulation || !d_randomStates ||
+        renderWidth != rngWidth || renderHeight != rngHeight)
+        throw std::runtime_error("Initialize matching render buffers and random states first");
+    check(cudaMemset(d_accumulation, 0, size_t(renderWidth)*renderHeight*sizeof(Vec3)));
+    check(cudaMemset(d_pixels, 0, size_t(renderWidth)*renderHeight*3));
+    dim3 threads(16,16);
+    dim3 blocks((unsigned(renderWidth)+15)/16, (unsigned(renderHeight)+15)/16);
+    initializeRandomStates<<<blocks,threads>>>(d_randomStates,renderWidth,renderHeight,42ULL);
+    check(cudaGetLastError());
+    check(cudaDeviceSynchronize());
+    completedSamples = 0;
+}
+
+// One new sample per pixel; return the completed sample count.
+int renderCudaImage(unsigned char* cpuPixels, int width, int height) {
+    if (!d_objects) throw std::runtime_error("Call initializeScene() before rendering");
+    if (!cpuPixels || !d_accumulation || !d_pixels || !d_randomStates)
+        throw std::runtime_error("Initialize image buffers and random states before rendering");
+    if (width != renderWidth || height != renderHeight ||
+        width != rngWidth || height != rngHeight)
+        throw std::runtime_error("Render dimensions must match both GPU buffer allocations");
+    if (completedSamples == std::numeric_limits<int>::max())
+        throw std::runtime_error("Sample counter limit reached; reset accumulation");
+    const int nextSample = completedSamples + 1;
+    dim3 threads(16,16);
+    dim3 blocks((unsigned(width)+15)/16, (unsigned(height)+15)/16);
+    genIm<<<blocks,threads>>>(d_accumulation,d_pixels,width,height,nextSample);
+    check(cudaGetLastError());
+    check(cudaDeviceSynchronize());
+    completedSamples = nextSample;
+    check(cudaMemcpy(cpuPixels,d_pixels,size_t(width)*height*3,cudaMemcpyDeviceToHost));
+    return completedSamples;
+}
+
+void destroyRenderBuffers() {
+    const cudaError_t sumsResult = cudaFree(d_accumulation);
+    const cudaError_t pixelsResult = cudaFree(d_pixels);
+    d_accumulation = nullptr;
+    d_pixels = nullptr;
+    renderWidth = renderHeight = completedSamples = 0;
+    check(sumsResult);
+    check(pixelsResult);
 }
 
 // Attempt all cleanup operations, then report the first error.
@@ -572,4 +641,5 @@ void destroyRandom()
 
     check(cudaFree(d_randomStates));
     d_randomStates = nullptr;
+    rngWidth = rngHeight = 0;
 }
