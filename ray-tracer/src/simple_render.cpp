@@ -30,7 +30,7 @@ Vec3 randomUnit() {
 auto light1 = std::make_shared<Sphere>(
     Vec3{0.0, 1.35, -0.7},
     0.25,
-    Material{{1, 1, 1}, false, {25, 25, 25}}
+    Material{{1, 1, 1}, false, {15, 15, 15}}
 );
 
 std::vector<std::shared_ptr<Sphere>> lights = {light1};

@@ -25,6 +25,68 @@ struct ObjectDesc
     Vec3 a{}, b{}, c{};    // Triangle vertices.
 };
 
+
+// CPU-only OBJ parsing for CUDA scenes.
+// Define tinyobjloader in this translation unit only.
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "../vendor/tiny_obj_loader.h"
+#include <filesystem>
+#include <iostream>
+#include <string>
+
+// Positions use: world = OBJ position * scale + translation.
+// Geometry only: supplied material and flat face normals are used for all faces.
+inline std::vector<ObjectDesc> loadObjDescriptions(
+    const std::string& filename, const Material& material,
+    double scale = 1.0, Vec3 translation = {0,0,0}) {
+    if (!std::isfinite(scale) || scale == 0)
+        throw std::runtime_error("OBJ scale must be finite and nonzero.");
+    tinyobj::ObjReaderConfig config;
+    config.triangulate = true;
+    config.mtl_search_path = std::filesystem::path(filename).parent_path().string();
+    tinyobj::ObjReader reader;
+    if (!reader.ParseFromFile(filename, config))
+        throw std::runtime_error("Cannot load OBJ " + filename + ": " + reader.Error());
+    if (!reader.Warning().empty()) std::cerr << "OBJ warning: " << reader.Warning();
+    const auto& vertices = reader.GetAttrib().vertices;
+    auto vertex = [&](int index) {
+        if(index < 0 || static_cast<size_t>(index) >= vertices.size()/3)
+            throw std::runtime_error("OBJ has an invalid vertex index: " + filename);
+        const size_t i = static_cast<size_t>(index)*3;
+        Vec3 p = Vec3{vertices[i],vertices[i+1],vertices[i+2]}*scale + translation;
+        if(!std::isfinite(p.x) || !std::isfinite(p.y) || !std::isfinite(p.z))
+            throw std::runtime_error("OBJ has a nonfinite position: " + filename);
+        return p;
+    };
+    std::vector<ObjectDesc> triangles;
+    size_t skipped=0;
+    for(const auto& shape : reader.GetShapes()) {
+        size_t offset=0;
+        for(unsigned int count : shape.mesh.num_face_vertices) {
+            if(count != 3 || offset+count > shape.mesh.indices.size())
+                throw std::runtime_error("OBJ face could not be triangulated: " + filename);
+            Vec3 a=vertex(shape.mesh.indices[offset].vertex_index);
+            Vec3 b=vertex(shape.mesh.indices[offset+1].vertex_index);
+            Vec3 c=vertex(shape.mesh.indices[offset+2].vertex_index);
+            offset+=count;
+            Vec3 n=cross(b-a,c-a);
+            if(dot(n,n)<=1e-12) { ++skipped; continue; }
+            ObjectDesc triangle{};
+            triangle.type = ObjectType::Triangle;
+            triangle.material = material;
+            triangle.a = a;
+            triangle.b = b;
+            triangle.c = c;
+            triangles.push_back(triangle);
+        }
+    }
+    if(triangles.empty()) throw std::runtime_error("OBJ contains no usable triangles: " + filename);
+    std::cout << "Loaded " << triangles.size() << " triangles from " << filename
+              << " (skipped " << skipped << " degenerate/tiny triangles).\n";
+    return triangles;
+}
+
+
 namespace{
     void check(cudaError_t result)
     {
@@ -41,7 +103,6 @@ namespace{
     int objectCount = 0;
     int lightCount = 0;
 
-    // GPU globals used by trace().
     // Persistent image buffers; one sample is added by each render call.
     Vec3* d_accumulation = nullptr;
     unsigned char* d_pixels = nullptr;
@@ -109,21 +170,25 @@ namespace{
             {2.6, 0, 0}, {0, 0, 4},
             lightdark);
 
-        // Metallic sphere.
-        ObjectDesc sphere{};
-        sphere.type = ObjectType::Sphere;
-        sphere.material = Material{{0.5, 0.5, 0.5}, true, {0, 0, 0}};
-        sphere.position = {0.0, 0.0, -1.225};
-        sphere.radius = 0.5;
-        scene.push_back(sphere);
+        // Emissive sphere, matching render.cpp.
+        ObjectDesc light{};
+        light.type = ObjectType::Sphere;
+        light.material = Material{{1, 1, 1}, false, {15, 15, 15}};
+        light.position = {0.0, 1.35, -0.7};
+        light.radius = 0.25;
+        scene.push_back(light);
 
-        // Metallic sphere.
-        ObjectDesc light1{};
-        sphere.type = ObjectType::Sphere;
-        sphere.material = Material{{1, 1, 1}, false, {25, 25, 25}};
-        sphere.position = {0.0, 1.35, -0.7};
-        sphere.radius = 0.25;
-        scene.push_back(sphere);
+        const Material modelMaterial{{0.92, 0.92, 0.92}, false, {0, 0, 0}};
+
+        // Load Bewear on the CPU; initializeObjects constructs its triangles on the GPU.
+        auto mesh = loadObjDescriptions(
+            R"(C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\models\bwearlowpoly.obj)",
+            modelMaterial,
+            0.0065,
+            Vec3{0.0, -0.497, -1.225}
+        );
+
+        scene.insert(scene.end(), mesh.begin(), mesh.end());
 
         // Pink panel behind the camera.
         addSquare(
@@ -337,12 +402,11 @@ namespace{
             direction = closestHit.normal;
         
         direction = unit(direction);
-        //Vec3 indirect = closestHit.material.color*trace({origin, direction}, depth-1, false);
-        return direct;
+        Vec3 indirect = closestHit.material.color*trace({origin, direction}, depth-1, false);
+        return indirect+direct;
     }
 
-    double reg_blend = 0.5*(unit(ray.direction).y+1);
-    //Vec3 sky = Vec3{1,1,1}*(1-reg_blend)+Vec3{0.45,0.65,1}*reg_blend;
+    // Black background for rays that miss the scene.
 
 
     return {0,0,0};
