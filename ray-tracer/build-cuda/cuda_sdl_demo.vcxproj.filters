@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\src\cuda\cuda_out.cpp">
+    <ClCompile Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\src\GPU_cuda\cuda_out.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="..\src\cuda\main.cu">
+    <CudaCompile Include="..\src\GPU_cuda\main.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
   </ItemGroup>

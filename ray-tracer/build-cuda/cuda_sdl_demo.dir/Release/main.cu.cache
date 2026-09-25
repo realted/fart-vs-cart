@@ -1,4 +1,4 @@
-Identity=..\src\cuda\main.cu
+Identity=..\src\GPU_cuda\main.cu
 AdditionalCompilerOptions=
 AdditionalCompilerOptions=
 AdditionalDependencies=

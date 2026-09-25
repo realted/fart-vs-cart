@@ -431,8 +431,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\src\cuda\cuda_out.cpp" />
-    <CudaCompile Include="..\src\cuda\main.cu" />
+    <ClCompile Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\src\GPU_cuda\cuda_out.cpp" />
+    <CudaCompile Include="..\src\GPU_cuda\main.cu" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\build-cuda\ZERO_CHECK.vcxproj">

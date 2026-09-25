@@ -23,11 +23,11 @@ function(enable_sdl target)
         VERBATIM)
 endfunction()
   
-add_executable(raytracer_cpu src/render.cpp)
+add_executable(raytracer_cpu src/CPU/render.cpp)
 enable_sdl(raytracer_cpu)
 
 # CPU main()/SDL + CUDA pixel generation in a separate translation unit.
-add_executable(cuda_sdl_demo src/cuda/cuda_out.cpp src/cuda/main.cu)
+add_executable(cuda_sdl_demo src/GPU_cuda/cuda_out.cpp src/GPU_cuda/main.cu)
 set_target_properties(cuda_sdl_demo PROPERTIES
     CUDA_STANDARD 17 CUDA_STANDARD_REQUIRED ON CUDA_ARCHITECTURES 86)
 enable_sdl(cuda_sdl_demo)
