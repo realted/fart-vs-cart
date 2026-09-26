@@ -17,6 +17,8 @@
 // VERSION		"Version 15.0.2 Build 153 07/15/2015 SJ Full Version"
 // CREATED		"Mon Nov 19 23:10:50 2018"
 
+import params::*;
+
 module memory(
 	wren,
 	clock,
@@ -30,13 +32,13 @@ module memory(
 input wire	wren;
 input wire	clock;
 input wire	MemRead;
-input wire	[7:0] address;
-input wire	[7:0] data;
-output wire	[7:0] q;
+input wire	[ADDR_BIT_WIDTH-1:0] address;
+input wire	[DATA_BIT_WIDTH-1:0] data;
+output wire	[DATA_BIT_WIDTH-1:0] q;
 
 wire	SYNTHESIZED_WIRE_0;
-wire	[0:7] SYNTHESIZED_WIRE_1;
-wire	[7:0] SYNTHESIZED_WIRE_2;
+wire	[0:DATA_BIT_WIDTH-1] SYNTHESIZED_WIRE_1;
+wire	[DATA_BIT_WIDTH-1:0] SYNTHESIZED_WIRE_2;
 
 assign	SYNTHESIZED_WIRE_1 = 0;
 

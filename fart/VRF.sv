@@ -19,6 +19,8 @@
 //
 // ---------------------------------------------------------------------
 
+import params::*;
+
 module VRF
 (
 clock, vreg1, vreg2, vregw,
@@ -35,22 +37,25 @@ vr3_0, vr3_1, vr3_2, vr3_3
 // ------------------------ PORT declaration ------------------------ //
 input clock;
 input [1:0] vreg1, vreg2, vregw;
-input [7:0] vdataw_0, vdataw_1, vdataw_2, vdataw_3;
+input [DATA_BIT_WIDTH-1:0] vdataw_0, vdataw_1, vdataw_2, vdataw_3;
 input VRFWrite;
 input reset;
-output [7:0] vdata1_0, vdata1_1, vdata1_2, vdata1_3, vdata2_0, vdata2_1, vdata2_2, vdata2_3;
-output [7:0] vr0_0, vr0_1, vr0_2, vr0_3;
-output [7:0] vr1_0, vr1_1, vr1_2, vr1_3;
-output [7:0] vr2_0, vr2_1, vr2_2, vr2_3;
-output [7:0] vr3_0, vr3_1, vr3_2, vr3_3;
+output [DATA_BIT_WIDTH-1:0] vdata1_0, vdata1_1, vdata1_2, vdata1_3, vdata2_0, vdata2_1, vdata2_2, vdata2_3;
+
+// Hex Display
+output [DATA_BIT_WIDTH-1:0] vr0_0, vr0_1, vr0_2, vr0_3;
+output [DATA_BIT_WIDTH-1:0] vr1_0, vr1_1, vr1_2, vr1_3;
+output [DATA_BIT_WIDTH-1:0] vr2_0, vr2_1, vr2_2, vr2_3;
+output [DATA_BIT_WIDTH-1:0] vr3_0, vr3_1, vr3_2, vr3_3;
 
 // ------------------------- Registers/Wires ------------------------ //
-reg [7:0] v0_0, v0_1, v0_2, v0_3;
-reg [7:0] v1_0, v1_1, v1_2, v1_3;
-reg [7:0] v2_0, v2_1, v2_2, v2_3;
-reg [7:0] v3_0, v3_1, v3_2, v3_3;
-reg [7:0] vdata1_0_tmp, vdata1_1_tmp, vdata1_2_tmp, vdata1_3_tmp;
-reg [7:0] vdata2_0_tmp, vdata2_1_tmp, vdata2_2_tmp, vdata2_3_tmp;
+reg [DATA_BIT_WIDTH-1:0] v0_0, v0_1, v0_2, v0_3;
+reg [DATA_BIT_WIDTH-1:0] v1_0, v1_1, v1_2, v1_3;
+reg [DATA_BIT_WIDTH-1:0] v2_0, v2_1, v2_2, v2_3;
+reg [DATA_BIT_WIDTH-1:0] v3_0, v3_1, v3_2, v3_3;
+reg [DATA_BIT_WIDTH-1:0] vdata1_0_tmp, vdata1_1_tmp, vdata1_2_tmp, vdata1_3_tmp;
+reg [DATA_BIT_WIDTH-1:0] vdata2_0_tmp, vdata2_1_tmp, vdata2_2_tmp, vdata2_3_tmp;
+
 
 // Asynchronously read data from two registers
 always @(*)

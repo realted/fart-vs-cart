@@ -26,19 +26,21 @@
 //
 // ---------------------------------------------------------------------
 
+import params::*;
+
 module zExtend(in, out);
 	parameter n = 3; // a parameter which detemines input size
 	input [n-1:0] in;
-	output [7:0] out;
+	output [DATA_BIT_WIDTH-1:0] out;
 	
-	assign out[7:n] = 0;
+	assign out[DATA_BIT_WIDTH-1:n] = 0;
 	assign out[n-1:0] = in;
 endmodule
 
 module sExtend(in, out);
 	parameter n = 3; // a parameter which detemines input size
 	input [n-1:0] in;
-	output [7:0] out;
+	output [DATA_BIT_WIDTH-1:0] out;
 
-	assign out = {{(8-n){in[n-1]}},in};
+	assign out = {{(DATA_BIT_WIDTH-n){in[n-1]}},in};
 endmodule

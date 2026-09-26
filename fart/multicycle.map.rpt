@@ -1,5 +1,5 @@
 Analysis & Synthesis report for multicycle
-Sat Sep 26 12:20:19 2026
+Sat Sep 26 17:57:19 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -56,7 +56,7 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sat Sep 26 12:20:19 2026           ;
+; Analysis & Synthesis Status     ; Successful - Sat Sep 26 17:57:19 2026           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; multicycle                                      ;
 ; Top-level Entity Name           ; multicycle                                      ;
@@ -186,22 +186,23 @@ on the Quartus Prime software download page.
 +----------------------------------+-----------------+------------------------------------+------------------------------------------------------------------------------+---------+
 ; File Name with User-Entered Path ; Used in Netlist ; File Type                          ; File Name with Absolute Path                                                 ; Library ;
 +----------------------------------+-----------------+------------------------------------+------------------------------------------------------------------------------+---------+
+; params.sv                        ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/params.sv                      ;         ;
+; VRF.sv                           ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/VRF.sv                         ;         ;
+; RF.sv                            ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/RF.sv                          ;         ;
+; register_8x4bit.sv               ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8x4bit.sv             ;         ;
+; register_8bit.sv                 ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8bit.sv               ;         ;
+; mux5to1_8bit.sv                  ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux5to1_8bit.sv                ;         ;
+; mux2to1_8bit.sv                  ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_8bit.sv                ;         ;
+; mux2to1_2bit.sv                  ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_2bit.sv                ;         ;
+; multicycle.sv                    ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv                  ;         ;
+; HEX.sv                           ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv                         ;         ;
+; FSM.sv                           ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv                         ;         ;
+; extend.sv                        ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/extend.sv                      ;         ;
+; DataMemory.sv                    ; yes             ; User Wizard-Generated File         ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv                  ;         ;
+; counter.sv                       ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.sv                     ;         ;
+; ALU.sv                           ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/ALU.sv                         ;         ;
+; adder_8.sv                       ; yes             ; User SystemVerilog HDL File        ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_8.sv                     ;         ;
 ; data.mif                         ; yes             ; User Memory Initialization File    ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/data.mif                       ;         ;
-; VRF.v                            ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/VRF.v                          ;         ;
-; register_8x4bit.v                ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8x4bit.v              ;         ;
-; counter.v                        ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.v                      ;         ;
-; adder_8.v                        ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_8.v                      ;         ;
-; register_8bit.v                  ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8bit.v                ;         ;
-; mux2to1_8bit.v                   ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_8bit.v                 ;         ;
-; mux2to1_2bit.v                   ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_2bit.v                 ;         ;
-; mux5to1_8bit.v                   ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux5to1_8bit.v                 ;         ;
-; multicycle.v                     ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v                   ;         ;
-; DataMemory.v                     ; yes             ; User Wizard-Generated File         ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.v                   ;         ;
-; ALU.v                            ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/ALU.v                          ;         ;
-; RF.v                             ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/RF.v                           ;         ;
-; extend.v                         ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/extend.v                       ;         ;
-; HEX.v                            ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v                          ;         ;
-; FSM.v                            ; yes             ; User Verilog HDL File              ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v                          ;         ;
 ; memory.bdf                       ; yes             ; User Block Diagram/Schematic File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.bdf                     ;         ;
 ; altsyncram.tdf                   ; yes             ; Megafunction                       ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf        ;         ;
 ; stratix_ram_block.inc            ; yes             ; Megafunction                       ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/stratix_ram_block.inc ;         ;
@@ -661,154 +662,156 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sat Sep 26 12:20:11 2026
+    Info: Processing started: Sat Sep 26 17:57:10 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off gpu_v0 -c multicycle
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
-Info (12021): Found 1 design units, including 1 entities, in source file vrf.v
-    Info (12023): Found entity 1: VRF File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/VRF.v Line: 22
-Info (12021): Found 1 design units, including 1 entities, in source file register_8x4bit.v
-    Info (12023): Found entity 1: register_8x4bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8x4bit.v Line: 4
-Info (12021): Found 1 design units, including 1 entities, in source file multicycle_tb.v
-    Info (12023): Found entity 1: multicycle_tb File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle_tb.v Line: 10
-Info (12021): Found 1 design units, including 1 entities, in source file counter.v
-    Info (12023): Found entity 1: counter File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file adder_8.v
-    Info (12023): Found entity 1: adder_8 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_8.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file register_8bit.v
-    Info (12023): Found entity 1: register_8bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8bit.v Line: 4
-Info (12021): Found 1 design units, including 1 entities, in source file mux2to1_8bit.v
-    Info (12023): Found entity 1: mux2to1_8bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_8bit.v Line: 3
-Info (12021): Found 1 design units, including 1 entities, in source file mux2to1_2bit.v
-    Info (12023): Found entity 1: mux2to1_2bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_2bit.v Line: 3
-Info (12021): Found 1 design units, including 1 entities, in source file mux5to1_8bit.v
-    Info (12023): Found entity 1: mux5to1_8bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux5to1_8bit.v Line: 3
-Info (12021): Found 1 design units, including 1 entities, in source file dualmem.v
-    Info (12023): Found entity 1: DualMem File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DualMem.v Line: 39
-Info (12021): Found 1 design units, including 1 entities, in source file multicycle.v
-    Info (12023): Found entity 1: multicycle File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 27
-Info (12021): Found 1 design units, including 1 entities, in source file datamemory.v
-    Info (12023): Found entity 1: DataMemory File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.v Line: 39
-Info (12021): Found 1 design units, including 1 entities, in source file alu.v
-    Info (12023): Found entity 1: ALU File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/ALU.v Line: 23
-Info (12021): Found 1 design units, including 1 entities, in source file rf.v
-    Info (12023): Found entity 1: RF File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/RF.v Line: 26
-Info (12021): Found 2 design units, including 2 entities, in source file extend.v
-    Info (12023): Found entity 1: zExtend File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/extend.v Line: 29
-    Info (12023): Found entity 2: sExtend File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/extend.v Line: 38
-Info (12021): Found 3 design units, including 3 entities, in source file hex.v
-    Info (12023): Found entity 1: chooseHEXs File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 29
-    Info (12023): Found entity 2: HEXs File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 59
-    Info (12023): Found entity 3: HEX File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 168
-Info (12021): Found 1 design units, including 1 entities, in source file fsm.v
-    Info (12023): Found entity 1: FSM File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 20
+Info (12021): Found 1 design units, including 0 entities, in source file params.sv
+    Info (12022): Found design unit 1: params (SystemVerilog) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/params.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file multicycle_tb.sv
+    Info (12023): Found entity 1: multicycle_tb File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle_tb.sv Line: 10
+Info (12021): Found 1 design units, including 1 entities, in source file vrf.sv
+    Info (12023): Found entity 1: VRF File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/VRF.sv Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file rf.sv
+    Info (12023): Found entity 1: RF File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/RF.sv Line: 26
+Info (12021): Found 1 design units, including 1 entities, in source file register_8x4bit.sv
+    Info (12023): Found entity 1: register_8x4bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8x4bit.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file register_8bit.sv
+    Info (12023): Found entity 1: register_8bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_8bit.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file mux5to1_8bit.sv
+    Info (12023): Found entity 1: mux5to1_8bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux5to1_8bit.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file mux2to1_8bit.sv
+    Info (12023): Found entity 1: mux2to1_8bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_8bit.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file mux2to1_2bit.sv
+    Info (12023): Found entity 1: mux2to1_2bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_2bit.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file multicycle.sv
+    Info (12023): Found entity 1: multicycle File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 27
+Info (12021): Found 3 design units, including 3 entities, in source file hex.sv
+    Info (12023): Found entity 1: chooseHEXs File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 29
+    Info (12023): Found entity 2: HEXs File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 59
+    Info (12023): Found entity 3: HEX File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 168
+Info (12021): Found 1 design units, including 1 entities, in source file fsm.sv
+    Info (12023): Found entity 1: FSM File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 20
+Info (12021): Found 2 design units, including 2 entities, in source file extend.sv
+    Info (12023): Found entity 1: zExtend File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/extend.sv Line: 29
+    Info (12023): Found entity 2: sExtend File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/extend.sv Line: 38
+Info (12021): Found 1 design units, including 1 entities, in source file dualmem.sv
+    Info (12023): Found entity 1: DualMem File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DualMem.sv Line: 39
+Info (12021): Found 1 design units, including 1 entities, in source file datamemory.sv
+    Info (12023): Found entity 1: DataMemory File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 39
+Info (12021): Found 1 design units, including 1 entities, in source file counter.sv
+    Info (12023): Found entity 1: counter File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file alu.sv
+    Info (12023): Found entity 1: ALU File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/ALU.sv Line: 23
+Info (12021): Found 1 design units, including 1 entities, in source file adder_8.sv
+    Info (12023): Found entity 1: adder_8 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_8.sv Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file memory.bdf
     Info (12023): Found entity 1: memory
 Info (12127): Elaborating entity "multicycle" for the top level hierarchy
-Warning (10034): Output port "LEDR[17..10]" at multicycle.v(38) has no driver File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-Info (12128): Elaborating entity "HEXs" for hierarchy "HEXs:HEX_display" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 106
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(91): variable "in0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 91
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(92): variable "in0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 92
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(93): variable "in1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 93
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(94): variable "in1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 94
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(95): variable "in2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 95
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(96): variable "in2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 96
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(99): variable "inv0_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 99
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(100): variable "inv0_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 100
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(101): variable "inv0_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 101
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(102): variable "inv0_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 102
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(103): variable "inv0_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 103
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(104): variable "inv0_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 104
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(107): variable "inv0_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 107
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(108): variable "inv0_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 108
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(109): variable "inv1_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 109
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(110): variable "inv1_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 110
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(111): variable "inv1_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 111
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(112): variable "inv1_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 112
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(115): variable "inv1_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 115
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(116): variable "inv1_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 116
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(117): variable "inv1_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 117
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(118): variable "inv1_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 118
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(119): variable "inv2_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 119
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(120): variable "inv2_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 120
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(123): variable "inv2_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 123
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(124): variable "inv2_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 124
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(125): variable "inv2_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 125
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(126): variable "inv2_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 126
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(127): variable "inv2_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 127
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(128): variable "inv2_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 128
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(131): variable "inv3_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 131
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(132): variable "inv3_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 132
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(133): variable "inv3_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 133
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(134): variable "inv3_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 134
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(135): variable "inv3_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 135
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(136): variable "inv3_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 136
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(139): variable "inv3_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 139
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(140): variable "inv3_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 140
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(149): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 149
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(150): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 150
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(151): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 151
-Warning (10235): Verilog HDL Always Construct warning at HEX.v(152): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 152
-Warning (10270): Verilog HDL Case Statement warning at HEX.v(89): incomplete case statement has no default case item File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 89
-Warning (10240): Verilog HDL Always Construct warning at HEX.v(87): inferring latch(es) for variable "hex_in_0", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Warning (10240): Verilog HDL Always Construct warning at HEX.v(87): inferring latch(es) for variable "hex_in_1", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Warning (10240): Verilog HDL Always Construct warning at HEX.v(87): inferring latch(es) for variable "hex_in_2", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Warning (10240): Verilog HDL Always Construct warning at HEX.v(87): inferring latch(es) for variable "hex_in_3", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Warning (10240): Verilog HDL Always Construct warning at HEX.v(87): inferring latch(es) for variable "hex_in_4", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Warning (10240): Verilog HDL Always Construct warning at HEX.v(87): inferring latch(es) for variable "hex_in_5", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_5[0]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_5[1]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_5[2]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_5[3]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_4[0]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_4[1]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_4[2]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_4[3]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_3[0]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_3[1]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_3[2]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_3[3]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_2[0]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_2[1]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_2[2]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_2[3]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_1[0]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_1[1]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_1[2]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_1[3]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_0[0]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_0[1]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_0[2]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (10041): Inferred latch for "hex_in_0[3]" at HEX.v(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-Info (12128): Elaborating entity "HEX" for hierarchy "HEXs:HEX_display|HEX:hex0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 159
-Info (12128): Elaborating entity "FSM" for hierarchy "FSM:Control" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 136
-Info (10264): Verilog HDL Case Statement information at FSM.v(137): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "MemInSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "VRFWrite", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "X1Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "X2Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "VoutSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "t0load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "t1load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "t2load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.v(137): inferring latch(es) for variable "t3load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "t3load" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "t2load" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "t1load" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "t0load" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "VoutSel" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "X2Load" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "X1Load" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "VRFWrite" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "MemInSel[0]" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "MemInSel[1]" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (10041): Inferred latch for "MemInSel[2]" at FSM.v(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 137
-Info (12128): Elaborating entity "memory" for hierarchy "memory:DataMem" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 142
+Warning (10034): Output port "LEDR[17..10]" at multicycle.sv(38) has no driver File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+Info (12128): Elaborating entity "HEXs" for hierarchy "HEXs:HEX_display" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 106
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(91): variable "in0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 91
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(92): variable "in0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 92
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(93): variable "in1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 93
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(94): variable "in1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 94
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(95): variable "in2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 95
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(96): variable "in2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 96
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(99): variable "inv0_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 99
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(100): variable "inv0_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 100
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(101): variable "inv0_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 101
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(102): variable "inv0_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 102
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(103): variable "inv0_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 103
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(104): variable "inv0_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 104
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(107): variable "inv0_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 107
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(108): variable "inv0_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 108
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(109): variable "inv1_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 109
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(110): variable "inv1_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 110
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(111): variable "inv1_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 111
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(112): variable "inv1_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 112
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(115): variable "inv1_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 115
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(116): variable "inv1_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 116
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(117): variable "inv1_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 117
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(118): variable "inv1_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 118
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(119): variable "inv2_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 119
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(120): variable "inv2_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 120
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(123): variable "inv2_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 123
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(124): variable "inv2_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 124
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(125): variable "inv2_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 125
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(126): variable "inv2_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 126
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(127): variable "inv2_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 127
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(128): variable "inv2_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 128
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(131): variable "inv3_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 131
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(132): variable "inv3_0" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 132
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(133): variable "inv3_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 133
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(134): variable "inv3_1" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 134
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(135): variable "inv3_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 135
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(136): variable "inv3_2" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 136
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(139): variable "inv3_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 139
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(140): variable "inv3_3" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 140
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(149): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 149
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(150): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 150
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(151): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 151
+Warning (10235): Verilog HDL Always Construct warning at HEX.sv(152): variable "counter" is read inside the Always Construct but isn't in the Always Construct's Event Control File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 152
+Warning (10270): Verilog HDL Case Statement warning at HEX.sv(89): incomplete case statement has no default case item File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 89
+Warning (10240): Verilog HDL Always Construct warning at HEX.sv(87): inferring latch(es) for variable "hex_in_0", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Warning (10240): Verilog HDL Always Construct warning at HEX.sv(87): inferring latch(es) for variable "hex_in_1", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Warning (10240): Verilog HDL Always Construct warning at HEX.sv(87): inferring latch(es) for variable "hex_in_2", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Warning (10240): Verilog HDL Always Construct warning at HEX.sv(87): inferring latch(es) for variable "hex_in_3", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Warning (10240): Verilog HDL Always Construct warning at HEX.sv(87): inferring latch(es) for variable "hex_in_4", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Warning (10240): Verilog HDL Always Construct warning at HEX.sv(87): inferring latch(es) for variable "hex_in_5", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_5[0]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_5[1]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_5[2]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_5[3]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_4[0]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_4[1]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_4[2]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_4[3]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_3[0]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_3[1]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_3[2]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_3[3]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_2[0]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_2[1]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_2[2]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_2[3]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_1[0]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_1[1]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_1[2]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_1[3]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_0[0]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_0[1]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_0[2]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (10041): Inferred latch for "hex_in_0[3]" at HEX.sv(87) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+Info (12128): Elaborating entity "HEX" for hierarchy "HEXs:HEX_display|HEX:hex0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 159
+Info (12128): Elaborating entity "FSM" for hierarchy "FSM:Control" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 136
+Info (10264): Verilog HDL Case Statement information at FSM.sv(137): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "MemInSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "VRFWrite", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "X1Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "X2Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "VoutSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t0load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t1load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t2load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t3load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "t3load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "t2load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "t1load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "t0load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "VoutSel" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "X2Load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "X1Load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "VRFWrite" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "MemInSel[0]" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "MemInSel[1]" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10041): Inferred latch for "MemInSel[2]" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (12128): Elaborating entity "memory" for hierarchy "memory:DataMem" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 142
 Info (12128): Elaborating entity "mux2to1_8bit" for hierarchy "memory:DataMem|mux2to1_8bit:inst3"
 Info (12128): Elaborating entity "DataMemory" for hierarchy "memory:DataMem|DataMemory:inst"
-Info (12128): Elaborating entity "altsyncram" for hierarchy "memory:DataMem|DataMemory:inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.v Line: 78
-Info (12130): Elaborated megafunction instantiation "memory:DataMem|DataMemory:inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.v Line: 78
-Info (12133): Instantiated megafunction "memory:DataMem|DataMemory:inst|altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.v Line: 78
+Info (12128): Elaborating entity "altsyncram" for hierarchy "memory:DataMem|DataMemory:inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 78
+Info (12130): Elaborated megafunction instantiation "memory:DataMem|DataMemory:inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 78
+Info (12133): Instantiated megafunction "memory:DataMem|DataMemory:inst|altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 78
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
     Info (12134): Parameter "init_file" = "data.mif"
@@ -826,92 +829,92 @@ Info (12133): Instantiated megafunction "memory:DataMem|DataMemory:inst|altsyncr
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_a1j1.tdf
     Info (12023): Found entity 1: altsyncram_a1j1 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_a1j1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_a1j1" for hierarchy "memory:DataMem|DataMemory:inst|altsyncram:altsyncram_component|altsyncram_a1j1:auto_generated" File: c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "ALU" for hierarchy "ALU:ALU" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 147
-Info (12128): Elaborating entity "RF" for hierarchy "RF:RF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 154
-Info (12128): Elaborating entity "VRF" for hierarchy "VRF:VRF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 169
-Info (12128): Elaborating entity "register_8x4bit" for hierarchy "register_8x4bit:X1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 177
-Info (12128): Elaborating entity "mux5to1_8bit" for hierarchy "mux5to1_8bit:Mem_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 190
-Info (12128): Elaborating entity "adder_8" for hierarchy "adder_8:a0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 196
-Info (12128): Elaborating entity "register_8bit" for hierarchy "register_8bit:temp0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 237
-Info (12128): Elaborating entity "mux2to1_2bit" for hierarchy "mux2to1_2bit:R1Sel_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 305
-Info (12128): Elaborating entity "counter" for hierarchy "counter:counter" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 330
-Warning (10230): Verilog HDL assignment warning at counter.v(16): truncated value with size 32 to match size of target (16) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.v Line: 16
-Info (12128): Elaborating entity "sExtend" for hierarchy "sExtend:SE4" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 334
-Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 335
-Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE5" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 336
-Warning (13012): Latch HEXs:HEX_display|hex_in_5[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_5[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_5[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_5[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_4[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_4[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_4[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_4[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_3[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_3[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_3[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_3[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_2[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_2[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_2[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_2[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_1[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_1[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_1[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_1[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_0[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_0[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_0[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch HEXs:HEX_display|hex_in_0[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.v Line: 87
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-Warning (13012): Latch FSM:Control|VRFWrite has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c7_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
-Warning (13012): Latch FSM:Control|VoutSel has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c3_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
-Warning (13012): Latch FSM:Control|t2load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c5_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
-Warning (13012): Latch FSM:Control|t1load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c4_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
-Warning (13012): Latch FSM:Control|t0load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c3_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
-Warning (13012): Latch FSM:Control|t3load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c6_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
-Warning (13012): Latch FSM:Control|X1Load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c2_vls File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
-Warning (13012): Latch FSM:Control|X2Load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c2_vadd File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.v Line: 46
+Info (12128): Elaborating entity "ALU" for hierarchy "ALU:ALU" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 147
+Info (12128): Elaborating entity "RF" for hierarchy "RF:RF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 154
+Info (12128): Elaborating entity "VRF" for hierarchy "VRF:VRF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 169
+Info (12128): Elaborating entity "register_8x4bit" for hierarchy "register_8x4bit:X1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 177
+Info (12128): Elaborating entity "mux5to1_8bit" for hierarchy "mux5to1_8bit:Mem_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 190
+Info (12128): Elaborating entity "adder_8" for hierarchy "adder_8:a0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 196
+Info (12128): Elaborating entity "register_8bit" for hierarchy "register_8bit:temp0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 237
+Info (12128): Elaborating entity "mux2to1_2bit" for hierarchy "mux2to1_2bit:R1Sel_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 305
+Info (12128): Elaborating entity "counter" for hierarchy "counter:counter" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 330
+Warning (10230): Verilog HDL assignment warning at counter.sv(16): truncated value with size 32 to match size of target (16) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.sv Line: 16
+Info (12128): Elaborating entity "sExtend" for hierarchy "sExtend:SE4" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 334
+Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 335
+Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE5" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 336
+Warning (13012): Latch HEXs:HEX_display|hex_in_5[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_5[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_5[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_5[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_4[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_4[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_4[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_4[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_3[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_3[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_3[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_3[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_2[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_2[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_2[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_2[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_1[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_1[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_1[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_1[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_0[0] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_0[1] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_0[2] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch HEXs:HEX_display|hex_in_0[3] has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 87
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[5] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+Warning (13012): Latch FSM:Control|VRFWrite has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c7_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
+Warning (13012): Latch FSM:Control|VoutSel has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c3_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
+Warning (13012): Latch FSM:Control|t2load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c5_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
+Warning (13012): Latch FSM:Control|t1load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c4_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
+Warning (13012): Latch FSM:Control|t0load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c3_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
+Warning (13012): Latch FSM:Control|t3load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c6_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
+Warning (13012): Latch FSM:Control|X1Load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c2_vls File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
+Warning (13012): Latch FSM:Control|X2Load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c2_vadd File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "LEDR[10]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-    Warning (13410): Pin "LEDR[11]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-    Warning (13410): Pin "LEDR[12]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-    Warning (13410): Pin "LEDR[13]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-    Warning (13410): Pin "LEDR[14]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-    Warning (13410): Pin "LEDR[15]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-    Warning (13410): Pin "LEDR[16]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
-    Warning (13410): Pin "LEDR[17]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 38
+    Warning (13410): Pin "LEDR[10]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+    Warning (13410): Pin "LEDR[11]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+    Warning (13410): Pin "LEDR[12]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+    Warning (13410): Pin "LEDR[13]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+    Warning (13410): Pin "LEDR[14]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+    Warning (13410): Pin "LEDR[15]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+    Warning (13410): Pin "LEDR[16]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
+    Warning (13410): Pin "LEDR[17]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 38
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 5 registers lost all their fanouts during netlist optimizations.
 Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not exist in design
@@ -1489,18 +1492,18 @@ Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 3 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
-    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.v Line: 35
+    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
+    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 35
 Info (21057): Implemented 745 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 11 input pins
     Info (21059): Implemented 60 output pins
     Info (21061): Implemented 666 logic cells
     Info (21064): Implemented 8 RAM segments
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 710 warnings
-    Info: Peak virtual memory: 4933 megabytes
-    Info: Processing ended: Sat Sep 26 12:20:19 2026
-    Info: Elapsed time: 00:00:08
-    Info: Total CPU time (on all processors): 00:00:19
+    Info: Peak virtual memory: 4940 megabytes
+    Info: Processing ended: Sat Sep 26 17:57:19 2026
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:21
 
 

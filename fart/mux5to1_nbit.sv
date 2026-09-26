@@ -1,6 +1,8 @@
 `timescale 1 ps / 1 ps
 
-module mux5to1_8bit (
+import params::*;
+
+module mux5to1_nbit (
 	data0x,
 	data1x,
 	data2x,
@@ -9,13 +11,13 @@ module mux5to1_8bit (
 	sel,
 	result);
 
-	input	[7:0]  data0x;
-	input	[7:0]  data1x;
-	input	[7:0]  data2x;
-	input	[7:0]  data3x;
-	input	[7:0]  data4x;
+	input	[DATA_BIT_WIDTH-1:0]  data0x;
+	input	[DATA_BIT_WIDTH-1:0]  data1x;
+	input	[DATA_BIT_WIDTH-1:0]  data2x;
+	input	[DATA_BIT_WIDTH-1:0]  data3x;
+	input	[DATA_BIT_WIDTH-1:0]  data4x;
 	input	[2:0]  sel;
-	output reg [7:0]  result;
+	output reg [DATA_BIT_WIDTH-1:0]  result;
 
 	always @(*)
 	begin
@@ -25,7 +27,7 @@ module mux5to1_8bit (
 			3'b010: result <= data2x;
 			3'b011: result <= data3x;
 			3'b100: result <= data4x;
-			default: result <= 8'b0;
+			default: result <= '0;
 		endcase
 	end
 	

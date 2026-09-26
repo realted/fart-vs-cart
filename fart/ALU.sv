@@ -20,16 +20,18 @@
 //
 // ---------------------------------------------------------------------
 
+import params::*;
+
 module ALU (in1, in2, out, ALUOp, N, Z);
 
 // ------------------------ PORT declaration ------------------------ //
-input [7:0] in1, in2;
+input [DATA_BIT_WIDTH-1:0] in1, in2;
 input [2:0] ALUOp;
-output [7:0] out;
+output [DATA_BIT_WIDTH-1:0] out;
 output N, Z;
 
 // ------------------------- Registers/Wires ------------------------ //
-reg [7:0] tmp_out;
+reg [DATA_BIT_WIDTH-1:0] tmp_out;
 
 // -------------------------- ALU Operation ------------------------- //
 // ALUOp encoding:													  //
@@ -58,7 +60,7 @@ end
 
 // Assign output and condition flags
 assign out = tmp_out;
-assign N = out[7];
-assign Z = (out == 8'b0);
+assign N = out[DATA_BIT_WIDTH-1];
+assign Z = (out == '0);
 
 endmodule

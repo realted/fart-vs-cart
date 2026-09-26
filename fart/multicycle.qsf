@@ -866,24 +866,25 @@ set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT NONE -section_id eda_simulation
+set_global_assignment -name SYSTEMVERILOG_FILE params.sv
+set_global_assignment -name SYSTEMVERILOG_FILE multicycle_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VRF.sv
+set_global_assignment -name SYSTEMVERILOG_FILE RF.sv
+set_global_assignment -name SYSTEMVERILOG_FILE register_8x4bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE register_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE mux5to1_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE mux2to1_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE mux2to1_2bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE multicycle.sv
+set_global_assignment -name SYSTEMVERILOG_FILE HEX.sv
+set_global_assignment -name SYSTEMVERILOG_FILE FSM.sv
+set_global_assignment -name SYSTEMVERILOG_FILE extend.sv
+set_global_assignment -name SYSTEMVERILOG_FILE DualMem.sv
+set_global_assignment -name SYSTEMVERILOG_FILE DataMemory.sv
+set_global_assignment -name SYSTEMVERILOG_FILE counter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU.sv
+set_global_assignment -name SYSTEMVERILOG_FILE adder_8.sv
 set_global_assignment -name MIF_FILE data.mif
-set_global_assignment -name VERILOG_FILE VRF.v
-set_global_assignment -name VERILOG_FILE register_8x4bit.v
-set_global_assignment -name VERILOG_FILE multicycle_tb.v
-set_global_assignment -name VERILOG_FILE counter.v
-set_global_assignment -name VERILOG_FILE adder_8.v
-set_global_assignment -name VERILOG_FILE register_8bit.v
-set_global_assignment -name VERILOG_FILE mux2to1_8bit.v
-set_global_assignment -name VERILOG_FILE mux2to1_2bit.v
-set_global_assignment -name VERILOG_FILE mux5to1_8bit.v
-set_global_assignment -name VERILOG_FILE DualMem.v
-set_global_assignment -name VERILOG_FILE multicycle.v
-set_global_assignment -name VERILOG_FILE DataMemory.v
-set_global_assignment -name VERILOG_FILE ALU.v
-set_global_assignment -name VERILOG_FILE RF.v
-set_global_assignment -name VERILOG_FILE extend.v
-set_global_assignment -name VERILOG_FILE HEX.v
-set_global_assignment -name VERILOG_FILE FSM.v
 set_global_assignment -name BDF_FILE memory.bdf
 set_global_assignment -name SOURCE_FILE db/multicycle.cmp.rdb
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

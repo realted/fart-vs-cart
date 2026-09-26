@@ -23,6 +23,8 @@
 //					   provided with this implementation
 //
 // ---------------------------------------------------------------------
+import params::*;
+
 
 module multicycle
 (
@@ -41,11 +43,12 @@ output reg [17:0] LEDR;
 wire	clock, reset;
 wire	IRLoad, MDRLoad, MemRead, MemWrite, PCWrite, RegIn, AddrSel;
 wire	ALU1, ALUOutWrite, FlagWrite, R1R2Load, R1Sel, RFWrite, stop;
-wire	[7:0] R2wire, PCwire, R1wire, RFout1wire, RFout2wire;
-wire	[7:0] ALU1wire, ALU2wire, ALUwire, ALUOut, MDRwire, MEMwire;
-wire	[7:0] IR, SE4wire, ZE5wire, ZE3wire, AddrWire, RegWire;
-wire	[7:0] reg0, reg1, reg2, reg3;
-wire	[7:0] constant;
+wire	[DATA_BIT_WIDTH-1:0] R2wire, PCwire, R1wire, RFout1wire, RFout2wire;
+wire	[DATA_BIT_WIDTH-1:0] ALU1wire, ALU2wire, ALUwire, ALUOut, MDRwire, MEMwire;
+wire	[IR_BIT_WIDTH:0] IR;
+wire    [DATA_BIT_WIDTH-1:0] SE4wire, ZE5wire, ZE3wire, AddrWire, RegWire;
+wire	[DATA_BIT_WIDTH-1:0] reg0, reg1, reg2, reg3;
+wire	[DATA_BIT_WIDTH-1:0] constant;
 wire	[2:0] ALUOp, ALU2;
 wire	[1:0] R1_in;
 wire    [15:0] counterOut;
@@ -54,35 +57,35 @@ reg		N, Z;
 
 // NEW CONNECTIONS 
 // VRF
-wire	[7:0] vreg0_0, vreg0_1, vreg0_2, vreg0_3;
-wire	[7:0] vreg1_0, vreg1_1, vreg1_2, vreg1_3;
-wire	[7:0] vreg2_0, vreg2_1, vreg2_2, vreg2_3;
-wire	[7:0] vreg3_0, vreg3_1, vreg3_2, vreg3_3;
-wire    [7:0] VRFout1_0wire, VRFout1_1wire, VRFout1_2wire, VRFout1_3wire; 
-wire    [7:0] VRFout2_0wire, VRFout2_1wire, VRFout2_2wire, VRFout2_3wire; 
-wire	[7:0] vdataw_0wire, vdataw_1wire, vdataw_2wire, vdataw_3wire; 
+wire	[DATA_BIT_WIDTH-1:0] vreg0_0, vreg0_1, vreg0_2, vreg0_3;
+wire	[DATA_BIT_WIDTH-1:0] vreg1_0, vreg1_1, vreg1_2, vreg1_3;
+wire	[DATA_BIT_WIDTH-1:0] vreg2_0, vreg2_1, vreg2_2, vreg2_3;
+wire	[DATA_BIT_WIDTH-1:0] vreg3_0, vreg3_1, vreg3_2, vreg3_3;
+wire    [DATA_BIT_WIDTH-1:0] VRFout1_0wire, VRFout1_1wire, VRFout1_2wire, VRFout1_3wire; 
+wire    [DATA_BIT_WIDTH-1:0] VRFout2_0wire, VRFout2_1wire, VRFout2_2wire, VRFout2_3wire; 
+wire	[DATA_BIT_WIDTH-1:0] vdataw_0wire, vdataw_1wire, vdataw_2wire, vdataw_3wire; 
 wire    VRFWrite;  // Control
 
 // Register Wires 
 wire    X1Load, X2Load;   // Control
-wire	[7:0] X1out_0, X1out_1, X1out_2, X1out_3;
-wire	[7:0] X2out_0, X2out_1, X2out_2, X2out_3;
+wire	[DATA_BIT_WIDTH-1:0] X1out_0, X1out_1, X1out_2, X1out_3;
+wire	[DATA_BIT_WIDTH-1:0] X2out_0, X2out_1, X2out_2, X2out_3;
 
 // 5 -1 Mux
 wire	[2:0] MemInSel;    // Control
-wire    [7:0] MemInWire;
+wire    [DATA_BIT_WIDTH-1:0] MemInWire;
 
 // Adder/Mux Wire
-wire	[7:0] add0, add1, add2, add3;
+wire	[DATA_BIT_WIDTH-1:0] add0, add1, add2, add3;
 wire    VoutSel;            // Control
-wire	[7:0] vMux0, vMux1, vMux2, vMux3;
+wire	[DATA_BIT_WIDTH-1:0] vMux0, vMux1, vMux2, vMux3;
 
 // Temp Reg Wire
 wire    t0load, t1load, t2load, t3load;  // Control
 
 // R2 adder, Mux
-wire	[7:0] plus1Wire;
-wire	[7:0] R2MuxOut;
+wire	[DATA_BIT_WIDTH-1:0] plus1Wire;
+wire	[DATA_BIT_WIDTH-1:0] R2MuxOut;
 wire    R2sel;           // Control
 
 
@@ -170,13 +173,13 @@ VRF		VRF_block(
 
 // X1 & X2 registers
 
-register_8x4bit  X1(
+register_nx4bit  X1(
 	.clock(clock),.aclr(reset),.enable(X1Load),
 	.data_0(VRFout1_0wire), .data_1(VRFout1_1wire), .data_2(VRFout1_2wire), .data_3(VRFout1_3wire),
 	.q_0(X1out_0), .q_1(X1out_1), .q_2(X1out_2), .q_3(X1out_3) 
 );
 
-register_8x4bit  X2(
+register_nx4bit  X2(
 	.clock(clock),.aclr(reset),.enable(X2Load),
 	.data_0(VRFout2_0wire), .data_1(VRFout2_1wire), .data_2(VRFout2_2wire), .data_3(VRFout2_3wire),
 	.q_0(X2out_0), .q_1(X2out_1), .q_2(X2out_2), .q_3(X2out_3) 
@@ -184,69 +187,69 @@ register_8x4bit  X2(
 
 // Mux 5-1 to Data_in of memory
 
-mux5to1_8bit 		Mem_mux(
+mux5to1_nbit 		Mem_mux(
 	.data0x(X1out_0),.data1x(X1out_1),.data2x(X1out_2),
 	.data3x(X1out_3),.data4x(R1wire),.sel(MemInSel),.result(MemInWire)
 );
 
 // 4 Adders PLEASE
 
-adder_8 a0(
+adder_n a0(
 	.in1(X1out_0), .in2(X2out_0), .out(add0) 
 );
 
-adder_8 a1(
+adder_n a1(
 	.in1(X1out_1), .in2(X2out_1), .out(add1) 
 );
 
-adder_8 a2(
+adder_n a2(
 	.in1(X1out_2), .in2(X2out_2), .out(add2) 	
 );
 
-adder_8 a3(
+adder_n a3(
 	.in1(X1out_3), .in2(X2out_3), .out(add3) 
 );
 
 // 4 2-1 Muxes PLEASE
 
-mux2to1_8bit 		voutSel_mux0(
+mux2to1_nbit 		voutSel_mux0(
 	.data0x(add0),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux0)
 );
 
-mux2to1_8bit 		voutSel_mux1(
+mux2to1_nbit 		voutSel_mux1(
 	.data0x(add1),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux1)
 );
 
-mux2to1_8bit 		voutSel_mux2(
+mux2to1_nbit 		voutSel_mux2(
 	.data0x(add2),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux2)
 );
 
-mux2to1_8bit 		voutSel_mux3(
+mux2to1_nbit 		voutSel_mux3(
 	.data0x(add3),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux3)
 );
 
 // 4 Temp Registers PLEASE
 
-register_8bit	temp0(
+register_nbit	temp0(
 	.clock(clock),.aclr(reset),.enable(t0load),
 	.data(vMux0),.q(vdataw_0wire)
 );
 
-register_8bit	temp1(
+register_nbit	temp1(
 	.clock(clock),.aclr(reset),.enable(t1load),
 	.data(vMux1),.q(vdataw_1wire)
 );
 
-register_8bit	temp2(
+register_nbit	temp2(
 	.clock(clock),.aclr(reset),.enable(t2load),
 	.data(vMux2),.q(vdataw_2wire)
 );
 
-register_8bit	temp3(
+register_nbit	temp3(
 	.clock(clock),.aclr(reset),.enable(t3load),
 	.data(vMux3),.q(vdataw_3wire)
 );
@@ -254,12 +257,12 @@ register_8bit	temp3(
 // Now for editing R2... 
 
 // Start with Adder
-adder_8 plusOne(
+adder_n plusOne(
 	.in1(R2wire), .in2(constant), .out(plus1Wire) 
 );
 
 // Selection Mux for R2
-mux2to1_8bit 		r2Sel_mux(
+mux2to1_nbit 		r2Sel_mux(
 	.data0x(RFout2wire),.data1x(plus1Wire),
 	.sel(R2sel),.result(R2MuxOut)
 );
@@ -268,33 +271,33 @@ mux2to1_8bit 		r2Sel_mux(
 
 
 
-register_8bit	IR_reg(
+register_nbit	IR_reg(
 	.clock(clock),.aclr(reset),.enable(IRLoad),
-	.data(MEMwire),.q(IR)
+	.data(MEMwire[IR_BIT_WIDTH:0]),.q(IR)
 );
 
-register_8bit	MDR_reg(
+register_nbit	MDR_reg(
 	.clock(clock),.aclr(reset),.enable(MDRLoad),
 	.data(MEMwire),.q(MDRwire)
 );
 
-register_8bit	PC(
+register_nbit	PC(
 	.clock(clock),.aclr(reset),.enable(PCWrite),
 	.data(ALUwire),.q(PCwire)
 );
 
-register_8bit	R1(
+register_nbit	R1(
 	.clock(clock),.aclr(reset),.enable(R1R2Load),
 	.data(RFout1wire),.q(R1wire)
 );
 
 // Edit this to be inputted from MuxOut not RF2 directly may have to edit enable...
-register_8bit	R2(
+register_nbit	R2(
 	.clock(clock),.aclr(reset),.enable(R1R2Load),
 	.data(R2MuxOut),.q(R2wire)
 );
 
-register_8bit	ALUOut_reg(
+register_nbit	ALUOut_reg(
 	.clock(clock),.aclr(reset),.enable(ALUOutWrite),
 	.data(ALUwire),.q(ALUOut)
 );
@@ -304,22 +307,22 @@ mux2to1_2bit		R1Sel_mux(
 	.sel(R1Sel),.result(R1_in)
 );
 
-mux2to1_8bit 		AddrSel_mux(
+mux2to1_nbit 		AddrSel_mux(
 	.data0x(R2wire),.data1x(PCwire),
 	.sel(AddrSel),.result(AddrWire)
 );
 
-mux2to1_8bit 		RegMux(
+mux2to1_nbit 		RegMux(
 	.data0x(ALUOut),.data1x(MDRwire),
 	.sel(RegIn),.result(RegWire)
 );
 
-mux2to1_8bit 		ALU1_mux(
+mux2to1_nbit 		ALU1_mux(
 	.data0x(PCwire),.data1x(R1wire),
 	.sel(ALU1),.result(ALU1wire)
 );
 
-mux5to1_8bit 		ALU2_mux(
+mux5to1_nbit 		ALU2_mux(
 	.data0x(R2wire),.data1x(constant),.data2x(SE4wire),
 	.data3x(ZE5wire),.data4x(ZE3wire),.sel(ALU2),.result(ALU2wire)
 );

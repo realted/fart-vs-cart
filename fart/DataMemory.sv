@@ -32,6 +32,8 @@
 //Altera or its authorized distributors.  Please refer to the 
 //applicable agreement for further details.
 
+import params::*;
+
 
 // synopsys translate_off
 `timescale 1 ps / 1 ps
