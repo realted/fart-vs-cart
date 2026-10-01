@@ -27,7 +27,7 @@ Change P.Poolad updated with new instruction codes for nop/stop and vector instr
 using namespace std;
 
 #define MEM_SIZE 256
-#define NUM_KEYWORDS 19
+#define NUM_KEYWORDS 25
 
 typedef struct instruction
 {
@@ -41,7 +41,7 @@ bool isKeyword(string str)
 {
 	string keywords[NUM_KEYWORDS] = {"load", "store", "add", "sub", "nand", "ori",
 						  "shift", "shiftl", "shiftr", "bz", "bnz", "bpz",
-					 "org", "db", "stop", "nop", "vload", "vstore", "vadd"};
+					 "org", "db", "stop", "nop", "vload", "vstore", "vadd", "vsub", "vmul", "vcmplt", "vcmpgt", "vcmpeq", "vcmclr"};
 
 	for (int i = 0; i < NUM_KEYWORDS; i++)
 	{
@@ -224,13 +224,13 @@ int main(int argc, char* argv[])
 
 			if (e == string::npos) {
 			  col2 = line.substr(b);
-			  if (col2 != "stop" && col2 != "nop")
+			  if (col2 != "stop" && col2 != "nop" && col2 != "vcmclr")
 			    throw "parse error";
 			  
 			}
 			else col2 = line.substr(b, e-b);
 
-			if (col2 != "stop" && col2 != "nop") 
+			if (col2 != "stop" && col2 != "nop" && col2 != "vcmclr") 
 			  {
 			    b = line.find_first_not_of(" \t", e);
 			
@@ -253,6 +253,11 @@ int main(int argc, char* argv[])
 				col3 = line.substr(b, e-b);
 			      }
 			  }
+            if (col2 == "stop" || col2 == "nop" || col2 == "vcmclr") {
+                const size_t tail = (e == string::npos) ? string::npos : line.find_first_not_of(" \t", e);
+                if (tail != string::npos && line[tail] != ';')
+                    throw "instruction takes no operands";
+            }
 			if (!isKeyword(col2))
 			{
 				cerr << "Error: line " << line_count << ", unrecognized term '" << col2 << "'." << endl;
@@ -350,7 +355,8 @@ int main(int argc, char* argv[])
 			}
             else if (col2 == "load" || col2 == "store" || col2 == "add" ||
                      col2 == "sub" || col2 == "nand" || col2 == "vload" ||
-                     col2 == "vstore" || col2 == "vadd")
+                     col2 == "vstore" || col2 == "vadd" || col2 == "vsub" ||
+                     col2 == "vmul" || col2 == "vcmplt" || col2 == "vcmpgt" || col2 == "vcmpeq")
             {
                 const bool vector_reg = col2[0] == 'v';
                 const bool memory_op = col2 == "load" || col2 == "store" ||
@@ -360,7 +366,8 @@ int main(int argc, char* argv[])
                 const map<string, int> opcodes = {
                     {"load", 0x00}, {"store", 0x02}, {"add", 0x04},
                     {"sub", 0x06}, {"nand", 0x08}, {"vload", 0x20},
-                    {"vstore", 0x22}, {"vadd", 0x24}
+                    {"vstore", 0x22}, {"vadd", 0x24}, {"vsub", 0x25},
+                    {"vmul", 0x26}, {"vcmplt", 0x28}, {"vcmpgt", 0x29}, {"vcmpeq", 0x2A}
                 };
                 encoding = (op1 << 14) | (op2 << 12) | (opcodes.at(col2) << 6);
             }
@@ -441,6 +448,10 @@ int main(int argc, char* argv[])
 				else
 					encoding |= 13;
 			}
+            else if (col2 == "vcmclr")
+            {
+                encoding = 0xFBC0; // 11 11 101111 000000: enable all lanes.
+            }
 			else if (col2 == "stop")
 			{
 			    encoding = 0x01;

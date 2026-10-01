@@ -37,21 +37,28 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
         ('shiftl k1,2', 0x4033), ('shiftr k3,3', 0xC01B),
         ('shift k2,7', 0x803B), ('bz -2048', 0x8005),
         ('bnz 2047', 0x7FF9), ('bpz -1', 0xFFFD),
-        ('nop', 0x8001), ('stop', 0x0001),
+        ('vsub v1,v2', 0x6940), ('vmul v1,v2', 0x6980),
+        ('vcmplt v1,v2', 0x6A00), ('vcmpgt v1,v2', 0x6A40),
+        ('vcmpeq v1,v2', 0x6A80), ('vcmclr', 0xFBC0),
+        ('vcmclr ; enable all lanes', 0xFBC0), ('nop', 0x8001), ('stop', 0x0001),
         ('db 256', 0x0100), ('db 65535', 0xFFFF), ('db -32768', 0x8000),
         ('db -1', 0xFFFF), ('db $ABCD', 0xABCD), ('db %100000000', 0x0100),
     ]
     data = assemble(''.join('    ' + op + '\n' for op, _ in golden))
     assert [data[i] for i in range(len(golden))] == [value for _, value in golden]
 
+    aliases = assemble('    vsub x1,x2\n    vmul x1,x2\n    vcmplt x1,x2\n    vcmpgt x1,x2\n    vcmpeq x1,x2\n')
+    assert [aliases[i] for i in range(5)] == [0x6940,0x6980,0x6A00,0x6A40,0x6A80]
+
     # All register combinations and both shift directions.
     for op, opcode in [('load', 0), ('store', 2), ('add', 4), ('sub', 6),
-                       ('nand', 8), ('vload', 32), ('vstore', 34), ('vadd', 36)]:
+                       ('nand', 8), ('vload', 32), ('vstore', 34), ('vadd', 36), ('vsub', 37), ('vmul', 38),
+                       ('vcmplt', 40), ('vcmpgt', 41), ('vcmpeq', 42)]:
         cases = []
         for a in range(4):
             for b in range(4):
                 first = ('v' if op.startswith('v') else 'k') + str(a)
-                second = ('v' if op == 'vadd' else 'k') + str(b)
+                second = ('v' if op in ('vadd','vsub','vmul','vcmplt','vcmpgt','vcmpeq') else 'k') + str(b)
                 if op.endswith(('load', 'store')):
                     second = '(' + second + ')'
                 cases.append((f'    {op} {first},{second}\n', (a << 14) | (b << 12) | (opcode << 6)))
@@ -68,7 +75,8 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
     data = assemble('    org 255\n    db 300\n')
     assert data[255] == 300
 
-    for text in ['ori -1', 'ori 8192', 'shiftl k0,4', 'shiftr k0,-1', 'shift k0,8',
+    for text in ['vcmclr v0', 'vmul k0,v1', 'vsub v0,k1', 'vcmplt v0,v4',
+                 'vcmpgt v0', 'vcmpeq k0,k1', 'ori -1', 'ori 8192', 'shiftl k0,4', 'shiftr k0,-1', 'shift k0,8',
                  'bz -2049', 'bnz 2048', 'db -32769', 'db 65536', 'db 4294967296',
                  'load v0,(k1)', 'vload k0,(k1)', 'vload v0,(v1)', 'vadd v0,k1',
                  'add k4,k1', 'add k1', 'org 256', 'org -1', 'bz missing',

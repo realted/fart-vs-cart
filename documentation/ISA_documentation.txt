@@ -85,8 +85,52 @@ VSTORE X1 (R2):
     PC = PC + 1;
 
 VADD X1 X2:
-    X1 = X1 + X2;  // Element-wise addition of vector registers X1 and X2
+	VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	T[0] ... T[3] = X1_0 + X2_0 ... X1_3 + X2_3;
+	X1 = [T[0] ... T[3]];
+	
+    Equiv: X1 = X1 + X2;  // Element-wise addition of vector registers X1 and X2 in Q8.8 Fixed point Format
+	
+VSUB X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	T[0] ... T[3] = X1_0 - X2_0 ... X1_3 - X2_3;
+	X1 = [T[0] ... T[3]];
+	
+    Equiv: X1 = X1 - X2;  // Element-wise subtraction of vector registers X1 and X2 in Q8.8 Fixed point Format
+	
+VMUL X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	T[0] ... T[3] = X1_0 * X2_0 ... X1_3 * X2_3;
+	X1 = [T[0] ... T[3]];
+	
+    Equiv: X1 = X1 * X2;  // Element-wise multiplication of vector registers X1 and X2 in Q8.8 Fixed point Format, arithmetic shift to fit result in 16 bits
 
+VCMPLT X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	mask[3:0] = X1_0 < X2_0 ... X1_3 < X2_3;
+	VRFLANEWRITE = mask;  // Mask to enable/disable proceeding lanes based on comparison  
+	
+    Equiv: mask = X1 < X2;
+	
+VCMPGT X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	mask[3:0] = X1_0 > X2_0 ... X1_3 > X2_3;
+	VRFLANEWRITE = mask;  // Mask to enable/disable proceeding lanes based on comparison  
+	
+    Equiv: mask = X1 > X2;
+
+VCMPEQ X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	mask[3:0] = X1_0 > X2_0 ... X1_3 > X2_3;
+	VRFLANEWRITE = mask;  // Mask to enable/disable proceeding lanes based on comparison  
+	
+    Equiv: mask = X1 > X2;
+
+VCMCLR:
+	mask[3:0] = 4'b1111;
+	VRFLANEWRITE = mask;  // Clear all lanes 
+	
+    Equiv: Enable all lanes.
 
 Instruction Encodings:
 Legend:
@@ -123,3 +167,9 @@ VRF Instructions:
 VLOAD:   R1 R2 100000 000000
 VSTORE:  R1 R2 100010 000000
 VADD:    R1 R2 100100 000000
+VSUB:	 R1 R2 100101 000000
+VMUL:    R1 R2 100110 000000
+VCMPLT:  R1 R2 101000 000000
+VCMPGT:  R1 R2 101001 000000
+VCMPEQ:  R1 R2 101010 000000
+VCMCLR:  11 11 101111 000000

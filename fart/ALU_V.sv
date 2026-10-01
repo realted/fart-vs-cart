@@ -1,45 +1,42 @@
 import params::*;
 
-module ALU_V (in1, in2, out, ALUOp);
+module ALU_V (in1, in2, out, mask, v_op);
 
 // ------------------------ PORT declaration ------------------------ //
 input [DATA_BIT_WIDTH-1:0] in1, in2;
-input [2:0] ALUOp;
-output [DATA_BIT_WIDTH-1:0] out;
+input [3:0] v_op;
+output logic [DATA_BIT_WIDTH-1:0] out;
+output logic mask;
 
 // ------------------------- Registers/Wires ------------------------ //
-reg [DATA_BIT_WIDTH-1:0] tmp_out;
-logic [DATA_BIT_WIDTH*2-1:0] product;
+logic signed [DATA_BIT_WIDTH*2-1:0] product;
 
 // -------------------------- ALU Operation ------------------------- //
 // ALUOp encoding:													  //
-//  000 = addition, 001 = subtraction, 010 = MULT,					  //
-//  011 = NAND, and 100 = Shift										  //
+//  0000 = addition, 0001 = subtraction, 0010 = multiplication,       //
+//  0011 = Lane Compare Less Than, 0100 = Lane Compare Greater Than,  //
+//  0101 = Lane Compare Equals, 0110 = Mask Clear	                  //
 // ------------------------------------------------------------------ //
-always @(*)
-begin
-	if (ALUOp == 0) begin
-		tmp_out = in1 + in2;
-	end	else if (ALUOp == 1) begin
-		tmp_out = in1 - in2;
-	end	else if (ALUOp == 2) begin
-		product = in1 * in2;
-		tmp_out = product >>> 8;
-	end	else if (ALUOp == 3) begin
-		tmp_out = ~(in1 & in2);
-	end	else if (ALUOp == 4) begin
-		if (in2[2] == 1)
-			tmp_out = in1 << in2[1:0];
-		else
-			tmp_out = in1 >> in2[1:0];
-	end	else begin
-		tmp_out = 0;
-	end
-end
+    always_comb begin
+        out     = '0;
+        mask    = 1'b0;
+        product = '0;
 
-// Assign output and condition flags
-assign out = tmp_out;
-assign N = out[DATA_BIT_WIDTH-1];
-assign Z = (out == '0);
+        case (v_op)
+            4'd0: out = in1 + in2;
+            4'd1: out = in1 - in2;
 
+            4'd2: begin
+                product = $signed(in1) * $signed(in2);
+                out = product >>> 8;
+				end
+
+            4'd3: mask = ($signed(in1) < $signed(in2));
+            4'd4: mask = ($signed(in1) > $signed(in2));
+            4'd5: mask = (in1 == in2);
+            4'd6: mask = 1'b1;
+
+            default: begin end
+        endcase
+    end
 endmodule

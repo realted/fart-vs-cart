@@ -75,8 +75,15 @@ wire	[DATA_BIT_WIDTH-1:0] X2out_0, X2out_1, X2out_2, X2out_3;
 wire	[2:0] MemInSel;    // Control
 wire    [DATA_BIT_WIDTH-1:0] MemInWire;
 
-// Adder/Mux Wire
-wire	[DATA_BIT_WIDTH-1:0] add0, add1, add2, add3;
+// Mask Register
+wire	ldMask; // Control
+wire    vmaskreset; // Control
+wire	[3:0] VRFLaneWrite;
+
+// ALU/Mux Wire
+wire	[DATA_BIT_WIDTH-1:0] vq0, vq1, vq2, vq3;
+wire	mask0, mask1, mask2, mask3;
+wire    [3:0] v_op;     	// Control
 wire    VoutSel;            // Control
 wire	[DATA_BIT_WIDTH-1:0] vMux0, vMux1, vMux2, vMux3;
 
@@ -134,8 +141,8 @@ FSM		Control(
 	.ALU1(ALU1),.ALUOutWrite(ALUOutWrite),.RFWrite(RFWrite),.RegIn(RegIn),
 	.FlagWrite(FlagWrite),.ALU2(ALU2),.ALUop(ALUOp), .stop(stop), 
 	// New
-	.VRFWrite(VRFWrite), .X1Load(X1Load), .X2Load(X2Load), .MemInSel(MemInSel), .VoutSel(VoutSel), 
-	.t0load(t0load), .t1load(t1load), .t2load(t2load), .t3load(t3load), .R2sel(R2sel)
+	.VRFWrite(VRFWrite), .v_op(v_op), .ldMask(ldMask), .vmaskreset(vmaskreset), .X1Load(X1Load), .X2Load(X2Load), .MemInSel(MemInSel),
+	.VoutSel(VoutSel), .t0load(t0load), .t1load(t1load), .t2load(t2load), .t3load(t3load), .R2sel(R2sel)
 	
 	
 );
@@ -158,11 +165,10 @@ RF		RF_block(
 	.r0(reg0),.r1(reg1),.r2(reg2),.r3(reg3)
 );
 
-// NEW ADDITIONS
 // VRF Block
 
 VRF		VRF_block(
-	.clock(clock),.reset(reset),.VRFWrite(VRFWrite),
+	.clock(clock),.reset(reset),.VRFWrite(VRFWrite),.VRFLaneWrite(VRFLaneWrite),
 	.vreg1(IR[15:14]),.vreg2(IR[13:12]),.vregw(IR[15:14]),
 	.vdataw_0(vdataw_0wire), .vdataw_1(vdataw_1wire), .vdataw_2(vdataw_2wire), .vdataw_3(vdataw_3wire),
 	.vdata1_0(VRFout1_0wire), .vdata1_1(VRFout1_1wire), .vdata1_2(VRFout1_2wire), .vdata1_3(VRFout1_3wire),
@@ -194,43 +200,46 @@ mux5to1_nbit 		Mem_mux(
 	.data3x(X1out_3),.data4x(R1wire),.sel(MemInSel),.result(MemInWire)
 );
 
-// 4 Adders PLEASE
+// Mask Register
+mask_reg_4b reg_4b(.clock(clock), .aclr(reset), .d({mask3, mask2, mask1, mask0}), .ldMask(ldMask), .vmaskreset(vmaskreset), .q(VRFLaneWrite));
 
-adder_n a0(
-	.in1(X1out_0), .in2(X2out_0), .out(add0) 
+// Replaced Adders with ALU's
+
+ALU_V a0(
+	.in1(X1out_0), .in2(X2out_0), .out(vq0), .mask(mask0), .v_op(v_op)
 );
 
-adder_n a1(
-	.in1(X1out_1), .in2(X2out_1), .out(add1) 
+ALU_V a1(
+	.in1(X1out_1), .in2(X2out_1), .out(vq1), .mask(mask1), .v_op(v_op) 
 );
 
-adder_n a2(
-	.in1(X1out_2), .in2(X2out_2), .out(add2) 	
+ALU_V a2(
+	.in1(X1out_2), .in2(X2out_2), .out(vq2), .mask(mask2), .v_op(v_op) 	
 );
 
-adder_n a3(
-	.in1(X1out_3), .in2(X2out_3), .out(add3) 
+ALU_V a3(
+	.in1(X1out_3), .in2(X2out_3), .out(vq3), .mask(mask3), .v_op(v_op) 
 );
 
 // 4 2-1 Muxes PLEASE
 
 mux2to1_nbit 		voutSel_mux0(
-	.data0x(add0),.data1x(MEMwire),
+	.data0x(vq0),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux0)
 );
 
 mux2to1_nbit 		voutSel_mux1(
-	.data0x(add1),.data1x(MEMwire),
+	.data0x(vq1),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux1)
 );
 
 mux2to1_nbit 		voutSel_mux2(
-	.data0x(add2),.data1x(MEMwire),
+	.data0x(vq2),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux2)
 );
 
 mux2to1_nbit 		voutSel_mux3(
-	.data0x(add3),.data1x(MEMwire),
+	.data0x(vq3),.data1x(MEMwire),
 	.sel(VoutSel),.result(vMux3)
 );
 

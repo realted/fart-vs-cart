@@ -24,7 +24,7 @@ import params::*;
 module VRF
 (
 clock, vreg1, vreg2, vregw,
-VRFWrite, reset,
+VRFWrite, VRFLaneWrite, reset,
 vdataw_0, vdataw_1, vdataw_2, vdataw_3,
 vdata1_0, vdata1_1, vdata1_2, vdata1_3,
 vdata2_0, vdata2_1, vdata2_2, vdata2_3,
@@ -39,6 +39,7 @@ input clock;
 input [1:0] vreg1, vreg2, vregw;
 input [DATA_BIT_WIDTH-1:0] vdataw_0, vdataw_1, vdataw_2, vdataw_3;
 input VRFWrite;
+input [3:0] VRFLaneWrite;
 input reset;
 output [DATA_BIT_WIDTH-1:0] vdata1_0, vdata1_1, vdata1_2, vdata1_3, vdata2_0, vdata2_1, vdata2_2, vdata2_3;
 
@@ -140,28 +141,28 @@ begin
 		if (VRFWrite) begin
 			case (vregw)
 				0: begin
-					   v0_0 = vdataw_0;
-					   v0_1 = vdataw_1;
-					   v0_2 = vdataw_2;
-					   v0_3 = vdataw_3;
+					if (VRFLaneWrite[0]) v0_0 <= vdataw_0;
+					if (VRFLaneWrite[1]) v0_1 <= vdataw_1;
+					if (VRFLaneWrite[2]) v0_2 <= vdataw_2;
+					if (VRFLaneWrite[3]) v0_3 <= vdataw_3;
 				   end
 				1: begin
-					   v1_0 = vdataw_0;
-					   v1_1 = vdataw_1;
-					   v1_2 = vdataw_2;
-					   v1_3 = vdataw_3;
+					if (VRFLaneWrite[0]) v1_0 <= vdataw_0;
+					if (VRFLaneWrite[1]) v1_1 <= vdataw_1;
+					if (VRFLaneWrite[2]) v1_2 <= vdataw_2;
+					if (VRFLaneWrite[3]) v1_3 <= vdataw_3;
 				   end
 				2: begin
-					   v2_0 = vdataw_0;
-					   v2_1 = vdataw_1;
-					   v2_2 = vdataw_2;
-					   v2_3 = vdataw_3;
+					if (VRFLaneWrite[0]) v2_0 <= vdataw_0;
+					if (VRFLaneWrite[1]) v2_1 <= vdataw_1;
+					if (VRFLaneWrite[2]) v2_2 <= vdataw_2;
+					if (VRFLaneWrite[3]) v2_3 <= vdataw_3;
 				   end
 				3: begin
-					   v3_0 = vdataw_0;
-					   v3_1 = vdataw_1;
-					   v3_2 = vdataw_2;
-					   v3_3 = vdataw_3;
+					if (VRFLaneWrite[0]) v3_0 <= vdataw_0;
+					if (VRFLaneWrite[1]) v3_1 <= vdataw_1;
+					if (VRFLaneWrite[2]) v3_2 <= vdataw_2;
+					if (VRFLaneWrite[3]) v3_3 <= vdataw_3;
 				   end
 			endcase
 		end

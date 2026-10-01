@@ -24,6 +24,8 @@ The SHIFT clarification below was confirmed by the processor author.
 | --- | --- |
 | LOAD, STORE, ADD, SUB, NAND | `(R1 << 14) \| (R2 << 12) \| (opcode << 6)`; opcodes 0, 2, 4, 6, 8 |
 | VLOAD, VSTORE, VADD | Same layout; opcodes 32, 34, 36 |
+| VSUB, VMUL, VCMPLT, VCMPGT, VCMPEQ | Same register layout; opcodes 37, 38, 40, 41, 42 |
+| VCMCLR | No operands; fixed word `FBC0`, enables all lanes |
 | ORI | `(imm13 << 3) \| 7`; immediate 0..8191 |
 | SHIFT | `(R1 << 14) \| (imm11 << 3) \| 3`; only low 3 immediate bits are used |
 | BZ, BNZ, BPZ | `((offset & 0xFFF) << 4) \| tag`; tags 5, 9, 13; offset -2048..2047 |
@@ -66,7 +68,20 @@ the MIF and ModelSim output. The unchanged `test1_16bit_path.s` also executes in
 an ISA-level model and halts with memory words 72..75 equal to
 `0100 0101 0100 012C`.
 
-This is not a full RTL simulation. At the time of this update, `FSM.sv` receives
-only `IR[11:6]`, so it cannot distinguish the low-bit ORI/SHIFT/branch tags or the
-STOP/NOP marker defined by this ISA. The hardware decoder needs to inspect the
-appropriate instruction bits before this program can run correctly on the FPGA.
+These are assembler/ISA-level tests, not a full RTL simulation.
+
+## New vector operations
+
+```asm
+    vsub   v0,v1     ; v0 = v0 - v1 (enabled lanes)
+    vmul   v0,v1     ; signed Q8.8 multiply (enabled lanes)
+    vcmplt v0,v1     ; mask lane = signed(v0 lane) < signed(v1 lane)
+    vcmpgt v0,v1     ; mask lane = signed(v0 lane) > signed(v1 lane)
+    vcmpeq v0,v1     ; mask lane = v0 lane == v1 lane
+    vcmclr          ; mask = 1111, all lanes enabled
+```
+
+The comparisons produce mask bits, not vector-register arithmetic results.
+`x0`..`x3` aliases also work. Q8.8 data uses integer literals representing
+scaled values: `db 384` represents 1.5. The assembler does not convert decimal
+floating-point literals. Multiplication scaling/truncation happens in the ALU.
