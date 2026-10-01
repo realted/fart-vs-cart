@@ -1,5 +1,5 @@
 Analysis & Synthesis report for multicycle
-Thu Oct  1 10:29:25 2026
+Thu Oct  1 14:43:26 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -27,15 +27,14 @@ Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
  19. Parameter Settings for User Entity Instance: zExtend:ZE3
  20. Parameter Settings for User Entity Instance: zExtend:ZE5
  21. altsyncram Parameter Settings by Entity Instance
- 22. Port Connectivity Checks: "register_nbit:IR_reg"
- 23. Port Connectivity Checks: "adder_n:plusOne"
- 24. Port Connectivity Checks: "memory:DataMem|mux2to1_nbit:b2v_inst3"
- 25. Port Connectivity Checks: "memory:DataMem|DataMemory:b2v_inst"
- 26. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[5].decoder"
- 27. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[4].decoder"
- 28. Post-Synthesis Netlist Statistics for Top Partition
- 29. Elapsed Time Per Partition
- 30. Analysis & Synthesis Messages
+ 22. Port Connectivity Checks: "adder_n:plusOne"
+ 23. Port Connectivity Checks: "memory:DataMem|mux2to1_nbit:b2v_inst3"
+ 24. Port Connectivity Checks: "memory:DataMem|DataMemory:b2v_inst"
+ 25. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[5].decoder"
+ 26. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[4].decoder"
+ 27. Post-Synthesis Netlist Statistics for Top Partition
+ 28. Elapsed Time Per Partition
+ 29. Analysis & Synthesis Messages
 
 
 
@@ -62,16 +61,16 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Thu Oct  1 10:29:25 2026           ;
+; Analysis & Synthesis Status     ; Successful - Thu Oct  1 14:43:25 2026           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; multicycle                                      ;
 ; Top-level Entity Name           ; multicycle                                      ;
 ; Family                          ; Cyclone V                                       ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 641                                             ;
+; Total registers                 ; 657                                             ;
 ; Total pins                      ; 71                                              ;
 ; Total virtual pins              ; 0                                               ;
-; Total block memory bits         ; 2,048                                           ;
+; Total block memory bits         ; 4,096                                           ;
 ; Total DSP Blocks                ; 0                                               ;
 ; Total HSSI RX PCSs              ; 0                                               ;
 ; Total HSSI PMA RX Deserializers ; 0                                               ;
@@ -234,27 +233,27 @@ on the Quartus Prime software download page.
 +---------------------------------------------+--------------+
 ; Resource                                    ; Usage        ;
 +---------------------------------------------+--------------+
-; Estimate of Logic utilization (ALMs needed) ; 543          ;
+; Estimate of Logic utilization (ALMs needed) ; 557          ;
 ;                                             ;              ;
-; Combinational ALUT usage for logic          ; 675          ;
+; Combinational ALUT usage for logic          ; 708          ;
 ;     -- 7 input functions                    ; 2            ;
-;     -- 6 input functions                    ; 339          ;
-;     -- 5 input functions                    ; 116          ;
-;     -- 4 input functions                    ; 32           ;
-;     -- <=3 input functions                  ; 186          ;
+;     -- 6 input functions                    ; 327          ;
+;     -- 5 input functions                    ; 160          ;
+;     -- 4 input functions                    ; 40           ;
+;     -- <=3 input functions                  ; 179          ;
 ;                                             ;              ;
-; Dedicated logic registers                   ; 641          ;
+; Dedicated logic registers                   ; 657          ;
 ;                                             ;              ;
 ; I/O pins                                    ; 71           ;
 ; Total MLAB memory bits                      ; 0            ;
-; Total block memory bits                     ; 2048         ;
+; Total block memory bits                     ; 4096         ;
 ;                                             ;              ;
 ; Total DSP Blocks                            ; 0            ;
 ;                                             ;              ;
 ; Maximum fan-out node                        ; KEY[1]~input ;
-; Maximum fan-out                             ; 649          ;
-; Total fan-out                               ; 6186         ;
-; Average fan-out                             ; 4.22         ;
+; Maximum fan-out                             ; 673          ;
+; Total fan-out                               ; 6536         ;
+; Average fan-out                             ; 4.29         ;
 +---------------------------------------------+--------------+
 
 
@@ -263,9 +262,9 @@ on the Quartus Prime software download page.
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node                   ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                           ; Entity Name     ; Library Name ;
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------+-----------------+--------------+
-; |multicycle                                  ; 675 (23)            ; 641 (2)                   ; 2048              ; 0          ; 71   ; 0            ; |multicycle                                                                                                   ; multicycle      ; work         ;
-;    |ALU:ALU|                                 ; 96 (96)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|ALU:ALU                                                                                           ; ALU             ; work         ;
-;    |FSM:Control|                             ; 58 (58)             ; 31 (31)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|FSM:Control                                                                                       ; FSM             ; work         ;
+; |multicycle                                  ; 708 (23)            ; 657 (2)                   ; 4096              ; 0          ; 71   ; 0            ; |multicycle                                                                                                   ; multicycle      ; work         ;
+;    |ALU:ALU|                                 ; 97 (97)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|ALU:ALU                                                                                           ; ALU             ; work         ;
+;    |FSM:Control|                             ; 66 (66)             ; 31 (31)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|FSM:Control                                                                                       ; FSM             ; work         ;
 ;    |HEXs:HEX_display|                        ; 143 (115)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display                                                                                  ; HEXs            ; work         ;
 ;       |HEX:decode_digits[0].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display|HEX:decode_digits[0].decoder                                                     ; HEX             ; work         ;
 ;       |HEX:decode_digits[1].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display|HEX:decode_digits[1].decoder                                                     ; HEX             ; work         ;
@@ -279,21 +278,21 @@ on the Quartus Prime software download page.
 ;    |adder_n:a3|                              ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|adder_n:a3                                                                                        ; adder_n         ; work         ;
 ;    |adder_n:plusOne|                         ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|adder_n:plusOne                                                                                   ; adder_n         ; work         ;
 ;    |counter:counter|                         ; 17 (17)             ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|counter:counter                                                                                   ; counter         ; work         ;
-;    |memory:DataMem|                          ; 8 (0)               ; 0 (0)                     ; 2048              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem                                                                                    ; memory          ; work         ;
-;       |DataMemory:b2v_inst|                  ; 0 (0)               ; 0 (0)                     ; 2048              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst                                                                ; DataMemory      ; work         ;
-;          |altsyncram:altsyncram_component|   ; 0 (0)               ; 0 (0)                     ; 2048              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component                                ; altsyncram      ; work         ;
-;             |altsyncram_p2j1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 2048              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated ; altsyncram_p2j1 ; work         ;
-;       |mux2to1_nbit:b2v_inst3|               ; 8 (8)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|mux2to1_nbit:b2v_inst3                                                             ; mux2to1_nbit    ; work         ;
+;    |memory:DataMem|                          ; 16 (0)              ; 0 (0)                     ; 4096              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem                                                                                    ; memory          ; work         ;
+;       |DataMemory:b2v_inst|                  ; 0 (0)               ; 0 (0)                     ; 4096              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst                                                                ; DataMemory      ; work         ;
+;          |altsyncram:altsyncram_component|   ; 0 (0)               ; 0 (0)                     ; 4096              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component                                ; altsyncram      ; work         ;
+;             |altsyncram_p2j1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 4096              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated ; altsyncram_p2j1 ; work         ;
+;       |mux2to1_nbit:b2v_inst3|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|mux2to1_nbit:b2v_inst3                                                             ; mux2to1_nbit    ; work         ;
 ;    |mux2to1_2bit:R1Sel_mux|                  ; 2 (2)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_2bit:R1Sel_mux                                                                            ; mux2to1_2bit    ; work         ;
 ;    |mux2to1_nbit:ALU1_mux|                   ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:ALU1_mux                                                                             ; mux2to1_nbit    ; work         ;
 ;    |mux2to1_nbit:AddrSel_mux|                ; 8 (8)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:AddrSel_mux                                                                          ; mux2to1_nbit    ; work         ;
 ;    |mux2to1_nbit:RegMux|                     ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:RegMux                                                                               ; mux2to1_nbit    ; work         ;
 ;    |mux2to1_nbit:r2Sel_mux|                  ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:r2Sel_mux                                                                            ; mux2to1_nbit    ; work         ;
 ;    |mux5to1_nbit:ALU2_mux|                   ; 22 (22)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux5to1_nbit:ALU2_mux                                                                             ; mux5to1_nbit    ; work         ;
-;    |mux5to1_nbit:Mem_mux|                    ; 18 (18)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux5to1_nbit:Mem_mux                                                                              ; mux5to1_nbit    ; work         ;
+;    |mux5to1_nbit:Mem_mux|                    ; 34 (34)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux5to1_nbit:Mem_mux                                                                              ; mux5to1_nbit    ; work         ;
 ;    |register_nbit:ALUOut_reg|                ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:ALUOut_reg                                                                          ; register_nbit   ; work         ;
-;    |register_nbit:IR_reg|                    ; 0 (0)               ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:IR_reg                                                                              ; register_nbit   ; work         ;
-;    |register_nbit:MDR_reg|                   ; 0 (0)               ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:MDR_reg                                                                             ; register_nbit   ; work         ;
+;    |register_nbit:IR_reg|                    ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:IR_reg                                                                              ; register_nbit   ; work         ;
+;    |register_nbit:MDR_reg|                   ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:MDR_reg                                                                             ; register_nbit   ; work         ;
 ;    |register_nbit:PC|                        ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:PC                                                                                  ; register_nbit   ; work         ;
 ;    |register_nbit:R1|                        ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:R1                                                                                  ; register_nbit   ; work         ;
 ;    |register_nbit:R2|                        ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:R2                                                                                  ; register_nbit   ; work         ;
@@ -361,35 +360,34 @@ Encoding Type:  One-Hot
 +-----------------------------------------------------+-------------------------------+------------------------+
 ; Latch Name                                          ; Latch Enable Signal           ; Free of Timing Hazards ;
 +-----------------------------------------------------+-------------------------------+------------------------+
-; FSM:Control|VRFWrite                                ; FSM:Control|WideOr33          ; yes                    ;
-; FSM:Control|VoutSel                                 ; FSM:Control|WideOr33          ; yes                    ;
-; FSM:Control|t0load                                  ; FSM:Control|WideOr33          ; yes                    ;
-; FSM:Control|t1load                                  ; FSM:Control|WideOr33          ; yes                    ;
-; FSM:Control|t2load                                  ; FSM:Control|WideOr33          ; yes                    ;
-; FSM:Control|t3load                                  ; FSM:Control|WideOr33          ; yes                    ;
+; FSM:Control|VRFWrite                                ; FSM:Control|WideOr35          ; yes                    ;
+; FSM:Control|VoutSel                                 ; FSM:Control|WideOr35          ; yes                    ;
+; FSM:Control|t0load                                  ; FSM:Control|WideOr35          ; yes                    ;
+; FSM:Control|t1load                                  ; FSM:Control|WideOr35          ; yes                    ;
+; FSM:Control|t2load                                  ; FSM:Control|WideOr35          ; yes                    ;
+; FSM:Control|t3load                                  ; FSM:Control|WideOr35          ; yes                    ;
 ; FSM:Control|MemInSel[1]                             ; FSM:Control|state.c3_stop_nop ; yes                    ;
 ; FSM:Control|MemInSel[0]                             ; FSM:Control|state.c3_stop_nop ; yes                    ;
 ; FSM:Control|MemInSel[2]                             ; FSM:Control|state.c3_stop_nop ; yes                    ;
-; FSM:Control|X1Load                                  ; FSM:Control|WideOr33          ; yes                    ;
-; FSM:Control|X2Load                                  ; FSM:Control|WideOr33          ; yes                    ;
+; FSM:Control|X1Load                                  ; FSM:Control|WideOr35          ; yes                    ;
+; FSM:Control|X2Load                                  ; FSM:Control|WideOr35          ; yes                    ;
 ; Number of user-specified and inferred latches = 11  ;                               ;                        ;
 +-----------------------------------------------------+-------------------------------+------------------------+
 Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
 
 
-+---------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                              ;
-+----------------------------------------+----------------------------------------+
-; Register name                          ; Reason for Removal                     ;
-+----------------------------------------+----------------------------------------+
-; register_nbit:MDR_reg|q[8..15]         ; Stuck at GND due to stuck port data_in ;
-; FSM:Control|state~5                    ; Lost fanout                            ;
-; FSM:Control|state~6                    ; Lost fanout                            ;
-; FSM:Control|state~7                    ; Lost fanout                            ;
-; FSM:Control|state~8                    ; Lost fanout                            ;
-; FSM:Control|state~9                    ; Lost fanout                            ;
-; Total Number of Removed Registers = 13 ;                                        ;
-+----------------------------------------+----------------------------------------+
++------------------------------------------------------------+
+; Registers Removed During Synthesis                         ;
++---------------------------------------+--------------------+
+; Register name                         ; Reason for Removal ;
++---------------------------------------+--------------------+
+; FSM:Control|state~5                   ; Lost fanout        ;
+; FSM:Control|state~6                   ; Lost fanout        ;
+; FSM:Control|state~7                   ; Lost fanout        ;
+; FSM:Control|state~8                   ; Lost fanout        ;
+; FSM:Control|state~9                   ; Lost fanout        ;
+; Total Number of Removed Registers = 5 ;                    ;
++---------------------------------------+--------------------+
 
 
 +------------------------------------------------------+
@@ -397,37 +395,35 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 641   ;
-; Number of registers using Synchronous Clear  ; 48    ;
-; Number of registers using Synchronous Load   ; 81    ;
-; Number of registers using Asynchronous Clear ; 625   ;
+; Total registers                              ; 657   ;
+; Number of registers using Synchronous Clear  ; 16    ;
+; Number of registers using Synchronous Load   ; 113   ;
+; Number of registers using Asynchronous Clear ; 641   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 609   ;
+; Number of registers using Clock Enable       ; 625   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                               ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                     ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |multicycle|counter:counter|counterOut[10]     ;
-; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X1|q_3[7]          ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R1|q[2]              ;
-; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X2|q_0[0]          ;
-; 5:1                ; 16 bits   ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R2|q[11]             ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux1                               ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux2                               ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux6                               ;
-; 5:1                ; 11 bits   ; 33 LEs        ; 22 LEs               ; 11 LEs                 ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux10        ;
-; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |multicycle|FSM:Control|state                  ;
-; 8:1                ; 8 bits    ; 40 LEs        ; 32 LEs               ; 8 LEs                  ; No         ; |multicycle|mux5to1_nbit:Mem_mux|Mux14         ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux14        ;
-; 33:1               ; 16 bits   ; 352 LEs       ; 240 LEs              ; 112 LEs                ; No         ; |multicycle|HEXs:HEX_display|display_value[12] ;
-; 12:1               ; 10 bits   ; 80 LEs        ; 70 LEs               ; 10 LEs                 ; No         ; |multicycle|ALU:ALU|tmp_out[5]                 ;
-; 11:1               ; 2 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; No         ; |multicycle|FSM:Control|state                  ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |multicycle|counter:counter|counterOut[6]     ;
+; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X1|q_1[14]        ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R1|q[6]             ;
+; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X2|q_1[0]         ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R2|q[8]             ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux1                              ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux2                              ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux7                              ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux2        ;
+; 8:1                ; 16 bits   ; 80 LEs        ; 64 LEs               ; 16 LEs                 ; No         ; |multicycle|mux5to1_nbit:Mem_mux|Mux10        ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux10       ;
+; 33:1               ; 16 bits   ; 352 LEs       ; 240 LEs              ; 112 LEs                ; No         ; |multicycle|HEXs:HEX_display|display_value[3] ;
+; 12:1               ; 10 bits   ; 80 LEs        ; 70 LEs               ; 10 LEs                 ; No         ; |multicycle|ALU:ALU|tmp_out[12]               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -556,7 +552,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+-------+---------------------------------+
 ; Parameter Name ; Value ; Type                            ;
 +----------------+-------+---------------------------------+
-; n              ; 4     ; Signed Integer                  ;
+; n              ; 12    ; Signed Integer                  ;
 +----------------+-------+---------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -566,7 +562,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+-------+---------------------------------+
 ; Parameter Name ; Value ; Type                            ;
 +----------------+-------+---------------------------------+
-; n              ; 3     ; Signed Integer                  ;
+; n              ; 11    ; Signed Integer                  ;
 +----------------+-------+---------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -576,7 +572,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+-------+---------------------------------+
 ; Parameter Name ; Value ; Type                            ;
 +----------------+-------+---------------------------------+
-; n              ; 5     ; Signed Integer                  ;
+; n              ; 13    ; Signed Integer                  ;
 +----------------+-------+---------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -601,17 +597,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-------------------------------------------+--------------------------------------------------------------------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "register_nbit:IR_reg"                                                                                                                           ;
-+-------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port  ; Type   ; Severity ; Details                                                                                                                                        ;
-+-------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
-; data  ; Input  ; Warning  ; Input port expression (9 bits) is smaller than the input port (16 bits) it drives.  Extra input bit(s) "data[15..9]" will be connected to GND. ;
-; q     ; Output ; Warning  ; Output or bidir port (16 bits) is wider than the port expression (9 bits) it drives; bit(s) "q[15..9]" have no fanouts                         ;
-; q[15] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                            ;
-+-------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------+
-
-
 +----------------------------------------------+
 ; Port Connectivity Checks: "adder_n:plusOne"  ;
 +------------+-------+----------+--------------+
@@ -631,15 +616,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 +--------+-------+----------+---------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "memory:DataMem|DataMemory:b2v_inst"                                                                                                                                                  ;
-+---------+--------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port    ; Type   ; Severity ; Details                                                                                                                                                                           ;
-+---------+--------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; address ; Input  ; Warning  ; Input port expression (16 bits) is wider than the input port (8 bits) it drives.  The 8 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
-; data    ; Input  ; Warning  ; Input port expression (16 bits) is wider than the input port (8 bits) it drives.  The 8 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
-; q       ; Output ; Warning  ; Output or bidir port (8 bits) is smaller than the port expression (16 bits) it drives.  The 8 most-significant bit(s) in the port expression will be connected to GND.            ;
-+---------+--------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "memory:DataMem|DataMemory:b2v_inst"                                                                                                                                                 ;
++---------+-------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port    ; Type  ; Severity ; Details                                                                                                                                                                           ;
++---------+-------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; address ; Input ; Warning  ; Input port expression (16 bits) is wider than the input port (8 bits) it drives.  The 8 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++---------+-------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------+
@@ -667,31 +650,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 641                         ;
+; arriav_ff             ; 657                         ;
 ;     CLR               ; 32                          ;
-;     ENA CLR           ; 480                         ;
-;     ENA CLR SCLR      ; 32                          ;
-;     ENA CLR SLD       ; 81                          ;
+;     ENA CLR           ; 496                         ;
+;     ENA CLR SLD       ; 113                         ;
 ;     ENA SCLR          ; 16                          ;
-; arriav_lcell_comb     ; 677                         ;
+; arriav_lcell_comb     ; 710                         ;
 ;     arith             ; 113                         ;
 ;         1 data inputs ; 33                          ;
 ;         2 data inputs ; 64                          ;
 ;         5 data inputs ; 16                          ;
 ;     extend            ; 2                           ;
 ;         7 data inputs ; 2                           ;
-;     normal            ; 562                         ;
+;     normal            ; 595                         ;
 ;         0 data inputs ; 2                           ;
-;         2 data inputs ; 26                          ;
+;         1 data inputs ; 1                           ;
+;         2 data inputs ; 18                          ;
 ;         3 data inputs ; 63                          ;
-;         4 data inputs ; 32                          ;
-;         5 data inputs ; 100                         ;
-;         6 data inputs ; 339                         ;
+;         4 data inputs ; 40                          ;
+;         5 data inputs ; 144                         ;
+;         6 data inputs ; 327                         ;
 ; boundary_port         ; 71                          ;
-; stratixv_ram_block    ; 8                           ;
+; stratixv_ram_block    ; 16                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 7.00                        ;
-; Average LUT depth     ; 3.05                        ;
+; Average LUT depth     ; 3.04                        ;
 +-----------------------+-----------------------------+
 
 
@@ -710,7 +693,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Thu Oct  1 10:29:16 2026
+    Info: Processing started: Thu Oct  1 14:43:16 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off gpu_v0 -c multicycle
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
@@ -753,27 +736,27 @@ Warning (10034): Output port "LEDR[17..10]" at multicycle.sv(40) has no driver F
 Info (12128): Elaborating entity "HEXs" for hierarchy "HEXs:HEX_display" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 111
 Info (12128): Elaborating entity "HEX" for hierarchy "HEXs:HEX_display|HEX:decode_digits[0].decoder" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 102
 Info (12128): Elaborating entity "FSM" for hierarchy "FSM:Control" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 141
-Info (10264): Verilog HDL Case Statement information at FSM.sv(137): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "MemInSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "VRFWrite", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "X1Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "X2Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "VoutSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t0load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t1load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t2load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(137): inferring latch(es) for variable "t3load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "t3load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "t2load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "t1load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "t0load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "VoutSel" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "X2Load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "X1Load" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "VRFWrite" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "MemInSel[0]" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "MemInSel[1]" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
-Info (10041): Inferred latch for "MemInSel[2]" at FSM.sv(137) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 137
+Info (10264): Verilog HDL Case Statement information at FSM.sv(144): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "MemInSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "VRFWrite", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "X1Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "X2Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "VoutSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t0load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t1load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t2load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t3load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "t3load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "t2load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "t1load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "t0load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "VoutSel" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "X2Load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "X1Load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "VRFWrite" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "MemInSel[0]" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "MemInSel[1]" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (10041): Inferred latch for "MemInSel[2]" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
 Warning (12125): Using design file memory.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: memory File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 22
 Warning (12300): Found the following files while searching for definition of entity "memory", but did not use these files because already using a different file containing the entity definition
@@ -824,28 +807,7 @@ Warning (10230): Verilog HDL assignment warning at counter.sv(16): truncated val
 Info (12128): Elaborating entity "sExtend" for hierarchy "sExtend:SE4" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 339
 Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 340
 Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE5" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 341
-Warning (12010): Port "data_a" on the entity instantiation of "altsyncram_component" is connected to a signal of width 8. The formal width of the signal in the module is 16.  The extra bits will be driven by GND. File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
-Warning (12030): Port "q_a" on the entity instantiation of "altsyncram_component" is connected to a signal of width 8. The formal width of the signal in the module is 16.  The extra bits will be left dangling without any fan-out logic. File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
-Warning (12011): Net is missing source, defaulting to GND
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[15]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[14]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[13]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[12]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[11]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[10]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[9]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-    Warning (12110): Net "memory:DataMem|SYNTHESIZED_WIRE_2[8]" is missing source, defaulting to GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 41
-Warning (14284): Synthesized away the following node(s):
-    Warning (14285): Synthesized away the following RAM node(s):
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[8]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 229
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[9]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 253
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[10]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 277
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[11]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 301
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[12]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 325
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[13]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 349
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[14]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 373
-        Warning (14320): Synthesized away node "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated|q_a[15]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_p2j1.tdf Line: 397
-Warning (12241): 2 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13012): Latch FSM:Control|VRFWrite has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
     Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c7_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
 Warning (13012): Latch FSM:Control|VoutSel has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
@@ -1464,15 +1426,15 @@ Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
 Warning (21074): Design contains 2 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 37
     Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 37
-Info (21057): Implemented 1137 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1193 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 11 input pins
     Info (21059): Implemented 60 output pins
-    Info (21061): Implemented 1058 logic cells
-    Info (21064): Implemented 8 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 661 warnings
-    Info: Peak virtual memory: 4933 megabytes
-    Info: Processing ended: Thu Oct  1 10:29:25 2026
-    Info: Elapsed time: 00:00:09
-    Info: Total CPU time (on all processors): 00:00:20
+    Info (21061): Implemented 1106 logic cells
+    Info (21064): Implemented 16 RAM segments
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 640 warnings
+    Info: Peak virtual memory: 4936 megabytes
+    Info: Processing ended: Thu Oct  1 14:43:26 2026
+    Info: Elapsed time: 00:00:10
+    Info: Total CPU time (on all processors): 00:00:22
 
 

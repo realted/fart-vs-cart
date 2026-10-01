@@ -1,15 +1,15 @@
-Fitter Status : Successful - Thu Oct  1 10:33:45 2026
+Fitter Status : Successful - Thu Oct  1 14:49:04 2026
 Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : multicycle
 Top-level Entity Name : multicycle
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 533 / 32,070 ( 2 % )
-Total registers : 669
+Logic utilization (in ALMs) : 575 / 32,070 ( 2 % )
+Total registers : 695
 Total pins : 71 / 457 ( 16 % )
 Total virtual pins : 0
-Total block memory bits : 2,048 / 4,065,280 ( < 1 % )
+Total block memory bits : 4,096 / 4,065,280 ( < 1 % )
 Total RAM Blocks : 1 / 397 ( < 1 % )
 Total DSP Blocks : 0 / 87 ( 0 % )
 Total HSSI RX PCSs : 0

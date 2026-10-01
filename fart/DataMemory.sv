@@ -47,12 +47,12 @@ module DataMemory (
 
 	input	[7:0]  address;
 	input	  clock;
-	input	[7:0]  data;
+	input	[15:0]  data;
 	input	  wren;
-	output	[7:0]  q;
+	output	[15:0]  q;
 
-	wire [7:0] sub_wire0;
-	wire [7:0] q = sub_wire0[7:0];
+	wire [15:0] sub_wire0;
+	wire [15:0] q = sub_wire0[15:0];
 
 	altsyncram	altsyncram_component (
 				.wren_a (wren),

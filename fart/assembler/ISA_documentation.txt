@@ -1,11 +1,11 @@
 NOTES:
-* IMM3 is a 3-bit immediate using sign/magnitude representation:
-  * bit 2 = sign, value = bits 1 and 0
-* IMM4: 4-bit immed using 2's complement representation
-* IMM5: 5-bit unsigned
-* EXT(X): sign-extend X to 8 bits
-  * eg: 101 = 5; EXT(101) = 00000101
-  * eg: 1101 = -3; EXT(1101) = 11111101
+* ORI IMM13: 13-bit unsigned immediate, 0..8191.
+* Branch IMM12: 12-bit two's complement offset, -2048..2047.
+* SHIFT IMM11: bits 10:3 unused (zero), bit 2 direction (1=left,
+  0=right), bits 1:0 shift count (0..3), as confirmed by the author.
+* EXT(X): sign-extend X to 16 bits
+  * eg: 101 = 5; EXT(101) = 0000000000000101
+  * eg: 1101 = -3; EXT(1101) = 1111111111111101
 * R1, R2: registers variables
 * TMP = temporary variable
 
@@ -41,32 +41,51 @@ NAND R1 R2
      IF (TMP < 0) N = 1; ELSE N = 0;
      [PC] = [PC] + 1
 
-ORI IMM5
-    TMP = [K1] bitwise-OR IMM5
+ORI IMM13
+    TMP = [K1] bitwise-OR IMM13
     [K1] = TMP
     IF (TMP == 0) Z = 1; ELSE Z = 0;
     IF (TMP < 0) N = 1; ELSE N = 0;
     [PC] = [PC] + 1
 
-SHIFT R1 IMM3
-    IF (IMM3 > 0) TMP = [R1] << IMM3
-    ELSE TMP = [R1] >> (-IMM3)
+SHIFT R1 IMM11
+    IF (IMM11[2] == 1) TMP = [R1] << IMM11[1:0]
+    ELSE TMP = [R1] >> IMM11[1:0]
     R1 = TMP
     IF (TMP == 0) Z = 1; ELSE Z = 0;
     IF (TMP < 0) N = 1; ELSE N = 0;
     [PC] = [PC] + 1
 
-BZ IMM4
-     IF (Z == 1) PC = [PC] + EXT(IMM4)
+BZ IMM12
+     IF (Z == 1) PC = [PC] + EXT(IMM12)
      [PC] = [PC] + 1
 
-BNZ IMM4
-     IF (Z == 0) PC = [PC] + EXT(IMM4)
+BNZ IMM12
+     IF (Z == 0) PC = [PC] + EXT(IMM12)
      [PC] = [PC] + 1
 
-BPZ IMM4
-     IF (N == 0) PC = [PC] + EXT(IMM4)
+BPZ IMM12
+     IF (N == 0) PC = [PC] + EXT(IMM12)
      [PC] = [PC] + 1
+
+VLOAD X1 (R2):
+    TMP0 = MEM[R2];
+    TMP1 = MEM[(R2 + 1) MOD 2^16];
+    TMP2 = MEM[(R2 + 2) MOD 2^16];
+    TMP3 = MEM[(R2 + 3) MOD 2^16];
+    X1 = (TMP0, TMP1, TMP2, TMP3);  // X1 is a vector register
+    PC = PC + 1;
+
+
+VSTORE X1 (R2):
+    MEM[R2]                 = TMP0;
+    MEM[(R2 + 1) MOD 2^16]   = TMP1;
+    MEM[(R2 + 2) MOD 2^16]   = TMP2;
+    MEM[(R2 + 3) MOD 2^16]   = TMP3;
+    PC = PC + 1;
+
+VADD X1 X2:
+    X1 = X1 + X2;  // Element-wise addition of vector registers X1 and X2
 
 
 Instruction Encodings:
@@ -74,18 +93,33 @@ Legend:
 Rx = 2 bit encoding of register
 I  = immediate value
 
-Bit [MSB]76543210[LSB]
+Bit [MSB]15|14|13|12|11|10|9|8|7|6|5|4|3|2|1|0[LSB]
+        <-R1-><-R2-> <--OP CODE--><-RESERVED->
 
-LOAD:    R1R20000
-STORE:	 R1R20010
-ADD:	 R1R20100
-SUB:	 R1R20110
-NAND:	 R1R21000
-ORI:	 IIIII111
-SHIFT:	 R1III011
-BZ:	 IIII0101
-BNZ:	 IIII1001
-BPZ:	 IIII1101
+Generally, for operational instructions with 2 REG. 
+[15:14] R1
+[13:12] R2
+[11:6]  OP CODE
+[5:0]   RESERVED/IMM/UNUSED
 
-STOP:	 00000001
-NOP:	 00001010
+RF Instructions:
+
+LOAD:    R1 R2 000000 000000
+STORE:	 R1 R2 000010 000000
+ADD:	 R1 R2 000100 000000
+SUB:	 R1 R2 000110 000000
+NAND:	 R1 R2 001000 000000
+ORI:	 II II IIIIII III111
+SHIFT:	 R1 II IIIIII III011
+BZ:	     II II IIIIII II0101
+BNZ:	 II II IIIIII II1001
+BPZ:	 II II IIIIII II1101
+
+STOP:	 00 00 000000 000001
+NOP:	 10 00 000000 000001
+
+VRF Instructions:
+
+VLOAD:   R1 R2 100000 000000
+VSTORE:  R1 R2 100010 000000
+VADD:    R1 R2 100100 000000

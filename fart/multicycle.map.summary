@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Thu Oct  1 10:29:25 2026
+Analysis & Synthesis Status : Successful - Thu Oct  1 14:43:25 2026
 Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : multicycle
 Top-level Entity Name : multicycle
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 641
+Total registers : 657
 Total pins : 71
 Total virtual pins : 0
-Total block memory bits : 2,048
+Total block memory bits : 4,096
 Total DSP Blocks : 0
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0

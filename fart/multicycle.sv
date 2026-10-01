@@ -45,7 +45,7 @@ wire	IRLoad, MDRLoad, MemRead, MemWrite, PCWrite, RegIn, AddrSel;
 wire	ALU1, ALUOutWrite, FlagWrite, R1R2Load, R1Sel, RFWrite, stop;
 wire	[DATA_BIT_WIDTH-1:0] R2wire, PCwire, R1wire, RFout1wire, RFout2wire;
 wire	[DATA_BIT_WIDTH-1:0] ALU1wire, ALU2wire, ALUwire, ALUOut, MDRwire, MEMwire;
-wire	[IR_BIT_WIDTH:0] IR;
+wire	[IR_BIT_WIDTH-1:0] IR;
 wire    [DATA_BIT_WIDTH-1:0] SE4wire, ZE5wire, ZE3wire, AddrWire, RegWire;
 wire	[DATA_BIT_WIDTH-1:0] reg0, reg1, reg2, reg3;
 wire	[DATA_BIT_WIDTH-1:0] constant;
@@ -128,7 +128,7 @@ assign HEX7 = 7'b1111111;
 */
 
 FSM		Control(
-	.reset(reset),.clock(clock),.N(N),.Z(Z),.instr(IR[3:0]), .msbInstr(IR[7]),
+	.reset(reset),.clock(clock),.N(N),.Z(Z),.instr(IR[11:0]), .msbInstr(IR[15]),
 	.PCwrite(PCWrite),.AddrSel(AddrSel),.MemRead(MemRead),.MemWrite(MemWrite),
 	.IRload(IRLoad),.R1Sel(R1Sel),.MDRload(MDRLoad),.R1R2Load(R1R2Load),
 	.ALU1(ALU1),.ALUOutWrite(ALUOutWrite),.RFWrite(RFWrite),.RegIn(RegIn),
@@ -153,7 +153,7 @@ ALU		ALU(
 
 RF		RF_block(
 	.clock(clock),.reset(reset),.RFWrite(RFWrite),
-	.dataw(RegWire),.reg1(R1_in),.reg2(IR[5:4]),
+	.dataw(RegWire),.reg1(R1_in),.reg2(IR[13:12]),
 	.regw(R1_in),.data1(RFout1wire),.data2(RFout2wire),
 	.r0(reg0),.r1(reg1),.r2(reg2),.r3(reg3)
 );
@@ -163,7 +163,7 @@ RF		RF_block(
 
 VRF		VRF_block(
 	.clock(clock),.reset(reset),.VRFWrite(VRFWrite),
-	.vreg1(IR[7:6]),.vreg2(IR[5:4]),.vregw(IR[7:6]),
+	.vreg1(IR[15:14]),.vreg2(IR[13:12]),.vregw(IR[15:14]),
 	.vdataw_0(vdataw_0wire), .vdataw_1(vdataw_1wire), .vdataw_2(vdataw_2wire), .vdataw_3(vdataw_3wire),
 	.vdata1_0(VRFout1_0wire), .vdata1_1(VRFout1_1wire), .vdata1_2(VRFout1_2wire), .vdata1_3(VRFout1_3wire),
 	.vdata2_0(VRFout2_0wire), .vdata2_1(VRFout2_1wire), .vdata2_2(VRFout2_2wire), .vdata2_3(VRFout2_3wire),
@@ -275,7 +275,7 @@ mux2to1_nbit 		r2Sel_mux(
 
 register_nbit	IR_reg(
 	.clock(clock),.aclr(reset),.enable(IRLoad),
-	.data(MEMwire[IR_BIT_WIDTH:0]),.q(IR)
+	.data(MEMwire[IR_BIT_WIDTH-1:0]),.q(IR)
 );
 
 register_nbit	MDR_reg(
@@ -305,7 +305,7 @@ register_nbit	ALUOut_reg(
 );
 
 mux2to1_2bit		R1Sel_mux(
-	.data0x(IR[7:6]),.data1x(constant[1:0]),
+	.data0x(IR[15:14]),.data1x(constant[1:0]),
 	.sel(R1Sel),.result(R1_in)
 );
 
@@ -336,13 +336,13 @@ counter             counter(
 
 
 
-sExtend		SE4(.in(IR[7:4]),.out(SE4wire));
-zExtend		ZE3(.in(IR[5:3]),.out(ZE3wire));
-zExtend		ZE5(.in(IR[7:3]),.out(ZE5wire));
+sExtend		SE4(.in(IR[15:4]),.out(SE4wire));
+zExtend		ZE3(.in(IR[13:3]),.out(ZE3wire));
+zExtend		ZE5(.in(IR[15:3]),.out(ZE5wire));
 // define parameter for the data size to be extended
-defparam	SE4.n = 4;
-defparam	ZE3.n = 3;
-defparam	ZE5.n = 5;
+defparam	SE4.n = 12;
+defparam	ZE3.n = 11;
+defparam	ZE5.n = 13;
 
 always@(posedge clock or posedge reset)
 begin

@@ -2,8 +2,8 @@
 Simple assembler for the multicycle processor implementation.
 Produces a MIF file that can be used to initialize the memory.
 In addition to the 10 instructions, it supports the org directive
-and the db directive. It also supports labels. It assumes that
-16-bit memory words with 8-bit instruction encodings. The db directive
+and the db directive. It also supports labels. It uses
+16-bit memory words and the new 16-bit instruction encodings. The db directive
 accepts -32768..65535; negative data uses 16-bit two's complement.
 Memory depth is controlled by MEM_SIZE.
 
@@ -107,36 +107,29 @@ bool labelExists (map <string, int>& labels, string label)
 	return (labels.find(label) != labels.end());
 }
 
-bool extractOperands (string ops, int& op1, int& op2, bool load_store = false)
+// Scalar registers are k0..k3; vector registers are v0..v3 (x aliases).
+bool registerIndex(const string& name, bool vector_reg, int& index)
 {
-	unsigned int comma_pos = ops.find_first_of(",");
-	if (comma_pos == string::npos || comma_pos == 0 || comma_pos == ops.length()-1)
-		return false;
-	else
-	{
-		string sop1 = ops.substr(0,comma_pos);
-		string sop2 = ops.substr(comma_pos+1);
-		if (sop1 != "k0" && sop1 != "k1" && sop1 != "k2" && sop1 != "k3" && sop1 != "v0" && sop1 != "v1" && sop1 != "v2" && sop1 != "v3")
-			return false;
-		if (load_store)
-		{
-			if (sop2 != "(k0)" && sop2 != "(k1)" && sop2 != "(k2)" && sop2 != "(k3)")
-				return false;
-			else
-				op2 = sop2[2] - '0';
-		}
-		else
-		{
-			if (sop2 != "k0" && sop2 != "k1" && sop2 != "k2" && sop2 != "k3" && sop2 != "v0" && sop2 != "v1" && sop2 != "v2" && sop2 != "v3")
-				return false;
-			else
-				op2 = sop2[1] - '0';
-		}
+    if (name.size() != 2 || name[1] < '0' || name[1] > '3') return false;
+    if (vector_reg ? (name[0] != 'v' && name[0] != 'x') : name[0] != 'k')
+        return false;
+    index = name[1] - '0';
+    return true;
+}
 
-		op1 = sop1[1] - '0';
-	}
-
-	return true;
+bool extractOperands(string ops, int& op1, int& op2,
+                     bool load_store = false, bool vector_reg = false)
+{
+    const size_t comma = ops.find(',');
+    if (comma == string::npos) return false;
+    string first = ops.substr(0, comma), second = ops.substr(comma + 1);
+    if (!registerIndex(first, vector_reg, op1)) return false;
+    if (load_store) {
+        if (second.size() != 4 || second.front() != '(' || second.back() != ')')
+            return false;
+        return registerIndex(second.substr(1, 2), false, op2);
+    }
+    return registerIndex(second, vector_reg, op2);
 }
 
 int processNumber(string str)
@@ -159,8 +152,9 @@ int processNumber(string str)
 int main(int argc, char* argv[])
 {
 	string line = " ";
-	char outfilename[1024];
+	string outfilename;
 	std::uint16_t mem[MEM_SIZE];
+    bool occupied[MEM_SIZE] = {};
 	int line_count = 0;
 	unsigned int cur_address = 0;
 	map <string, int> labels;
@@ -185,29 +179,10 @@ int main(int argc, char* argv[])
 	ofstream outfilesim;	
 
 	if (argc == 2)
-		strcpy(outfilename,"data.mif");
+		outfilename = "data.mif";
 	else if (argc == 3)
-		strcpy(outfilename,argv[2]);
+		outfilename = argv[2];
 	
-	outfile.open(outfilename, ios::out);
-
-	if (outfile.fail())
-	{
-		cerr << "Error: cannot open the output file.";
-		exit(1);
-	}
-
-	strcat(outfilename,".mem");
-	
-	outfilesim.open(outfilename, ios::out);
-
-	if (outfilesim.fail())
-	{
-		cerr << "Error: cannot open the simulation mem file.";
-		outfile.close();
-		exit(1);
-	}
-
 	// init memory to all zeros
 	for (int i = 0; i < MEM_SIZE; i++)
 		mem[i] = 0;
@@ -270,7 +245,7 @@ int main(int argc, char* argv[])
 			      {
 				if (line[e] != ';')
 				  {
-				    unsigned int tmp_pos = line.find_first_not_of(" \t", e);
+				    size_t tmp_pos = line.find_first_not_of(" \t", e);
 				    if (tmp_pos != string::npos && line[tmp_pos] != ';')
 				      throw "parse error";
 				  }
@@ -286,7 +261,7 @@ int main(int argc, char* argv[])
 
 			if (col2 == "org")
 			{	
-				int addr = (unsigned int) processNumber(col3);
+				int addr = processNumber(col3);
 
 				if (addr < 0 || addr > MEM_SIZE - 1)
 				{
@@ -329,9 +304,9 @@ int main(int argc, char* argv[])
 
 			cur_address++;
 		}
-		catch (...)
+		catch (const char* reason)
 		{
-			cerr << "Error: line " << line_count << "." << endl;
+			cerr << "Error: line " << line_count << ": " << reason << "." << endl;
 			exit(1);
 		}
 	}
@@ -373,99 +348,39 @@ int main(int argc, char* argv[])
 				}
 				encoding = (int) c_encoding;
 			}
-			else if (col2 == "load")
-			{
-				if (!extractOperands(col3, op1, op2, true))
-					throw "parse error";
-				
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-			}
-			else if (col2 == "vload")
-			{
-				if (!extractOperands(col3, op1, op2, true))
-					throw "parse error";
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-				encoding |= 0xA;
-			}
-			else if (col2 == "store")
-			{
-				if (!extractOperands(col3, op1, op2, true))
-					throw "parse error";
-				
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-				encoding |= 2;
-			}
-			else if (col2 == "vstore")
-			{
-				if (!extractOperands(col3, op1, op2, true))
-					throw "parse error";
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-				encoding |= 0xC;
-			}
-			else if (col2 == "add")
-			{
-				if (!extractOperands(col3, op1, op2))
-					throw "parse error";
-				
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-				encoding |= 4;
-			}
-			else if (col2 == "vadd")
-			{
-				if (!extractOperands(col3, op1, op2))
-					throw "parse error";
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-				encoding |= 0xE;
-			}
-			else if (col2 == "sub")
-			{
-				if (!extractOperands(col3, op1, op2))
-					throw "parse error";
-				
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-				encoding |= 6;
-			}
-			else if (col2 == "nand")
-			{
-				if (!extractOperands(col3, op1, op2))
-					throw "parse error";
-				
-				encoding = 0;
-				encoding = op1 << 6;
-				encoding += op2 << 4;
-				encoding |= 8;
-			}
+            else if (col2 == "load" || col2 == "store" || col2 == "add" ||
+                     col2 == "sub" || col2 == "nand" || col2 == "vload" ||
+                     col2 == "vstore" || col2 == "vadd")
+            {
+                const bool vector_reg = col2[0] == 'v';
+                const bool memory_op = col2 == "load" || col2 == "store" ||
+                                       col2 == "vload" || col2 == "vstore";
+                if (!extractOperands(col3, op1, op2, memory_op, vector_reg))
+                    throw "invalid register operands";
+                const map<string, int> opcodes = {
+                    {"load", 0x00}, {"store", 0x02}, {"add", 0x04},
+                    {"sub", 0x06}, {"nand", 0x08}, {"vload", 0x20},
+                    {"vstore", 0x22}, {"vadd", 0x24}
+                };
+                encoding = (op1 << 14) | (op2 << 12) | (opcodes.at(col2) << 6);
+            }
 			else if (col2 == "ori")
 			{
-				unsigned int imm5 = (unsigned int) processNumber(col3);
+				int imm13 = processNumber(col3);
 				
-				if (imm5 < 0 || imm5 > 31)
+				if (imm13 < 0 || imm13 > 8191)
 				{
-					cerr << "Error: line " << line_count << ", number too large to fit in 5 bits (or is negative)." << endl;
+					cerr << "Error: line " << line_count << ", number too large to fit in 13 bits (or is negative)." << endl;
 					exit(1);
 				}
 
-				encoding = imm5;
+				encoding = imm13;
 				encoding <<= 3;
 				encoding |= 7;
 			}
 			else if (col2 == "shift" || col2 == "shiftl" || col2 == "shiftr")
 			{
-				unsigned int comma_pos = col3.find_first_of(",");
+				size_t comma_pos = col3.find_first_of(",");
 				if (comma_pos == string::npos || comma_pos == 0 || comma_pos == col3.length()-1)
 					throw "parse error";
 				else
@@ -475,49 +390,49 @@ int main(int argc, char* argv[])
 					if (sop1 != "k0" && sop1 != "k1" && sop1 != "k2" && sop1 != "k3")
 						throw "parse error";
 
-					unsigned int imm3 = (unsigned int) processNumber(sop2);
+					int imm11 = processNumber(sop2);
 					
 					if (col2 == "shiftl" || col2 == "shiftr")
 					{
-						if (imm3 > 3)
+						if (imm11 < 0 || imm11 > 3)
 						{
 							cerr << "Error: line " << line_count << ", shiftl and shiftr can only accept parameters between 0 and 3." << endl;
 							exit(1);
 						}
 
 						if (col2 == "shiftl")
-							imm3 |= 4;
+							imm11 |= 4; // Direction bit 2: 1=left; bits 1:0=count.
 					}	
-					else if (imm3 < 0 || imm3 > 7)
+					else if (imm11 < 0 || imm11 > 7)
 					{
-						cerr << "Error: line " << line_count << ", number too large to fit in 3 bits (or is negative)." << endl;
+						cerr << "Error: line " << line_count << ", raw SHIFT must be 0..7; upper eight immediate bits are reserved." << endl;
 						exit(1);
 					}
 
 					encoding = 0;
-					encoding = (sop1[1] - '0') << 6;
-					encoding += imm3 << 3;
+					encoding = (sop1[1] - '0') << 14;
+					encoding += imm11 << 3;
 					encoding |= 3;
 				}
 			}
 			else if (col2 == "bz" || col2 == "bnz" || col2 == "bpz")
 			{
-				int imm4;
+				int imm12;
 				if (labelExists(labels, col3))
 				{
 					int lbl_address = labels[col3];
-					imm4 = (lbl_address - cur_address) - 1;
+					imm12 = lbl_address - static_cast<int>(cur_address) - 1;
 				}
 				else
-					imm4 = processNumber(col3);
+					imm12 = processNumber(col3);
 				
-				if (imm4 < -8 || imm4 > 7)
+				if (imm12 < -2048 || imm12 > 2047)
 				{
-					cerr << "Error: line " << line_count << ", number cannot fit in 4 bits." << endl;
+					cerr << "Error: line " << line_count << ", number cannot fit in 12 bits." << endl;
 					exit(1);
 				}
 
-				encoding = (imm4 & 0xF) << 4;
+				encoding = (imm12 & 0xFFF) << 4;
 
 				if (col2 == "bz")
 					encoding |= 5;
@@ -532,18 +447,25 @@ int main(int argc, char* argv[])
 			}
 			else if (col2 == "nop")
 			  {
-			    encoding = 0x81;
+			    encoding = 0x8001;
 			  }
 
 			
-			mem[cur_address] = static_cast<std::uint16_t>(encoding);
+			if (occupied[cur_address]) throw "overlapping org/data address";
+            occupied[cur_address] = true;
+            mem[cur_address] = static_cast<std::uint16_t>(encoding);
 		}
-		catch (...)
+		catch (const char* reason)
 		{
-			cerr << "Error: line " << line_count << "." << endl;
+			cerr << "Error: line " << line_count << ": " << reason << "." << endl;
 			exit(1);
 		}
 	}
+
+    outfile.open(outfilename, ios::out);
+    if (!outfile) { cerr << "Cannot open output file." << endl; return 1; }
+    outfilesim.open((string(outfilename) + ".mem").c_str(), ios::out);
+    if (!outfilesim) { cerr << "Cannot open simulation output file." << endl; return 1; }
 
 	// write output file
 	outfile << "DEPTH = " << MEM_SIZE << ";" << endl;
