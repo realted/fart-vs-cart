@@ -91,7 +91,7 @@ module DataMemory (
 		altsyncram_component.outdata_reg_a = "UNREGISTERED",
 		altsyncram_component.power_up_uninitialized = "FALSE",
 		altsyncram_component.widthad_a = 8,
-		altsyncram_component.width_a = 8,
+		altsyncram_component.width_a = 16,
 		altsyncram_component.width_byteena_a = 1;
 
 

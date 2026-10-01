@@ -102,7 +102,9 @@ HEXs	HEX_display(
 	.inv1_0(vreg1_0), .inv1_1(vreg1_1), .inv1_2(vreg1_2), .inv1_3(vreg1_3), 
 	.inv2_0(vreg2_0), .inv2_1(vreg2_1), .inv2_2(vreg2_2), .inv2_3(vreg2_3), 
 	.inv3_0(vreg3_0), .inv3_1(vreg3_1), .inv3_2(vreg3_2), .inv3_3(vreg3_3), 
-	.selH(SW[8:5]), .counter(counterOut),
+	// SW2 is the high selector bit; SW8..SW5 are the low four bits.
+    // 0..3: scalar registers; 4..19: vector lanes; 31: counter.
+    .selH({SW[2], SW[8:5]}), .counter(counterOut),
 	// Til here
 	.out0(HEX0),.out1(HEX1),.out2(HEX2),.out3(HEX3),
 	.out4(HEX4),.out5(HEX5)

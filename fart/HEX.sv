@@ -2,169 +2,112 @@
 // Copyright (c) 2007 by University of Toronto ECE 243 development team 
 // ---------------------------------------------------------------------
 //
-// Major Functions:	Three modules included: HEX, HEXs, chooseHEXs
-//
-//					HEX:	decode a four-bit input value into
-//							7-segment HEX display signals (0 to F)
-//					HEXs:	decode four 8-bit inputs to eight 7-segment
-//							HEX display signals (not compatible with DE1)
-//					chooseHEXs:	decode four 8-bit inputs to a single
-//								selected 7-segment HEX display singnals
-//								(compatible with both DE1 and DE2)
-//
-// Input(s):		HEX
-//						 in: 4-bit input (HEX: 0 to F)
-//					HEXs
-//						 in0 - in4: four 8-bit input (HEX: 00 to FF)
-//					chooseHEXs
-//						 in0-in4: four 8-bit input (HEX: 00 to FF)
-//						 select: two-bit input controlling output decoded
-//								 signals
-//
-// Output(s):		HEX/HEXs/chooseHEXs
-//						 out: seven-segment display decoded value(s) 
-//
-// ---------------------------------------------------------------------
+// HEX: one nibble to an active-low seven-segment digit.
+// HEXs: one selected register across HEX5..HEX0 (most to least significant).
+// At DATA_BIT_WIDTH=16: HEX3..HEX2 = high byte, HEX1..HEX0 = low byte;
+// HEX5 and HEX4 are blank. Partial nibbles are zero-padded.
+// selH: 0..3 = scalar registers; 4..19 = vector lanes in row-major order;
+// 31 = 16-bit counter; other selections blank all digits.
+// Six digits hold 24 bits. For wider registers, DISPLAY_PAGE selects a
+// 24-bit chunk (0 = least significant). It is a compile-time parameter.
+// Compile params.sv before this file. WIDTH must be positive.
 
-import params::*;
-
-module chooseHEXs
-(
-in0, in1, in2, in3,
-select, out1, out0
+module chooseHEXs #(
+    parameter integer WIDTH = params::DATA_BIT_WIDTH,
+    parameter integer BYTE_PAGE = 0
+)(
+    input [WIDTH-1:0] in0, in1, in2, in3,
+    input [1:0] select,
+    output [6:0] out1, out0
 );
-input 	[7:0] in0, in1, in2, in3;
-input	[1:0] select;
-output 	[6:0] out0, out1;
-
-reg		[7:0] temp_in;
-
-always@(*)
-begin
-	if( select == 0 )
-		temp_in = in0;
-	else if( select == 1 )
-		temp_in = in1;
-	else if( select == 2 )
-		temp_in = in2;
-	else if( select == 3 )
-		temp_in = in3;
-	else
-		temp_in = in0;
-end
-
-HEX hex0 ( temp_in[7:4], out1 );
-HEX hex1 ( temp_in[3:0], out0 );
-
+    // Legacy two-digit interface: select one byte of a wider register.
+    reg [WIDTH-1:0] selected;
+    wire [7:0] selected_byte;
+    always @(*) begin
+        case (select)
+            2'd0: selected = in0;
+            2'd1: selected = in1;
+            2'd2: selected = in2;
+            2'd3: selected = in3;
+            default: selected = '0;
+        endcase
+    end
+    assign selected_byte = selected >> (8 * BYTE_PAGE);
+    HEX hex0(selected_byte[7:4], out1);
+    HEX hex1(selected_byte[3:0], out0);
 endmodule
 
-module HEXs
-(
-in0, in1, in2, in3,
-inv0_0, inv0_1, inv0_2, inv0_3,
-inv1_0, inv1_1, inv1_2, inv1_3,
-inv2_0, inv2_1, inv2_2, inv2_3,
-inv3_0, inv3_1, inv3_2, inv3_3,
-selH, counter,
-out0, out1, out2, out3,
-out4, out5
+module HEXs #(
+    parameter integer WIDTH = params::DATA_BIT_WIDTH,
+    parameter integer DISPLAY_PAGE = 0
+)(
+    input [WIDTH-1:0] in0, in1, in2, in3,
+    input [WIDTH-1:0] inv0_0, inv0_1, inv0_2, inv0_3,
+    input [WIDTH-1:0] inv1_0, inv1_1, inv1_2, inv1_3,
+    input [WIDTH-1:0] inv2_0, inv2_1, inv2_2, inv2_3,
+    input [WIDTH-1:0] inv3_0, inv3_1, inv3_2, inv3_3,
+    input [4:0] selH,
+    input [15:0] counter,
+    output [6:0] out0, out1, out2, out3, out4, out5
 );
-input 	[7:0] in0, in1, in2, in3;
-input   [7:0] inv0_0, inv0_1, inv0_2, inv0_3;
-input   [7:0] inv1_0, inv1_1, inv1_2, inv1_3;
-input   [7:0] inv2_0, inv2_1, inv2_2, inv2_3;
-input   [7:0] inv3_0, inv3_1, inv3_2, inv3_3;
-input 	[3:0] selH;
-input   [15:0] counter;
-output 	[6:0] out0, out1, out2, out3;
-output 	[6:0] out4, out5;
+    reg [WIDTH-1:0] selected;
+    reg valid;
+    reg [23:0] display_value;
+    reg [5:0] digit_enable;
+    wire [6:0] segments [0:5];
+    integer digit;
 
-reg [3:0] hex_in_0;
-reg [3:0] hex_in_1;
-reg [3:0] hex_in_2;
-reg [3:0] hex_in_3;
-reg [3:0] hex_in_4;
-reg [3:0] hex_in_5;
+    always @(*) begin
+        selected = '0;
+        valid = 1'b1;
+        case (selH)
+            5'd0: selected = in0;
+            5'd1: selected = in1;
+            5'd2: selected = in2;
+            5'd3: selected = in3;
+            5'd4: selected = inv0_0;
+            5'd5: selected = inv0_1;
+            5'd6: selected = inv0_2;
+            5'd7: selected = inv0_3;
+            5'd8: selected = inv1_0;
+            5'd9: selected = inv1_1;
+            5'd10: selected = inv1_2;
+            5'd11: selected = inv1_3;
+            5'd12: selected = inv2_0;
+            5'd13: selected = inv2_1;
+            5'd14: selected = inv2_2;
+            5'd15: selected = inv2_3;
+            5'd16: selected = inv3_0;
+            5'd17: selected = inv3_1;
+            5'd18: selected = inv3_2;
+            5'd19: selected = inv3_3;
+            default: valid = 1'b0;
+        endcase
 
-always @(selH)
-begin
-	case (selH)
-	   0: begin
-		hex_in_0 = in0[7:4];
-	   hex_in_1 = in0[3:0];
-	   hex_in_2 = in1[7:4];
-	   hex_in_3 = in1[3:0];
-	   hex_in_4 = in2[7:4];
-	   hex_in_5 = in2[3:0];
-      end
-	   1: begin
-	   hex_in_0 = inv0_0[7:4];
-	   hex_in_1 = inv0_0[3:0];
-	   hex_in_2 = inv0_1[7:4];
-	   hex_in_3 = inv0_1[3:0];
-	   hex_in_4 = inv0_2[7:4];
-	   hex_in_5 = inv0_2[3:0];
-      end
-	  2: begin
-	   hex_in_0 = inv0_3[7:4];
-	   hex_in_1 = inv0_3[3:0];
-	   hex_in_2 = inv1_0[7:4];
-	   hex_in_3 = inv1_0[3:0];
-	   hex_in_4 = inv1_1[7:4];
-	   hex_in_5 = inv1_1[3:0];
-      end
-	  4: begin
-	   hex_in_0 = inv1_2[7:4];
-	   hex_in_1 = inv1_2[3:0];
-	   hex_in_2 = inv1_3[7:4];
-	   hex_in_3 = inv1_3[3:0];
-	   hex_in_4 = inv2_0[7:4];
-	   hex_in_5 = inv2_0[3:0];
-      end
-	  8: begin
-	   hex_in_0 = inv2_1[7:4];
-	   hex_in_1 = inv2_1[3:0];
-	   hex_in_2 = inv2_2[7:4];
-	   hex_in_3 = inv2_2[3:0];
-	   hex_in_4 = inv2_3[7:4];
-	   hex_in_5 = inv2_3[3:0];
-      end
-	  3: begin
-	   hex_in_0 = inv3_0[7:4];
-	   hex_in_1 = inv3_0[3:0];
-	   hex_in_2 = inv3_1[7:4];
-	   hex_in_3 = inv3_1[3:0];
-	   hex_in_4 = inv3_2[7:4];
-	   hex_in_5 = inv3_2[3:0];
-      end
-	  12: begin
-	   hex_in_0 = inv3_3[7:4];
-	   hex_in_1 = inv3_3[3:0];
-	   hex_in_2 = 4'b0;
-	   hex_in_3 = 4'b0;
-	   hex_in_4 = 4'b0;
-	   hex_in_5 = 4'b0;
-      end 
-	  15: begin
-	   hex_in_0 = 4'b0;
-	   hex_in_1 = 4'b0;
-	   hex_in_2 = counter[15:12];
-	   hex_in_3 = counter[11:8];
-	   hex_in_4 = counter[7:4];
-	   hex_in_5 = counter[3:0];
-      end
-	  
-	  
-	endcase
-end
-	
-HEX hex0 ( hex_in_0, out5 );
-HEX hex1 ( hex_in_1, out4 );
-HEX hex2 ( hex_in_2, out3 );
-HEX hex3 ( hex_in_3, out2 );
-HEX hex4 ( hex_in_4, out1 );
-HEX hex5 ( hex_in_5, out0 );
+        display_value = selected >> (24 * DISPLAY_PAGE);
+        digit_enable = 6'b000000;
+        for (digit = 0; digit < 6; digit = digit + 1) begin
+            if (valid && ((24 * DISPLAY_PAGE + 4 * digit) < WIDTH))
+                digit_enable[digit] = 1'b1;
+        end
+        if (selH == 5'd31) begin
+            display_value = {8'b0, counter};
+            digit_enable = 6'b001111;
+        end
+    end
 
+    genvar d;
+    generate
+        for (d = 0; d < 6; d = d + 1) begin : decode_digits
+            HEX decoder(display_value[4*d +: 4], segments[d]);
+        end
+    endgenerate
+    assign out0 = digit_enable[0] ? segments[0] : 7'b1111111;
+    assign out1 = digit_enable[1] ? segments[1] : 7'b1111111;
+    assign out2 = digit_enable[2] ? segments[2] : 7'b1111111;
+    assign out3 = digit_enable[3] ? segments[3] : 7'b1111111;
+    assign out4 = digit_enable[4] ? segments[4] : 7'b1111111;
+    assign out5 = digit_enable[5] ? segments[5] : 7'b1111111;
 endmodule
 
 module HEX (in, out);
@@ -174,7 +117,7 @@ output 	[6:0] out;
 reg [6:0] out;
 
 
-always @(in)
+always @(*)
 begin
 	case (in)
 		0: out = 7'b1000000;
@@ -193,6 +136,7 @@ begin
 		13: out = 7'b0100001;
 		14: out = 7'b0000110;
 		15: out = 7'b0001110;
+		default: out = 7'b1111111;
 	endcase
 end
 

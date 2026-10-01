@@ -55,7 +55,7 @@ DataMemory	b2v_inst(
 assign	SYNTHESIZED_WIRE_0 =  ~clock;
 
 
-mux2to1_8bit	b2v_inst3(
+mux2to1_nbit	b2v_inst3(
 	.sel(MemRead),
 	.data0x(SYNTHESIZED_WIRE_1),
 	.data1x(SYNTHESIZED_WIRE_2),
