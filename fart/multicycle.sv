@@ -28,12 +28,14 @@ import params::*;
 
 module multicycle
 (
+CLOCK_50,
 SW, KEY, HEX0, HEX1, HEX2, HEX3,
 HEX4, HEX5, LEDR
 );
 
 // ------------------------ PORT declaration ------------------------ //
 input	[1:0] KEY;
+input CLOCK_50;
 input [8:0] SW;          // Original Multicycle Uses 4 Switches... Just add all 9
 output	[6:0] HEX0, HEX1, HEX2, HEX3;
 output	[6:0] HEX4, HEX5;
@@ -95,9 +97,26 @@ wire	[DATA_BIT_WIDTH-1:0] plus1Wire;
 wire	[DATA_BIT_WIDTH-1:0] R2MuxOut;
 wire    R2sel;           // Control
 
+// CLOCK Auto advance
+localparam integer HALF_PERIOD = 250_000;
+reg [17:0] divider;
+reg cpu_clock;
+
+always @(posedge CLOCK_50 or posedge reset) begin
+    if (reset) begin
+        divider   <= 0;
+        cpu_clock <= 0;
+    end else if (divider == HALF_PERIOD - 1) begin
+        divider   <= 0;
+        cpu_clock <= ~cpu_clock;
+    end else begin
+        divider <= divider + 1'b1;
+    end
+end
+
 
 // ------------------------ Input Assignment ------------------------ //
-assign	clock = KEY[1];
+assign	clock = cpu_clock;
 assign	reset =  ~KEY[0]; // KEY is active high
 
 

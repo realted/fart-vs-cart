@@ -1,5 +1,5 @@
 Analysis & Synthesis report for multicycle
-Thu Oct  1 14:43:26 2026
+Mon Oct  5 23:02:33 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -14,27 +14,30 @@ Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Analysis & Synthesis RAM Summary
-  9. State Machine - |multicycle|FSM:Control|state
- 10. User-Specified and Inferred Latches
- 11. Registers Removed During Synthesis
- 12. General Register Statistics
- 13. Multiplexer Restructuring Statistics (Restructuring Performed)
- 14. Source assignments for memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated
- 15. Parameter Settings for User Entity Instance: HEXs:HEX_display
- 16. Parameter Settings for User Entity Instance: FSM:Control
- 17. Parameter Settings for User Entity Instance: memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component
- 18. Parameter Settings for User Entity Instance: sExtend:SE4
- 19. Parameter Settings for User Entity Instance: zExtend:ZE3
- 20. Parameter Settings for User Entity Instance: zExtend:ZE5
- 21. altsyncram Parameter Settings by Entity Instance
- 22. Port Connectivity Checks: "adder_n:plusOne"
- 23. Port Connectivity Checks: "memory:DataMem|mux2to1_nbit:b2v_inst3"
- 24. Port Connectivity Checks: "memory:DataMem|DataMemory:b2v_inst"
- 25. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[5].decoder"
- 26. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[4].decoder"
- 27. Post-Synthesis Netlist Statistics for Top Partition
- 28. Elapsed Time Per Partition
- 29. Analysis & Synthesis Messages
+  9. Analysis & Synthesis DSP Block Usage Summary
+ 10. State Machine - |multicycle|FSM:Control|state
+ 11. User-Specified and Inferred Latches
+ 12. Registers Removed During Synthesis
+ 13. General Register Statistics
+ 14. Inverted Register Statistics
+ 15. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 16. Source assignments for memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_p2j1:auto_generated
+ 17. Parameter Settings for User Entity Instance: HEXs:HEX_display
+ 18. Parameter Settings for User Entity Instance: FSM:Control
+ 19. Parameter Settings for User Entity Instance: memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component
+ 20. Parameter Settings for User Entity Instance: sExtend:SE4
+ 21. Parameter Settings for User Entity Instance: zExtend:ZE3
+ 22. Parameter Settings for User Entity Instance: zExtend:ZE5
+ 23. altsyncram Parameter Settings by Entity Instance
+ 24. Port Connectivity Checks: "adder_n:plusOne"
+ 25. Port Connectivity Checks: "memory:DataMem|mux2to1_nbit:b2v_inst3"
+ 26. Port Connectivity Checks: "memory:DataMem|DataMemory:b2v_inst"
+ 27. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[5].decoder"
+ 28. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[4].decoder"
+ 29. Post-Synthesis Netlist Statistics for Top Partition
+ 30. Elapsed Time Per Partition
+ 31. Analysis & Synthesis Messages
+ 32. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -61,17 +64,17 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Thu Oct  1 14:43:25 2026           ;
+; Analysis & Synthesis Status     ; Successful - Mon Oct  5 23:02:33 2026           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; multicycle                                      ;
 ; Top-level Entity Name           ; multicycle                                      ;
 ; Family                          ; Cyclone V                                       ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 657                                             ;
-; Total pins                      ; 71                                              ;
+; Total registers                 ; 688                                             ;
+; Total pins                      ; 72                                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 4,096                                           ;
-; Total DSP Blocks                ; 0                                               ;
+; Total DSP Blocks                ; 4                                               ;
 ; Total HSSI RX PCSs              ; 0                                               ;
 ; Total HSSI PMA RX Deserializers ; 0                                               ;
 ; Total HSSI TX PCSs              ; 0                                               ;
@@ -223,8 +226,10 @@ on the Quartus Prime software download page.
 ; mux2to1_nbit.sv                  ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_nbit.sv                ;         ;
 ; register_nx4bit.sv               ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_nx4bit.sv             ;         ;
 ; mux5to1_nbit.sv                  ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux5to1_nbit.sv                ;         ;
-; adder_n.sv                       ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_n.sv                     ;         ;
+; mask_reg_4b.sv                   ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mask_reg_4b.sv                 ;         ;
+; alu_v.sv                         ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/alu_v.sv                       ;         ;
 ; register_nbit.sv                 ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_nbit.sv               ;         ;
+; adder_n.sv                       ; yes             ; Auto-Found SystemVerilog HDL File  ; C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_n.sv                     ;         ;
 +----------------------------------+-----------------+------------------------------------+------------------------------------------------------------------------------+---------+
 
 
@@ -233,27 +238,27 @@ on the Quartus Prime software download page.
 +---------------------------------------------+--------------+
 ; Resource                                    ; Usage        ;
 +---------------------------------------------+--------------+
-; Estimate of Logic utilization (ALMs needed) ; 557          ;
+; Estimate of Logic utilization (ALMs needed) ; 693          ;
 ;                                             ;              ;
-; Combinational ALUT usage for logic          ; 708          ;
+; Combinational ALUT usage for logic          ; 938          ;
 ;     -- 7 input functions                    ; 2            ;
-;     -- 6 input functions                    ; 327          ;
-;     -- 5 input functions                    ; 160          ;
-;     -- 4 input functions                    ; 40           ;
-;     -- <=3 input functions                  ; 179          ;
+;     -- 6 input functions                    ; 390          ;
+;     -- 5 input functions                    ; 246          ;
+;     -- 4 input functions                    ; 89           ;
+;     -- <=3 input functions                  ; 211          ;
 ;                                             ;              ;
-; Dedicated logic registers                   ; 657          ;
+; Dedicated logic registers                   ; 688          ;
 ;                                             ;              ;
-; I/O pins                                    ; 71           ;
+; I/O pins                                    ; 72           ;
 ; Total MLAB memory bits                      ; 0            ;
 ; Total block memory bits                     ; 4096         ;
 ;                                             ;              ;
-; Total DSP Blocks                            ; 0            ;
+; Total DSP Blocks                            ; 4            ;
 ;                                             ;              ;
-; Maximum fan-out node                        ; KEY[1]~input ;
-; Maximum fan-out                             ; 673          ;
-; Total fan-out                               ; 6536         ;
-; Average fan-out                             ; 4.29         ;
+; Maximum fan-out node                        ; KEY[0]~input ;
+; Maximum fan-out                             ; 689          ;
+; Total fan-out                               ; 7855         ;
+; Average fan-out                             ; 4.39         ;
 +---------------------------------------------+--------------+
 
 
@@ -262,22 +267,23 @@ on the Quartus Prime software download page.
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node                   ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                           ; Entity Name     ; Library Name ;
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------+-----------------+--------------+
-; |multicycle                                  ; 708 (23)            ; 657 (2)                   ; 4096              ; 0          ; 71   ; 0            ; |multicycle                                                                                                   ; multicycle      ; work         ;
-;    |ALU:ALU|                                 ; 97 (97)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|ALU:ALU                                                                                           ; ALU             ; work         ;
-;    |FSM:Control|                             ; 66 (66)             ; 31 (31)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|FSM:Control                                                                                       ; FSM             ; work         ;
+; |multicycle                                  ; 938 (46)            ; 688 (21)                  ; 4096              ; 4          ; 72   ; 0            ; |multicycle                                                                                                   ; multicycle      ; work         ;
+;    |ALU:ALU|                                 ; 95 (95)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|ALU:ALU                                                                                           ; ALU             ; work         ;
+;    |ALU_V:a0|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |multicycle|ALU_V:a0                                                                                          ; ALU_V           ; work         ;
+;    |ALU_V:a1|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |multicycle|ALU_V:a1                                                                                          ; ALU_V           ; work         ;
+;    |ALU_V:a2|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |multicycle|ALU_V:a2                                                                                          ; ALU_V           ; work         ;
+;    |ALU_V:a3|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |multicycle|ALU_V:a3                                                                                          ; ALU_V           ; work         ;
+;    |FSM:Control|                             ; 90 (90)             ; 39 (39)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|FSM:Control                                                                                       ; FSM             ; work         ;
 ;    |HEXs:HEX_display|                        ; 143 (115)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display                                                                                  ; HEXs            ; work         ;
 ;       |HEX:decode_digits[0].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display|HEX:decode_digits[0].decoder                                                     ; HEX             ; work         ;
 ;       |HEX:decode_digits[1].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display|HEX:decode_digits[1].decoder                                                     ; HEX             ; work         ;
 ;       |HEX:decode_digits[2].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display|HEX:decode_digits[2].decoder                                                     ; HEX             ; work         ;
 ;       |HEX:decode_digits[3].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|HEXs:HEX_display|HEX:decode_digits[3].decoder                                                     ; HEX             ; work         ;
 ;    |RF:RF_block|                             ; 20 (20)             ; 64 (64)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|RF:RF_block                                                                                       ; RF              ; work         ;
-;    |VRF:VRF_block|                           ; 132 (132)           ; 256 (256)                 ; 0                 ; 0          ; 0    ; 0            ; |multicycle|VRF:VRF_block                                                                                     ; VRF             ; work         ;
-;    |adder_n:a0|                              ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|adder_n:a0                                                                                        ; adder_n         ; work         ;
-;    |adder_n:a1|                              ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|adder_n:a1                                                                                        ; adder_n         ; work         ;
-;    |adder_n:a2|                              ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|adder_n:a2                                                                                        ; adder_n         ; work         ;
-;    |adder_n:a3|                              ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|adder_n:a3                                                                                        ; adder_n         ; work         ;
+;    |VRF:VRF_block|                           ; 144 (144)           ; 256 (256)                 ; 0                 ; 0          ; 0    ; 0            ; |multicycle|VRF:VRF_block                                                                                     ; VRF             ; work         ;
 ;    |adder_n:plusOne|                         ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|adder_n:plusOne                                                                                   ; adder_n         ; work         ;
 ;    |counter:counter|                         ; 17 (17)             ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|counter:counter                                                                                   ; counter         ; work         ;
+;    |mask_reg_4b:reg_4b|                      ; 8 (8)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mask_reg_4b:reg_4b                                                                                ; mask_reg_4b     ; work         ;
 ;    |memory:DataMem|                          ; 16 (0)              ; 0 (0)                     ; 4096              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem                                                                                    ; memory          ; work         ;
 ;       |DataMemory:b2v_inst|                  ; 0 (0)               ; 0 (0)                     ; 4096              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst                                                                ; DataMemory      ; work         ;
 ;          |altsyncram:altsyncram_component|   ; 0 (0)               ; 0 (0)                     ; 4096              ; 0          ; 0    ; 0            ; |multicycle|memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component                                ; altsyncram      ; work         ;
@@ -288,6 +294,10 @@ on the Quartus Prime software download page.
 ;    |mux2to1_nbit:AddrSel_mux|                ; 8 (8)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:AddrSel_mux                                                                          ; mux2to1_nbit    ; work         ;
 ;    |mux2to1_nbit:RegMux|                     ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:RegMux                                                                               ; mux2to1_nbit    ; work         ;
 ;    |mux2to1_nbit:r2Sel_mux|                  ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:r2Sel_mux                                                                            ; mux2to1_nbit    ; work         ;
+;    |mux2to1_nbit:voutSel_mux0|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:voutSel_mux0                                                                         ; mux2to1_nbit    ; work         ;
+;    |mux2to1_nbit:voutSel_mux1|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:voutSel_mux1                                                                         ; mux2to1_nbit    ; work         ;
+;    |mux2to1_nbit:voutSel_mux2|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:voutSel_mux2                                                                         ; mux2to1_nbit    ; work         ;
+;    |mux2to1_nbit:voutSel_mux3|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux2to1_nbit:voutSel_mux3                                                                         ; mux2to1_nbit    ; work         ;
 ;    |mux5to1_nbit:ALU2_mux|                   ; 22 (22)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux5to1_nbit:ALU2_mux                                                                             ; mux5to1_nbit    ; work         ;
 ;    |mux5to1_nbit:Mem_mux|                    ; 34 (34)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |multicycle|mux5to1_nbit:Mem_mux                                                                              ; mux5to1_nbit    ; work         ;
 ;    |register_nbit:ALUOut_reg|                ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:ALUOut_reg                                                                          ; register_nbit   ; work         ;
@@ -299,7 +309,7 @@ on the Quartus Prime software download page.
 ;    |register_nbit:temp0|                     ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:temp0                                                                               ; register_nbit   ; work         ;
 ;    |register_nbit:temp1|                     ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:temp1                                                                               ; register_nbit   ; work         ;
 ;    |register_nbit:temp2|                     ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:temp2                                                                               ; register_nbit   ; work         ;
-;    |register_nbit:temp3|                     ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:temp3                                                                               ; register_nbit   ; work         ;
+;    |register_nbit:temp3|                     ; 1 (1)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nbit:temp3                                                                               ; register_nbit   ; work         ;
 ;    |register_nx4bit:X1|                      ; 0 (0)               ; 64 (64)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nx4bit:X1                                                                                ; register_nx4bit ; work         ;
 ;    |register_nx4bit:X2|                      ; 0 (0)               ; 64 (64)                   ; 0                 ; 0          ; 0    ; 0            ; |multicycle|register_nx4bit:X2                                                                                ; register_nx4bit ; work         ;
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------+-----------------+--------------+
@@ -315,44 +325,64 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------------------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+------+----------+
 
 
++----------------------------------------------+
+; Analysis & Synthesis DSP Block Usage Summary ;
++-------------------------------+--------------+
+; Statistic                     ; Number Used  ;
++-------------------------------+--------------+
+; Two Independent 18x18         ; 4            ;
+; Total number of DSP blocks    ; 4            ;
+;                               ;              ;
+; Fixed Point Signed Multiplier ; 4            ;
++-------------------------------+--------------+
+
+
 Encoding Type:  One-Hot
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |multicycle|FSM:Control|state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ;
-+-------------------+---------------+---------------+-----------------+-----------------+-----------------+-----------------+----------------+----------------+----------------+----------------+----------------+---------------+--------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
-; Name              ; state.c4_vadd ; state.c3_vadd ; state.c6_vstore ; state.c5_vstore ; state.c4_vstore ; state.c3_vstore ; state.c7_vload ; state.c6_vload ; state.c5_vload ; state.c4_vload ; state.c3_vload ; state.c2_vadd ; state.c2_vls ; state.c3_nop ; state.c3_stop ; state.c3_stop_nop ; state.c3_bnz ; state.c3_bz ; state.c3_bpz ; state.c3_store ; state.c4_load ; state.c3_load ; state.c5_ori ; state.c4_ori ; state.c3_ori ; state.c3_shift ; state.c4_asnsh ; state.c3_asn ; state.c2 ; state.c1 ; state.reset_s ;
-+-------------------+---------------+---------------+-----------------+-----------------+-----------------+-----------------+----------------+----------------+----------------+----------------+----------------+---------------+--------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
-; state.reset_s     ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 0             ;
-; state.c1          ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 1        ; 1             ;
-; state.c2          ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 1        ; 0        ; 1             ;
-; state.c3_asn      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 1            ; 0        ; 0        ; 1             ;
-; state.c4_asnsh    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 1              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_shift    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 1              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_ori      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 1            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c4_ori      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 1            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c5_ori      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 1            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_load     ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 1             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c4_load     ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 1             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_store    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 1              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_bpz      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 1            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_bz       ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 1           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_bnz      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 1            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_stop_nop ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 1                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_stop     ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 1             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_nop      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 1            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c2_vls      ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 1            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c2_vadd     ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 1             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vload    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 1              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c4_vload    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 1              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c5_vload    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 1              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c6_vload    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 1              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c7_vload    ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 1              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vstore   ; 0             ; 0             ; 0               ; 0               ; 0               ; 1               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c4_vstore   ; 0             ; 0             ; 0               ; 0               ; 1               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c5_vstore   ; 0             ; 0             ; 0               ; 1               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c6_vstore   ; 0             ; 0             ; 1               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vadd     ; 0             ; 1             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c4_vadd     ; 1             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-+-------------------+---------------+---------------+-----------------+-----------------+-----------------+-----------------+----------------+----------------+----------------+----------------+----------------+---------------+--------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |multicycle|FSM:Control|state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ;
++--------------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+---------------+---------------+---------------+-----------------+-----------------+-----------------+-----------------+----------------+----------------+----------------+----------------+----------------+--------------------+--------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
+; Name               ; state.c2_vcmclr ; state.c3_vcmpeq ; state.c3_vcmpgt ; state.c3_vcmplt ; state.c4_vmul ; state.c3_vmul ; state.c4_vsub ; state.c3_vsub ; state.c4_vadd ; state.c3_vadd ; state.c6_vstore ; state.c5_vstore ; state.c4_vstore ; state.c3_vstore ; state.c7_vload ; state.c6_vload ; state.c5_vload ; state.c4_vload ; state.c3_vload ; state.c2_vop_regld ; state.c2_vls ; state.c3_nop ; state.c3_stop ; state.c3_stop_nop ; state.c3_bnz ; state.c3_bz ; state.c3_bpz ; state.c3_store ; state.c4_load ; state.c3_load ; state.c5_ori ; state.c4_ori ; state.c3_ori ; state.c3_shift ; state.c4_asnsh ; state.c3_asn ; state.c2 ; state.c1 ; state.reset_s ;
++--------------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+---------------+---------------+---------------+-----------------+-----------------+-----------------+-----------------+----------------+----------------+----------------+----------------+----------------+--------------------+--------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
+; state.reset_s      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 0             ;
+; state.c1           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 1        ; 1             ;
+; state.c2           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 1        ; 0        ; 1             ;
+; state.c3_asn       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 1            ; 0        ; 0        ; 1             ;
+; state.c4_asnsh     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 1              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_shift     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 1              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_ori       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 1            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_ori       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 1            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c5_ori       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 1            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_load      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 1             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_load      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 1             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_store     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 1              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_bpz       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 1            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_bz        ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 1           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_bnz       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 1            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_stop_nop  ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 1                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_stop      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 1             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_nop       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 1            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c2_vls       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 1            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c2_vop_regld ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 1                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vload     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 1              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_vload     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 1              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c5_vload     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 1              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c6_vload     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 1              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c7_vload     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 1              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vstore    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 1               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_vstore    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 1               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c5_vstore    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 1               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c6_vstore    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vadd      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_vadd      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 1             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vsub      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 1             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_vsub      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 1             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vmul      ; 0               ; 0               ; 0               ; 0               ; 0             ; 1             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_vmul      ; 0               ; 0               ; 0               ; 0               ; 1             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vcmplt    ; 0               ; 0               ; 0               ; 1               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vcmpgt    ; 0               ; 0               ; 1               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vcmpeq    ; 0               ; 1               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c2_vcmclr    ; 1               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0               ; 0               ; 0               ; 0               ; 0              ; 0              ; 0              ; 0              ; 0              ; 0                  ; 0            ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
++--------------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+---------------+---------------+---------------+-----------------+-----------------+-----------------+-----------------+----------------+----------------+----------------+----------------+----------------+--------------------+--------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
 
 
 +--------------------------------------------------------------------------------------------------------------+
@@ -360,18 +390,23 @@ Encoding Type:  One-Hot
 +-----------------------------------------------------+-------------------------------+------------------------+
 ; Latch Name                                          ; Latch Enable Signal           ; Free of Timing Hazards ;
 +-----------------------------------------------------+-------------------------------+------------------------+
-; FSM:Control|VRFWrite                                ; FSM:Control|WideOr35          ; yes                    ;
-; FSM:Control|VoutSel                                 ; FSM:Control|WideOr35          ; yes                    ;
-; FSM:Control|t0load                                  ; FSM:Control|WideOr35          ; yes                    ;
-; FSM:Control|t1load                                  ; FSM:Control|WideOr35          ; yes                    ;
-; FSM:Control|t2load                                  ; FSM:Control|WideOr35          ; yes                    ;
-; FSM:Control|t3load                                  ; FSM:Control|WideOr35          ; yes                    ;
+; FSM:Control|VRFWrite                                ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|v_op[1]                                 ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|VoutSel                                 ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|v_op[2]                                 ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|v_op[0]                                 ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|t0load                                  ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|vmaskreset                              ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|ldMask                                  ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|t1load                                  ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|t2load                                  ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|t3load                                  ; FSM:Control|WideOr39          ; yes                    ;
 ; FSM:Control|MemInSel[1]                             ; FSM:Control|state.c3_stop_nop ; yes                    ;
 ; FSM:Control|MemInSel[0]                             ; FSM:Control|state.c3_stop_nop ; yes                    ;
 ; FSM:Control|MemInSel[2]                             ; FSM:Control|state.c3_stop_nop ; yes                    ;
-; FSM:Control|X1Load                                  ; FSM:Control|WideOr35          ; yes                    ;
-; FSM:Control|X2Load                                  ; FSM:Control|WideOr35          ; yes                    ;
-; Number of user-specified and inferred latches = 11  ;                               ;                        ;
+; FSM:Control|X1Load                                  ; FSM:Control|WideOr39          ; yes                    ;
+; FSM:Control|X2Load                                  ; FSM:Control|WideOr39          ; yes                    ;
+; Number of user-specified and inferred latches = 16  ;                               ;                        ;
 +-----------------------------------------------------+-------------------------------+------------------------+
 Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
 
@@ -381,12 +416,13 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +---------------------------------------+--------------------+
 ; Register name                         ; Reason for Removal ;
 +---------------------------------------+--------------------+
-; FSM:Control|state~5                   ; Lost fanout        ;
-; FSM:Control|state~6                   ; Lost fanout        ;
-; FSM:Control|state~7                   ; Lost fanout        ;
-; FSM:Control|state~8                   ; Lost fanout        ;
-; FSM:Control|state~9                   ; Lost fanout        ;
-; Total Number of Removed Registers = 5 ;                    ;
+; FSM:Control|state~38                  ; Lost fanout        ;
+; FSM:Control|state~39                  ; Lost fanout        ;
+; FSM:Control|state~40                  ; Lost fanout        ;
+; FSM:Control|state~41                  ; Lost fanout        ;
+; FSM:Control|state~42                  ; Lost fanout        ;
+; FSM:Control|state~43                  ; Lost fanout        ;
+; Total Number of Removed Registers = 6 ;                    ;
 +---------------------------------------+--------------------+
 
 
@@ -395,35 +431,51 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 657   ;
-; Number of registers using Synchronous Clear  ; 16    ;
-; Number of registers using Synchronous Load   ; 113   ;
-; Number of registers using Asynchronous Clear ; 641   ;
+; Total registers                              ; 688   ;
+; Number of registers using Synchronous Clear  ; 98    ;
+; Number of registers using Synchronous Load   ; 49    ;
+; Number of registers using Asynchronous Clear ; 672   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 625   ;
+; Number of registers using Clock Enable       ; 629   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                              ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                    ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |multicycle|counter:counter|counterOut[6]     ;
-; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X1|q_1[14]        ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R1|q[6]             ;
-; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X2|q_1[0]         ;
-; 5:1                ; 16 bits   ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R2|q[8]             ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux1                              ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux2                              ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux7                              ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux2        ;
-; 8:1                ; 16 bits   ; 80 LEs        ; 64 LEs               ; 16 LEs                 ; No         ; |multicycle|mux5to1_nbit:Mem_mux|Mux10        ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux10       ;
-; 33:1               ; 16 bits   ; 352 LEs       ; 240 LEs              ; 112 LEs                ; No         ; |multicycle|HEXs:HEX_display|display_value[3] ;
-; 12:1               ; 10 bits   ; 80 LEs        ; 70 LEs               ; 10 LEs                 ; No         ; |multicycle|ALU:ALU|tmp_out[12]               ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; mask_reg_4b:reg_4b|q[0]                ; 4       ;
+; mask_reg_4b:reg_4b|q[1]                ; 4       ;
+; mask_reg_4b:reg_4b|q[2]                ; 4       ;
+; mask_reg_4b:reg_4b|q[3]                ; 4       ;
+; Total number of inverted registers = 4 ;         ;
++----------------------------------------+---------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                     ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |multicycle|counter:counter|counterOut[4]      ;
+; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X1|q_2[2]          ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R1|q[7]              ;
+; 4:1                ; 64 bits   ; 128 LEs       ; 128 LEs              ; 0 LEs                  ; Yes        ; |multicycle|register_nx4bit:X2|q_0[2]          ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; Yes        ; |multicycle|register_nbit:R2|q[5]              ;
+; 9:1                ; 64 bits   ; 384 LEs       ; 128 LEs              ; 256 LEs                ; Yes        ; |multicycle|register_nbit:temp3|q[2]           ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 20 LEs               ; 4 LEs                  ; Yes        ; |multicycle|mask_reg_4b:reg_4b|q[0]            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux1                               ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux2                               ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |multicycle|Mux0                               ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux0         ;
+; 8:1                ; 16 bits   ; 80 LEs        ; 64 LEs               ; 16 LEs                 ; No         ; |multicycle|mux5to1_nbit:Mem_mux|Mux1          ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; |multicycle|mux5to1_nbit:ALU2_mux|Mux12        ;
+; 33:1               ; 16 bits   ; 352 LEs       ; 240 LEs              ; 112 LEs                ; No         ; |multicycle|HEXs:HEX_display|display_value[12] ;
+; 7:1                ; 38 bits   ; 152 LEs       ; 152 LEs              ; 0 LEs                  ; No         ; |multicycle|FSM:Control|state                  ;
+; 12:1               ; 10 bits   ; 80 LEs        ; 70 LEs               ; 10 LEs                 ; No         ; |multicycle|ALU:ALU|tmp_out[5]                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -448,41 +500,49 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 +----------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: FSM:Control ;
-+----------------+-------+---------------------------------+
-; Parameter Name ; Value ; Type                            ;
-+----------------+-------+---------------------------------+
-; reset_s        ; 00000 ; Unsigned Binary                 ;
-; c1             ; 00001 ; Unsigned Binary                 ;
-; c2             ; 00010 ; Unsigned Binary                 ;
-; c3_asn         ; 00011 ; Unsigned Binary                 ;
-; c4_asnsh       ; 00100 ; Unsigned Binary                 ;
-; c3_shift       ; 00101 ; Unsigned Binary                 ;
-; c3_ori         ; 00110 ; Unsigned Binary                 ;
-; c4_ori         ; 00111 ; Unsigned Binary                 ;
-; c5_ori         ; 01000 ; Unsigned Binary                 ;
-; c3_load        ; 01001 ; Unsigned Binary                 ;
-; c4_load        ; 01010 ; Unsigned Binary                 ;
-; c3_store       ; 01011 ; Unsigned Binary                 ;
-; c3_bpz         ; 01100 ; Unsigned Binary                 ;
-; c3_bz          ; 01101 ; Unsigned Binary                 ;
-; c3_bnz         ; 01110 ; Unsigned Binary                 ;
-; c3_stop_nop    ; 01111 ; Unsigned Binary                 ;
-; c3_stop        ; 10000 ; Unsigned Binary                 ;
-; c3_nop         ; 10001 ; Unsigned Binary                 ;
-; c2_vls         ; 10010 ; Unsigned Binary                 ;
-; c2_vadd        ; 10011 ; Unsigned Binary                 ;
-; c3_vload       ; 10100 ; Unsigned Binary                 ;
-; c4_vload       ; 10101 ; Unsigned Binary                 ;
-; c5_vload       ; 10110 ; Unsigned Binary                 ;
-; c6_vload       ; 10111 ; Unsigned Binary                 ;
-; c7_vload       ; 11000 ; Unsigned Binary                 ;
-; c3_vstore      ; 11001 ; Unsigned Binary                 ;
-; c4_vstore      ; 11010 ; Unsigned Binary                 ;
-; c5_vstore      ; 11011 ; Unsigned Binary                 ;
-; c6_vstore      ; 11100 ; Unsigned Binary                 ;
-; c3_vadd        ; 11101 ; Unsigned Binary                 ;
-; c4_vadd        ; 11110 ; Unsigned Binary                 ;
-+----------------+-------+---------------------------------+
++----------------+--------+--------------------------------+
+; Parameter Name ; Value  ; Type                           ;
++----------------+--------+--------------------------------+
+; reset_s        ; 000000 ; Unsigned Binary                ;
+; c1             ; 000001 ; Unsigned Binary                ;
+; c2             ; 000010 ; Unsigned Binary                ;
+; c3_asn         ; 000011 ; Unsigned Binary                ;
+; c4_asnsh       ; 000100 ; Unsigned Binary                ;
+; c3_shift       ; 000101 ; Unsigned Binary                ;
+; c3_ori         ; 000110 ; Unsigned Binary                ;
+; c4_ori         ; 000111 ; Unsigned Binary                ;
+; c5_ori         ; 001000 ; Unsigned Binary                ;
+; c3_load        ; 001001 ; Unsigned Binary                ;
+; c4_load        ; 001010 ; Unsigned Binary                ;
+; c3_store       ; 001011 ; Unsigned Binary                ;
+; c3_bpz         ; 001100 ; Unsigned Binary                ;
+; c3_bz          ; 001101 ; Unsigned Binary                ;
+; c3_bnz         ; 001110 ; Unsigned Binary                ;
+; c3_stop_nop    ; 001111 ; Unsigned Binary                ;
+; c3_stop        ; 010000 ; Unsigned Binary                ;
+; c3_nop         ; 010001 ; Unsigned Binary                ;
+; c2_vls         ; 010010 ; Unsigned Binary                ;
+; c2_vop_regld   ; 010011 ; Unsigned Binary                ;
+; c3_vload       ; 010100 ; Unsigned Binary                ;
+; c4_vload       ; 010101 ; Unsigned Binary                ;
+; c5_vload       ; 010110 ; Unsigned Binary                ;
+; c6_vload       ; 010111 ; Unsigned Binary                ;
+; c7_vload       ; 011000 ; Unsigned Binary                ;
+; c3_vstore      ; 011001 ; Unsigned Binary                ;
+; c4_vstore      ; 011010 ; Unsigned Binary                ;
+; c5_vstore      ; 011011 ; Unsigned Binary                ;
+; c6_vstore      ; 011100 ; Unsigned Binary                ;
+; c3_vadd        ; 011101 ; Unsigned Binary                ;
+; c4_vadd        ; 011110 ; Unsigned Binary                ;
+; c3_vsub        ; 011111 ; Unsigned Binary                ;
+; c4_vsub        ; 100000 ; Unsigned Binary                ;
+; c3_vmul        ; 100001 ; Unsigned Binary                ;
+; c4_vmul        ; 100010 ; Unsigned Binary                ;
+; c3_vcmplt      ; 100011 ; Unsigned Binary                ;
+; c3_vcmpgt      ; 100100 ; Unsigned Binary                ;
+; c3_vcmpeq      ; 100101 ; Unsigned Binary                ;
+; c2_vcmclr      ; 100110 ; Unsigned Binary                ;
++----------------+--------+--------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -650,31 +710,33 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 657                         ;
-;     CLR               ; 32                          ;
-;     ENA CLR           ; 496                         ;
-;     ENA CLR SLD       ; 113                         ;
+; arriav_ff             ; 688                         ;
+;     CLR               ; 41                          ;
+;     CLR SCLR          ; 18                          ;
+;     ENA CLR           ; 500                         ;
+;     ENA CLR SCLR      ; 64                          ;
+;     ENA CLR SLD       ; 49                          ;
 ;     ENA SCLR          ; 16                          ;
-; arriav_lcell_comb     ; 710                         ;
-;     arith             ; 113                         ;
-;         1 data inputs ; 33                          ;
-;         2 data inputs ; 64                          ;
+; arriav_lcell_comb     ; 940                         ;
+;     arith             ; 135                         ;
+;         1 data inputs ; 55                          ;
+;         3 data inputs ; 64                          ;
 ;         5 data inputs ; 16                          ;
 ;     extend            ; 2                           ;
 ;         7 data inputs ; 2                           ;
-;     normal            ; 595                         ;
+;     normal            ; 803                         ;
 ;         0 data inputs ; 2                           ;
-;         1 data inputs ; 1                           ;
-;         2 data inputs ; 18                          ;
-;         3 data inputs ; 63                          ;
-;         4 data inputs ; 40                          ;
-;         5 data inputs ; 144                         ;
-;         6 data inputs ; 327                         ;
-; boundary_port         ; 71                          ;
+;         2 data inputs ; 22                          ;
+;         3 data inputs ; 70                          ;
+;         4 data inputs ; 89                          ;
+;         5 data inputs ; 230                         ;
+;         6 data inputs ; 390                         ;
+; arriav_mac            ; 4                           ;
+; boundary_port         ; 72                          ;
 ; stratixv_ram_block    ; 16                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 7.00                        ;
-; Average LUT depth     ; 3.04                        ;
+; Average LUT depth     ; 3.25                        ;
 +-----------------------+-----------------------------+
 
 
@@ -693,7 +755,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Thu Oct  1 14:43:16 2026
+    Info: Processing started: Mon Oct  5 23:02:24 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off gpu_v0 -c multicycle
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
@@ -732,36 +794,45 @@ Info (12021): Found 1 design units, including 1 entities, in source file alu.sv
     Info (12023): Found entity 1: ALU File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/ALU.sv Line: 25
 Warning (12019): Can't analyze file -- file adder_8.sv is missing
 Info (12127): Elaborating entity "multicycle" for the top level hierarchy
-Warning (10034): Output port "LEDR[17..10]" at multicycle.sv(40) has no driver File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-Info (12128): Elaborating entity "HEXs" for hierarchy "HEXs:HEX_display" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 111
+Warning (10034): Output port "LEDR[17..10]" at multicycle.sv(42) has no driver File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+Info (12128): Elaborating entity "HEXs" for hierarchy "HEXs:HEX_display" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 137
 Info (12128): Elaborating entity "HEX" for hierarchy "HEXs:HEX_display|HEX:decode_digits[0].decoder" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 102
-Info (12128): Elaborating entity "FSM" for hierarchy "FSM:Control" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 141
-Info (10264): Verilog HDL Case Statement information at FSM.sv(144): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "MemInSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "VRFWrite", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "X1Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "X2Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "VoutSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t0load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t1load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t2load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Warning (10240): Verilog HDL Always Construct warning at FSM.sv(144): inferring latch(es) for variable "t3load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "t3load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "t2load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "t1load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "t0load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "VoutSel" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "X2Load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "X1Load" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "VRFWrite" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "MemInSel[0]" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "MemInSel[1]" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
-Info (10041): Inferred latch for "MemInSel[2]" at FSM.sv(144) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 144
+Info (12128): Elaborating entity "FSM" for hierarchy "FSM:Control" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 167
+Info (10264): Verilog HDL Case Statement information at FSM.sv(169): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "MemInSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "VRFWrite", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "X1Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "X2Load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "VoutSel", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "t0load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "t1load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "t2load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "t3load", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "v_op", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "ldMask", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Warning (10240): Verilog HDL Always Construct warning at FSM.sv(169): inferring latch(es) for variable "vmaskreset", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "vmaskreset" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "ldMask" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "v_op[0]" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "v_op[1]" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "v_op[2]" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "v_op[3]" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "t3load" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "t2load" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "t1load" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "t0load" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "VoutSel" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "X2Load" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "X1Load" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "VRFWrite" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "MemInSel[0]" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "MemInSel[1]" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
+Info (10041): Inferred latch for "MemInSel[2]" at FSM.sv(169) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 169
 Warning (12125): Using design file memory.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: memory File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 22
 Warning (12300): Found the following files while searching for definition of entity "memory", but did not use these files because already using a different file containing the entity definition
     Warning (12126): File: memory.bdf
-Info (12128): Elaborating entity "memory" for hierarchy "memory:DataMem" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 147
+Info (12128): Elaborating entity "memory" for hierarchy "memory:DataMem" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 173
 Info (12128): Elaborating entity "DataMemory" for hierarchy "memory:DataMem|DataMemory:b2v_inst" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 53
 Info (12128): Elaborating entity "altsyncram" for hierarchy "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
 Info (12130): Elaborated megafunction instantiation "memory:DataMem|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
@@ -786,69 +857,60 @@ Info (12128): Elaborating entity "altsyncram_p2j1" for hierarchy "memory:DataMem
 Warning (12125): Using design file mux2to1_nbit.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: mux2to1_nbit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux2to1_nbit.sv Line: 6
 Info (12128): Elaborating entity "mux2to1_nbit" for hierarchy "memory:DataMem|mux2to1_nbit:b2v_inst3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 62
-Info (12128): Elaborating entity "ALU" for hierarchy "ALU:ALU" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 152
-Info (12128): Elaborating entity "RF" for hierarchy "RF:RF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 159
-Info (12128): Elaborating entity "VRF" for hierarchy "VRF:VRF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 174
+Info (12128): Elaborating entity "ALU" for hierarchy "ALU:ALU" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 178
+Info (12128): Elaborating entity "RF" for hierarchy "RF:RF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 185
+Info (12128): Elaborating entity "VRF" for hierarchy "VRF:VRF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 199
 Warning (12125): Using design file register_nx4bit.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: register_nx4bit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_nx4bit.sv Line: 7
-Info (12128): Elaborating entity "register_nx4bit" for hierarchy "register_nx4bit:X1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 182
+Info (12128): Elaborating entity "register_nx4bit" for hierarchy "register_nx4bit:X1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 207
 Warning (12125): Using design file mux5to1_nbit.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: mux5to1_nbit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mux5to1_nbit.sv Line: 5
-Info (12128): Elaborating entity "mux5to1_nbit" for hierarchy "mux5to1_nbit:Mem_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 195
-Warning (12125): Using design file adder_n.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
-    Info (12023): Found entity 1: adder_n File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_n.sv Line: 4
-Info (12128): Elaborating entity "adder_n" for hierarchy "adder_n:a0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 201
+Info (12128): Elaborating entity "mux5to1_nbit" for hierarchy "mux5to1_nbit:Mem_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 220
+Warning (12125): Using design file mask_reg_4b.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: mask_reg_4b File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/mask_reg_4b.sv Line: 3
+Info (12128): Elaborating entity "mask_reg_4b" for hierarchy "mask_reg_4b:reg_4b" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 223
+Warning (12125): Using design file alu_v.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: ALU_V File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/alu_v.sv Line: 3
+Info (12128): Elaborating entity "ALU_V" for hierarchy "ALU_V:a0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 229
+Warning (10230): Verilog HDL assignment warning at alu_v.sv(31): truncated value with size 32 to match size of target (16) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/alu_v.sv Line: 31
 Warning (12125): Using design file register_nbit.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: register_nbit File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/register_nbit.sv Line: 7
-Info (12128): Elaborating entity "register_nbit" for hierarchy "register_nbit:temp0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 242
-Info (12128): Elaborating entity "mux2to1_2bit" for hierarchy "mux2to1_2bit:R1Sel_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 310
-Info (12128): Elaborating entity "counter" for hierarchy "counter:counter" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 335
+Info (12128): Elaborating entity "register_nbit" for hierarchy "register_nbit:temp0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 270
+Warning (12125): Using design file adder_n.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: adder_n File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/adder_n.sv Line: 4
+Info (12128): Elaborating entity "adder_n" for hierarchy "adder_n:plusOne" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 292
+Info (12128): Elaborating entity "mux2to1_2bit" for hierarchy "mux2to1_2bit:R1Sel_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 338
+Info (12128): Elaborating entity "counter" for hierarchy "counter:counter" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 363
 Warning (10230): Verilog HDL assignment warning at counter.sv(16): truncated value with size 32 to match size of target (16) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.sv Line: 16
-Info (12128): Elaborating entity "sExtend" for hierarchy "sExtend:SE4" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 339
-Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 340
-Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE5" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 341
+Info (12128): Elaborating entity "sExtend" for hierarchy "sExtend:SE4" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 367
+Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 368
+Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE5" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 369
 Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
-Warning (13012): Latch FSM:Control|VRFWrite has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c7_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
-Warning (13012): Latch FSM:Control|VoutSel has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c3_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
-Warning (13012): Latch FSM:Control|t0load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c3_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
-Warning (13012): Latch FSM:Control|t1load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c4_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
-Warning (13012): Latch FSM:Control|t2load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c5_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
-Warning (13012): Latch FSM:Control|t3load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c6_vload File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
-Warning (13012): Latch FSM:Control|X1Load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c2_vls File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
-Warning (13012): Latch FSM:Control|X2Load has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 43
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal FSM:Control|state.c2_vadd File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 46
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "HEX4[0]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX4[1]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX4[2]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX4[3]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX4[4]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX4[5]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX4[6]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX5[0]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX5[1]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX5[2]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX5[3]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX5[4]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX5[5]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "HEX5[6]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
-    Warning (13410): Pin "LEDR[10]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-    Warning (13410): Pin "LEDR[11]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-    Warning (13410): Pin "LEDR[12]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-    Warning (13410): Pin "LEDR[13]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-    Warning (13410): Pin "LEDR[14]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-    Warning (13410): Pin "LEDR[15]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-    Warning (13410): Pin "LEDR[16]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
-    Warning (13410): Pin "LEDR[17]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 40
+    Warning (13410): Pin "HEX4[0]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX4[1]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX4[2]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX4[3]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX4[4]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX4[5]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX4[6]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX5[0]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX5[1]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX5[2]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX5[3]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX5[4]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX5[5]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "HEX5[6]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 41
+    Warning (13410): Pin "LEDR[10]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+    Warning (13410): Pin "LEDR[11]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+    Warning (13410): Pin "LEDR[12]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+    Warning (13410): Pin "LEDR[13]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+    Warning (13410): Pin "LEDR[14]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+    Warning (13410): Pin "LEDR[15]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+    Warning (13410): Pin "LEDR[16]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
+    Warning (13410): Pin "LEDR[17]" is stuck at GND File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 42
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 5 registers lost all their fanouts during netlist optimizations.
+Info (17049): 6 registers lost all their fanouts during netlist optimizations.
 Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not exist in design
     Warning (20014): Assignment for entity set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to HPS_DDR3_ADDR[0] -entity DE1_SoC was ignored
     Warning (20014): Assignment for entity set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to HPS_DDR3_ADDR[10] -entity DE1_SoC was ignored
@@ -1421,20 +1483,29 @@ Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not
     Warning (20014): Assignment for entity set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to HPS_DDR3_DQ[9] -entity DE1_SoC was ignored
     Warning (20014): Assignment for entity set_instance_assignment -name D5_DELAY 2 -to HPS_DDR3_CK_N -entity DE1_SoC was ignored
     Warning (20014): Assignment for entity set_instance_assignment -name D5_DELAY 2 -to HPS_DDR3_CK_P -entity DE1_SoC was ignored
+Info (144001): Generated suppressed messages file C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 2 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 37
-    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 37
-Info (21057): Implemented 1193 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 11 input pins
+Warning (21074): Design contains 3 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
+    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 39
+    Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sv Line: 37
+Info (21057): Implemented 1429 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 12 input pins
     Info (21059): Implemented 60 output pins
-    Info (21061): Implemented 1106 logic cells
+    Info (21061): Implemented 1337 logic cells
     Info (21064): Implemented 16 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 640 warnings
-    Info: Peak virtual memory: 4936 megabytes
-    Info: Processing ended: Thu Oct  1 14:43:26 2026
-    Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:22
+    Info (21062): Implemented 4 DSP elements
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 631 warnings
+    Info: Peak virtual memory: 4908 megabytes
+    Info: Processing ended: Mon Oct  5 23:02:33 2026
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:21
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.map.smsg.
 
 

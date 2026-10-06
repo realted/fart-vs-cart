@@ -886,4 +886,5 @@ set_global_assignment -name SYSTEMVERILOG_FILE ALU.sv
 set_global_assignment -name SYSTEMVERILOG_FILE adder_8.sv
 set_global_assignment -name MIF_FILE data.mif
 set_global_assignment -name SOURCE_FILE db/multicycle.cmp.rdb
+set_global_assignment -name SDC_FILE multicycle.sdc
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

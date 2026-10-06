@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at VRF.sv(121): always construct contains both blocking and non-blocking assignments File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/VRF.sv Line: 121
