@@ -72,6 +72,21 @@ t0load, t1load, t2load, t3load, R2sel
 					// New states (v0.2)
 					c3_vsub = 31, c4_vsub = 32, c3_vmul = 33, c4_vmul = 34, c3_vcmplt = 35, 
 					c3_vcmpgt = 36, c3_vcmpeq = 37, c2_vcmclr = 38;
+    // Scalars retain opcode [11:6] and six reserved low bits.
+    // Eight-register vectors use opcode [9:4] and four reserved low bits.
+    localparam [5:0] VLOAD_OP = 6'b100001, VSTORE_OP = 6'b100010,
+                     VADD_OP = 6'b100100, VSUB_OP = 6'b100101,
+                     VMUL_OP = 6'b100110, VCMPLT_OP = 6'b101000,
+                     VCMPGT_OP = 6'b101001, VCMPEQ_OP = 6'b101010,
+                     VCMCLR_OP = 6'b101111;
+    wire [5:0] vector_opcode = instr[9:4];
+    wire vector_instruction = (instr[3:0] == 4'b0000) &&
+        ((vector_opcode == VLOAD_OP) || (vector_opcode == VSTORE_OP) ||
+         (vector_opcode == VADD_OP) || (vector_opcode == VSUB_OP) ||
+         (vector_opcode == VMUL_OP) || (vector_opcode == VCMPLT_OP) ||
+         (vector_opcode == VCMPGT_OP) || (vector_opcode == VCMPEQ_OP) ||
+         (vector_opcode == VCMCLR_OP));
+
 	// determines the next state based upon the current state; supports
 	// asynchronous reset
 	always @(posedge clock or posedge reset)
@@ -85,16 +100,20 @@ t0load, t1load, t2load, t3load, R2sel
 						
 						
                 c2: begin
-                    // Register instructions reserve the low six bits as zero.
-                    // Without this guard, immediate bits can mimic an opcode.
-                    if (instr[5:0] == 6'b000000) begin
+                    if (vector_instruction) begin
+                        case (vector_opcode)
+                            VLOAD_OP, VSTORE_OP: state = c2_vls;
+                            VADD_OP, VSUB_OP, VMUL_OP,
+                            VCMPLT_OP, VCMPGT_OP, VCMPEQ_OP: state = c2_vop_regld;
+                            VCMCLR_OP: state = c2_vcmclr;
+                            default: state = reset_s;
+                        endcase
+                    end
+                    else if (instr[5:0] == 6'b000000) begin
                         case (instr[11:6])
                             6'b000000: state = c3_load;
                             6'b000010: state = c3_store;
                             6'b000100, 6'b000110, 6'b001000: state = c3_asn;
-                            6'b100000, 6'b100010: state = c2_vls;
-                            6'b100100, 6'b100101, 6'b100110, 6'b101000, 6'b101001, 6'b101010: state = c2_vop_regld;
-							6'b101111: state = c2_vcmclr;
                             default: state = reset_s;
                         endcase
                     end
@@ -126,19 +145,24 @@ t0load, t1load, t2load, t3load, R2sel
 				c3_nop:     state = c1;
 				
 				// More New instructions
-				c2_vls: begin 
-							if (instr[11:6] == 6'b100000) state = c3_vload;
-							else state = c3_vstore;
-						end
-				c2_vop_regld: 
-						begin
-							if (instr[11:6] == 6'b100100) state = c3_vadd;
-							else if (instr[11:6] == 6'b100101) state = c3_vsub;
-							else if (instr[11:6] == 6'b100110) state = c3_vmul;
-							else if (instr[11:6] == 6'b101000) state = c3_vcmplt;
-							else if (instr[11:6] == 6'b101001) state = c3_vcmpgt;
-							else if (instr[11:6] == 6'b101010) state = c3_vcmpeq;
-						end
+                c2_vls: begin
+                    case (vector_opcode)
+                        VLOAD_OP: state = c3_vload;
+                        VSTORE_OP: state = c3_vstore;
+                        default: state = reset_s;
+                    endcase
+                end
+                c2_vop_regld: begin
+                    case (vector_opcode)
+                        VADD_OP: state = c3_vadd;
+                        VSUB_OP: state = c3_vsub;
+                        VMUL_OP: state = c3_vmul;
+                        VCMPLT_OP: state = c3_vcmplt;
+                        VCMPGT_OP: state = c3_vcmpgt;
+                        VCMPEQ_OP: state = c3_vcmpeq;
+                        default: state = reset_s;
+                    endcase
+                end
 				c3_vload:	state = c4_vload;
 				c4_vload:	state = c5_vload;
 				c5_vload:	state = c6_vload;
@@ -607,8 +631,8 @@ t0load, t1load, t2load, t3load, R2sel
 				
 				// New Control Instructions 
 			c2_vls: 
-				// VRF[IR[7..6]] = X1
-				// VRF[IR[5..4]] = R2			
+				// X1 captures VRF[IR[15:13]].
+				// R2 captures the scalar base address (top-level RF selection).			
 				begin
 					PCwrite = 0;
 					AddrSel = 0;
@@ -646,8 +670,8 @@ t0load, t1load, t2load, t3load, R2sel
 				end	
 			
 			c2_vop_regld: 
-				// VRF[IR[15..14]] = X1
-				// VRF[IR[13..12]] = X2			
+				// X1 captures VRF[IR[15:13]].
+				// X2 captures VRF[IR[12:10]].			
 				begin
 					PCwrite = 0;
 					AddrSel = 0;

@@ -1,5 +1,5 @@
 Assembler report for multicycle
-Mon Oct  5 23:06:01 2026
+Thu Oct  8 22:22:35 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -38,7 +38,7 @@ on the Quartus Prime software download page.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Mon Oct  5 23:06:01 2026 ;
+; Assembler Status      ; Successful - Thu Oct  8 22:22:34 2026 ;
 ; Revision Name         ; multicycle                            ;
 ; Top-level Entity Name ; multicycle                            ;
 ; Family                ; Cyclone V                             ;
@@ -67,8 +67,8 @@ on the Quartus Prime software download page.
 +----------------+-----------------------------------------------------------------------+
 ; Option         ; Setting                                                               ;
 +----------------+-----------------------------------------------------------------------+
-; JTAG usercode  ; 0x00CF6B5E                                                            ;
-; Checksum       ; 0x00CF6B5E                                                            ;
+; JTAG usercode  ; 0x00DADC47                                                            ;
+; Checksum       ; 0x00DADC47                                                            ;
 +----------------+-----------------------------------------------------------------------+
 
 
@@ -78,14 +78,14 @@ on the Quartus Prime software download page.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Mon Oct  5 23:05:56 2026
+    Info: Processing started: Thu Oct  8 22:22:28 2026
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off gpu_v0 -c multicycle
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4885 megabytes
-    Info: Processing ended: Mon Oct  5 23:06:01 2026
-    Info: Elapsed time: 00:00:05
-    Info: Total CPU time (on all processors): 00:00:04
+    Info: Peak virtual memory: 4888 megabytes
+    Info: Processing ended: Thu Oct  8 22:22:35 2026
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:05
 
 

@@ -107,10 +107,10 @@ bool labelExists (map <string, int>& labels, string label)
 	return (labels.find(label) != labels.end());
 }
 
-// Scalar registers are k0..k3; vector registers are v0..v3 (x aliases).
+// Scalar registers are k0..k3; vector registers are v0..v7 (x aliases).
 bool registerIndex(const string& name, bool vector_reg, int& index)
 {
-    if (name.size() != 2 || name[1] < '0' || name[1] > '3') return false;
+    if (name.size() != 2 || name[1] < '0' || name[1] > (vector_reg ? '7' : '3')) return false;
     if (vector_reg ? (name[0] != 'v' && name[0] != 'x') : name[0] != 'k')
         return false;
     index = name[1] - '0';
@@ -365,11 +365,13 @@ int main(int argc, char* argv[])
                     throw "invalid register operands";
                 const map<string, int> opcodes = {
                     {"load", 0x00}, {"store", 0x02}, {"add", 0x04},
-                    {"sub", 0x06}, {"nand", 0x08}, {"vload", 0x20},
+                    {"sub", 0x06}, {"nand", 0x08}, {"vload", 0x21},
                     {"vstore", 0x22}, {"vadd", 0x24}, {"vsub", 0x25},
                     {"vmul", 0x26}, {"vcmplt", 0x28}, {"vcmpgt", 0x29}, {"vcmpeq", 0x2A}
                 };
-                encoding = (op1 << 14) | (op2 << 12) | (opcodes.at(col2) << 6);
+                encoding = vector_reg
+                    ? ((op1 << 13) | (op2 << 10) | (opcodes.at(col2) << 4))
+                    : ((op1 << 14) | (op2 << 12) | (opcodes.at(col2) << 6));
             }
 			else if (col2 == "ori")
 			{
@@ -450,7 +452,7 @@ int main(int argc, char* argv[])
 			}
             else if (col2 == "vcmclr")
             {
-                encoding = 0xFBC0; // 11 11 101111 000000: enable all lanes.
+                encoding = 0xFEF0; // 111 111 101111 0000: enable all lanes.
             }
 			else if (col2 == "stop")
 			{

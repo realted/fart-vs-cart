@@ -23,16 +23,16 @@ The SHIFT clarification below was confirmed by the processor author.
 | Instruction | Encoding / range |
 | --- | --- |
 | LOAD, STORE, ADD, SUB, NAND | `(R1 << 14) \| (R2 << 12) \| (opcode << 6)`; opcodes 0, 2, 4, 6, 8 |
-| VLOAD, VSTORE, VADD | Same layout; opcodes 32, 34, 36 |
-| VSUB, VMUL, VCMPLT, VCMPGT, VCMPEQ | Same register layout; opcodes 37, 38, 40, 41, 42 |
-| VCMCLR | No operands; fixed word `FBC0`, enables all lanes |
+| VLOAD, VSTORE, VADD | `(R1 << 13) \| (R2 << 10) \| (opcode << 4)`; opcodes 33, 34, 36 |
+| VSUB, VMUL, VCMPLT, VCMPGT, VCMPEQ | Same vector layout; opcodes 37, 38, 40, 41, 42 |
+| VCMCLR | No operands; fixed word `FEF0`, enables all lanes |
 | ORI | `(imm13 << 3) \| 7`; immediate 0..8191 |
 | SHIFT | `(R1 << 14) \| (imm11 << 3) \| 3`; only low 3 immediate bits are used |
 | BZ, BNZ, BPZ | `((offset & 0xFFF) << 4) \| tag`; tags 5, 9, 13; offset -2048..2047 |
 | STOP / NOP | `0001` / `8001` |
 
-Scalar registers: `k0` through `k3`. Vector registers: `v0` through `v3`, with
-`x0` through `x3` accepted as aliases. Loads/stores use a scalar address register:
+Scalar registers: `k0` through `k3`. Vector registers: `v0` through `v7`, with
+`x0` through `x7` accepted as aliases. Loads/stores use a scalar address register:
 `load k0,(k1)`, `vload v0,(k1)`. Arithmetic uses `add k0,k1` or `vadd v0,v1`.
 Register classes are checked; scalar/vector operands cannot be mixed.
 
@@ -82,6 +82,6 @@ These are assembler/ISA-level tests, not a full RTL simulation.
 ```
 
 The comparisons produce mask bits, not vector-register arithmetic results.
-`x0`..`x3` aliases also work. Q8.8 data uses integer literals representing
+`x0`..`x7` aliases also work. Q8.8 data uses integer literals representing
 scaled values: `db 384` represents 1.5. The assembler does not convert decimal
 floating-point literals. Multiplication scaling/truncation happens in the ALU.

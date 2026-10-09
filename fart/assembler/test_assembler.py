@@ -31,16 +31,16 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
     golden = [
         ('load k1,(k2)', 0x6000), ('store k1,(k2)', 0x6080),
         ('add k1,k2', 0x6100), ('sub k1,k2', 0x6180),
-        ('nand k1,k2', 0x6200), ('vload v1,(k2)', 0x6800),
-        ('vstore v1,(k2)', 0x6880), ('vadd v1,v2', 0x6900),
-        ('vadd x1,x2', 0x6900), ('ori 8191', 0xFFFF), ('ori 0', 0x0007),
+        ('nand k1,k2', 0x6200), ('vload v1,(k2)', 0x2A10),
+        ('vstore v1,(k2)', 0x2A20), ('vadd v1,v2', 0x2A40),
+        ('vadd x1,x2', 0x2A40), ('ori 8191', 0xFFFF), ('ori 0', 0x0007),
         ('shiftl k1,2', 0x4033), ('shiftr k3,3', 0xC01B),
         ('shift k2,7', 0x803B), ('bz -2048', 0x8005),
         ('bnz 2047', 0x7FF9), ('bpz -1', 0xFFFD),
-        ('vsub v1,v2', 0x6940), ('vmul v1,v2', 0x6980),
-        ('vcmplt v1,v2', 0x6A00), ('vcmpgt v1,v2', 0x6A40),
-        ('vcmpeq v1,v2', 0x6A80), ('vcmclr', 0xFBC0),
-        ('vcmclr ; enable all lanes', 0xFBC0), ('nop', 0x8001), ('stop', 0x0001),
+        ('vsub v1,v2', 0x2A50), ('vmul v1,v2', 0x2A60),
+        ('vcmplt v1,v2', 0x2A80), ('vcmpgt v1,v2', 0x2A90),
+        ('vcmpeq v1,v2', 0x2AA0), ('vcmclr', 0xFEF0),
+        ('vcmclr ; enable all lanes', 0xFEF0), ('nop', 0x8001), ('stop', 0x0001),
         ('db 256', 0x0100), ('db 65535', 0xFFFF), ('db -32768', 0x8000),
         ('db -1', 0xFFFF), ('db $ABCD', 0xABCD), ('db %100000000', 0x0100),
     ]
@@ -48,22 +48,22 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
     assert [data[i] for i in range(len(golden))] == [value for _, value in golden]
 
     aliases = assemble('    vsub x1,x2\n    vmul x1,x2\n    vcmplt x1,x2\n    vcmpgt x1,x2\n    vcmpeq x1,x2\n')
-    assert [aliases[i] for i in range(5)] == [0x6940,0x6980,0x6A00,0x6A40,0x6A80]
+    assert [aliases[i] for i in range(5)] == [0x2A50,0x2A60,0x2A80,0x2A90,0x2AA0]
 
     # All register combinations and both shift directions.
     for op, opcode in [('load', 0), ('store', 2), ('add', 4), ('sub', 6),
-                       ('nand', 8), ('vload', 32), ('vstore', 34), ('vadd', 36), ('vsub', 37), ('vmul', 38),
+                       ('nand', 8), ('vload', 33), ('vstore', 34), ('vadd', 36), ('vsub', 37), ('vmul', 38),
                        ('vcmplt', 40), ('vcmpgt', 41), ('vcmpeq', 42)]:
         cases = []
-        for a in range(4):
-            for b in range(4):
+        for a in range(8 if op.startswith("v") else 4):
+            for b in range(8 if op.startswith("v") and op not in ("vload", "vstore") else 4):
                 first = ('v' if op.startswith('v') else 'k') + str(a)
                 second = ('v' if op in ('vadd','vsub','vmul','vcmplt','vcmpgt','vcmpeq') else 'k') + str(b)
                 if op.endswith(('load', 'store')):
                     second = '(' + second + ')'
-                cases.append((f'    {op} {first},{second}\n', (a << 14) | (b << 12) | (opcode << 6)))
+                cases.append((f'    {op} {first},{second}\n', ((a << 13) | (b << 10) | (opcode << 4)) if op.startswith("v") else ((a << 14) | (b << 12) | (opcode << 6))))
         data = assemble(''.join(t for t, _ in cases))
-        assert [data[i] for i in range(16)] == [v for _, v in cases]
+        assert [data[i] for i in range(len(cases))] == [v for _, v in cases]
     for reg in range(4):
         for count in range(4):
             data = assemble(f'    shiftl k{reg},{count}\n    shiftr k{reg},{count}\n')
@@ -75,7 +75,7 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
     data = assemble('    org 255\n    db 300\n')
     assert data[255] == 300
 
-    for text in ['vcmclr v0', 'vmul k0,v1', 'vsub v0,k1', 'vcmplt v0,v4',
+    for text in ['vcmclr v0', 'vload v7,(k4)', 'vstore v8,(k0)', 'vadd x8,x0', 'vmul k0,v1', 'vsub v0,k1', 'vcmplt v0,v8',
                  'vcmpgt v0', 'vcmpeq k0,k1', 'ori -1', 'ori 8192', 'shiftl k0,4', 'shiftr k0,-1', 'shift k0,8',
                  'bz -2049', 'bnz 2048', 'db -32769', 'db 65536', 'db 4294967296',
                  'load v0,(k1)', 'vload k0,(k1)', 'vload v0,(v1)', 'vadd v0,k1',
@@ -90,8 +90,8 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
         assert Path(str(output) + '.mem').read_text() == 'KEEP MEM', text
 
     data = assemble((ROOT / 'test1_16bit_path.s').read_text())
-    expected_ops = [0x0087, 0x4033, 0x1800, 0x0027, 0x5800,
-                    0x1900, 0x5180, 0x0097, 0x4033, 0x1880]
+    expected_ops = [0x0087, 0x4033, 0x0610, 0x0027, 0x2610,
+                    0x0640, 0x5180, 0x0097, 0x4033, 0x0620]
     assert [data[i * 4] for i in range(10)] == expected_ops
     assert all(data[i * 4 + j] == 0x8001 for i in range(10) for j in (1, 2, 3))
     assert data[40] == 1
@@ -99,7 +99,7 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
 
     # ISA-level execution, not an RTL simulation. Decode words, not source text.
     mem = [data[i] for i in range(256)] + [0] * (65536 - 256)
-    scalar, vector, pc = [0] * 4, [[0] * 4 for _ in range(4)], 0
+    scalar, vector, pc = [0] * 4, [[0] * 4 for _ in range(8)], 0
     for steps in range(1000):
         ins = mem[pc]
         pc = (pc + 1) & 65535
@@ -114,19 +114,17 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
             assert imm < 8
             scalar[reg] = ((scalar[reg] << (imm & 3)) if imm & 4 else
                            (scalar[reg] >> (imm & 3))) & 65535
-        elif ins & 63 == 0:
-            a, b, opcode = ins >> 14, (ins >> 12) & 3, (ins >> 6) & 63
-            if opcode == 6:
-                scalar[a] = (scalar[a] - scalar[b]) & 65535
-            elif opcode == 32:
-                vector[a] = [mem[(scalar[b] + lane) & 65535] for lane in range(4)]
+        elif ins & 15 == 0 and ((ins >> 4) & 63) in (33,34,36):
+            a,b,opcode = ins >> 13, (ins >> 10) & 7, (ins >> 4) & 63
+            if opcode == 33:
+                vector[a] = [mem[(scalar[b]+lane)&65535] for lane in range(4)]
             elif opcode == 36:
-                vector[a] = [(x + y) & 65535 for x, y in zip(vector[a], vector[b])]
-            elif opcode == 34:
-                for lane in range(4):
-                    mem[(scalar[b] + lane) & 65535] = vector[a][lane]
+                vector[a] = [(x+y)&65535 for x,y in zip(vector[a],vector[b])]
             else:
-                raise AssertionError(f'Unexpected instruction {ins:04X}')
+                for lane in range(4): mem[(scalar[b]+lane)&65535] = vector[a][lane]
+        elif ins & 63 == 0 and ((ins >> 6) & 63) == 6:
+            a,b = ins >> 14, (ins >> 12)&3
+            scalar[a] = (scalar[a]-scalar[b])&65535
         else:
             raise AssertionError(f'Unexpected instruction {ins:04X}')
     else:

@@ -1,8 +1,8 @@
 NOTES:
-* ORI IMM13: 13-bit unsigned immediate, 0..8191.
-* Branch IMM12: 12-bit two's complement offset, -2048..2047.
-* SHIFT IMM11: bits 10:3 unused (zero), bit 2 direction (1=left,
-  0=right), bits 1:0 shift count (0..3), as confirmed by the author.
+* IMM13 is a 13-bit immediate using sign/magnitude representation:
+  * bit 2 = sign, value = bits 1 and 0
+* IMM12: 12-bit immed using 2's complement representation
+* IMM11: 11-bit unsigned
 * EXT(X): sign-extend X to 16 bits
   * eg: 101 = 5; EXT(101) = 0000000000000101
   * eg: 1101 = -3; EXT(1101) = 1111111111111101
@@ -49,8 +49,8 @@ ORI IMM13
     [PC] = [PC] + 1
 
 SHIFT R1 IMM11
-    IF (IMM11[2] == 1) TMP = [R1] << IMM11[1:0]
-    ELSE TMP = [R1] >> IMM11[1:0]
+    IF (IMM11 > 0) TMP = [R1] << IMM11
+    ELSE TMP = [R1] >> (-IMM11)
     R1 = TMP
     IF (TMP == 0) Z = 1; ELSE Z = 0;
     IF (TMP < 0) N = 1; ELSE N = 0;
@@ -85,8 +85,52 @@ VSTORE X1 (R2):
     PC = PC + 1;
 
 VADD X1 X2:
-    X1 = X1 + X2;  // Element-wise addition of vector registers X1 and X2
+	VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	T[0] ... T[3] = X1_0 + X2_0 ... X1_3 + X2_3;
+	X1 = [T[0] ... T[3]];
+	
+    Equiv: X1 = X1 + X2;  // Element-wise addition of vector registers X1 and X2 in Q8.8 Fixed point Format
+	
+VSUB X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	T[0] ... T[3] = X1_0 - X2_0 ... X1_3 - X2_3;
+	X1 = [T[0] ... T[3]];
+	
+    Equiv: X1 = X1 - X2;  // Element-wise subtraction of vector registers X1 and X2 in Q8.8 Fixed point Format
+	
+VMUL X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	T[0] ... T[3] = X1_0 * X2_0 ... X1_3 * X2_3;
+	X1 = [T[0] ... T[3]];
+	
+    Equiv: X1 = X1 * X2;  // Element-wise multiplication of vector registers X1 and X2 in Q8.8 Fixed point Format, arithmetic shift to fit result in 16 bits
 
+VCMPLT X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	mask[3:0] = X1_0 < X2_0 ... X1_3 < X2_3;
+	VRFLANEWRITE = mask;  // Mask to enable/disable proceeding lanes based on comparison  
+	
+    Equiv: mask = X1 < X2;
+	
+VCMPGT X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	mask[3:0] = X1_0 > X2_0 ... X1_3 > X2_3;
+	VRFLANEWRITE = mask;  // Mask to enable/disable proceeding lanes based on comparison  
+	
+    Equiv: mask = X1 > X2;
+
+VCMPEQ X1 X2:
+    VRF[IR[15..14]], VRF[IR[13..12]] = X1, X2;
+	mask[3:0] = X1_0 > X2_0 ... X1_3 > X2_3;
+	VRFLANEWRITE = mask;  // Mask to enable/disable proceeding lanes based on comparison  
+	
+    Equiv: mask = X1 > X2;
+
+VCMCLR:
+	mask[3:0] = 4'b1111;
+	VRFLANEWRITE = mask;  // Clear all lanes 
+	
+    Equiv: Enable all lanes.
 
 Instruction Encodings:
 Legend:
@@ -123,3 +167,9 @@ VRF Instructions:
 VLOAD:   R1 R2 100000 000000
 VSTORE:  R1 R2 100010 000000
 VADD:    R1 R2 100100 000000
+VSUB:	 R1 R2 100101 000000
+VMUL:    R1 R2 100110 000000
+VCMPLT:  R1 R2 101000 000000
+VCMPGT:  R1 R2 101001 000000
+VCMPEQ:  R1 R2 101010 000000
+VCMCLR:  11 11 101111 000000

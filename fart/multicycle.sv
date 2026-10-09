@@ -63,6 +63,10 @@ wire	[DATA_BIT_WIDTH-1:0] vreg0_0, vreg0_1, vreg0_2, vreg0_3;
 wire	[DATA_BIT_WIDTH-1:0] vreg1_0, vreg1_1, vreg1_2, vreg1_3;
 wire	[DATA_BIT_WIDTH-1:0] vreg2_0, vreg2_1, vreg2_2, vreg2_3;
 wire	[DATA_BIT_WIDTH-1:0] vreg3_0, vreg3_1, vreg3_2, vreg3_3;
+wire	[DATA_BIT_WIDTH-1:0] vreg4_0, vreg4_1, vreg4_2, vreg4_3;
+wire	[DATA_BIT_WIDTH-1:0] vreg5_0, vreg5_1, vreg5_2, vreg5_3;
+wire	[DATA_BIT_WIDTH-1:0] vreg6_0, vreg6_1, vreg6_2, vreg6_3;
+wire	[DATA_BIT_WIDTH-1:0] vreg7_0, vreg7_1, vreg7_2, vreg7_3;
 wire    [DATA_BIT_WIDTH-1:0] VRFout1_0wire, VRFout1_1wire, VRFout1_2wire, VRFout1_3wire; 
 wire    [DATA_BIT_WIDTH-1:0] VRFout2_0wire, VRFout2_1wire, VRFout2_2wire, VRFout2_3wire; 
 wire	[DATA_BIT_WIDTH-1:0] vdataw_0wire, vdataw_1wire, vdataw_2wire, vdataw_3wire; 
@@ -128,9 +132,13 @@ HEXs	HEX_display(
 	.inv1_0(vreg1_0), .inv1_1(vreg1_1), .inv1_2(vreg1_2), .inv1_3(vreg1_3), 
 	.inv2_0(vreg2_0), .inv2_1(vreg2_1), .inv2_2(vreg2_2), .inv2_3(vreg2_3), 
 	.inv3_0(vreg3_0), .inv3_1(vreg3_1), .inv3_2(vreg3_2), .inv3_3(vreg3_3), 
+	.inv4_0(vreg4_0), .inv4_1(vreg4_1), .inv4_2(vreg4_2), .inv4_3(vreg4_3), 
+	.inv5_0(vreg5_0), .inv5_1(vreg5_1), .inv5_2(vreg5_2), .inv5_3(vreg5_3), 
+	.inv6_0(vreg6_0), .inv6_1(vreg6_1), .inv6_2(vreg6_2), .inv6_3(vreg6_3), 
+	.inv7_0(vreg7_0), .inv7_1(vreg7_1), .inv7_2(vreg7_2), .inv7_3(vreg7_3), 
 	// SW2 is the high selector bit; SW8..SW5 are the low four bits.
     // 0..3: scalar registers; 4..19: vector lanes; 31: counter.
-    .selH({SW[2], SW[8:5]}), .counter(counterOut),
+    .selH({SW[2], SW[8:4]}), .counter(counterOut),
 	// Til here
 	.out0(HEX0),.out1(HEX1),.out2(HEX2),.out3(HEX3),
 	.out4(HEX4),.out5(HEX5)
@@ -177,9 +185,15 @@ ALU		ALU(
 	.ALUOp(ALUOp),.N(Nwire),.Z(Zwire)
 );
 
+wire vector_mem = (IR[3:0] == 4'b0000) &&
+                  ((IR[9:4] == 6'b100001) ||
+                   (IR[9:4] == 6'b100010));
+
+wire [1:0] rf_read2 = vector_mem ? IR[11:10] : IR[13:12];
+
 RF		RF_block(
 	.clock(clock),.reset(reset),.RFWrite(RFWrite),
-	.dataw(RegWire),.reg1(R1_in),.reg2(IR[13:12]),
+	.dataw(RegWire),.reg1(R1_in),.reg2(rf_read2),
 	.regw(R1_in),.data1(RFout1wire),.data2(RFout2wire),
 	.r0(reg0),.r1(reg1),.r2(reg2),.r3(reg3)
 );
@@ -188,14 +202,18 @@ RF		RF_block(
 
 VRF		VRF_block(
 	.clock(clock),.reset(reset),.VRFWrite(VRFWrite),.VRFLaneWrite(VRFLaneWrite),
-	.vreg1(IR[15:14]),.vreg2(IR[13:12]),.vregw(IR[15:14]),
+	.vreg1(IR[15:13]),.vreg2(IR[12:10]),.vregw(IR[15:13]),
 	.vdataw_0(vdataw_0wire), .vdataw_1(vdataw_1wire), .vdataw_2(vdataw_2wire), .vdataw_3(vdataw_3wire),
 	.vdata1_0(VRFout1_0wire), .vdata1_1(VRFout1_1wire), .vdata1_2(VRFout1_2wire), .vdata1_3(VRFout1_3wire),
 	.vdata2_0(VRFout2_0wire), .vdata2_1(VRFout2_1wire), .vdata2_2(VRFout2_2wire), .vdata2_3(VRFout2_3wire),
 	.vr0_0(vreg0_0),.vr0_1(vreg0_1),.vr0_2(vreg0_2),.vr0_3(vreg0_3),
 	.vr1_0(vreg1_0),.vr1_1(vreg1_1),.vr1_2(vreg1_2),.vr1_3(vreg1_3),
 	.vr2_0(vreg2_0),.vr2_1(vreg2_1),.vr2_2(vreg2_2),.vr2_3(vreg2_3),
-	.vr3_0(vreg3_0),.vr3_1(vreg3_1),.vr3_2(vreg3_2),.vr3_3(vreg3_3)
+	.vr3_0(vreg3_0),.vr3_1(vreg3_1),.vr3_2(vreg3_2),.vr3_3(vreg3_3),
+	.vr4_0(vreg4_0),.vr4_1(vreg4_1),.vr4_2(vreg4_2),.vr4_3(vreg4_3),
+	.vr5_0(vreg5_0),.vr5_1(vreg5_1),.vr5_2(vreg5_2),.vr5_3(vreg5_3),
+	.vr6_0(vreg6_0),.vr6_1(vreg6_1),.vr6_2(vreg6_2),.vr6_3(vreg6_3),
+	.vr7_0(vreg7_0),.vr7_1(vreg7_1),.vr7_2(vreg7_2),.vr7_3(vreg7_3)
 );
 
 // X1 & X2 registers
