@@ -1,10 +1,10 @@
-Analysis & Synthesis Status : Successful - Sat Oct 10 13:16:46 2026
+Analysis & Synthesis Status : Successful - Sat Oct 10 15:58:10 2026
 Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : multicycle
 Top-level Entity Name : gpu
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 866
+Total registers : 867
 Total pins : 72
 Total virtual pins : 0
 Total block memory bits : 20,480

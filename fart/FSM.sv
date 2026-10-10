@@ -26,7 +26,8 @@ vecstore
 	input	N, Z;
 	input	reset, clock;
 	output	PCwrite, MemRead, IRload, R1Sel, MDRload, MemWrite;
-	output	R1R2Load, ALU1, ALUOutWrite, RFWrite, RegIn, FlagWrite, stop;
+	output	R1R2Load, ALU1, ALUOutWrite, RFWrite, FlagWrite, stop;
+	output  [1:0] RegIn;
 	output	[2:0] ALU2, ALUop;
 
 	// New Control Signals
@@ -40,7 +41,8 @@ vecstore
 	output logic vecstore;
 	reg [5:0]	state;
 	reg	PCwrite, MemRead, IRload, R1Sel, MDRload;
-	reg	R1R2Load, ALU1, ALUOutWrite, RFWrite, RegIn, FlagWrite, stop;
+	reg	R1R2Load, ALU1, ALUOutWrite, RFWrite, FlagWrite, stop;
+	reg [1:0] RegIn;
 	reg	[2:0] ALU2, ALUop;
 	
 	// New wires
@@ -56,8 +58,11 @@ vecstore
 					c3_vload = 18, c3_vstore = 19, c3_vadd = 20,
 					
 					// New states (v0.2)
-					c3_vsub = 21, c3_vmul = 22, c3_vcmplt = 23, 
-					c3_vcmpgt = 24, c3_vcmpeq = 25, c2_vcmclr = 26;
+					c3_vsub = 21, c3_vmul = 22, c3_vcmplt = 23,
+					c3_vcmpgt = 24, c3_vcmpeq = 25, c2_vcmclr = 26,
+					
+					// New states (v0.5)
+					c3_li = 27;
 					
     // Scalars retain opcode [11:6] and six reserved low bits.
     // Eight-register vectors use opcode [9:4] and four reserved low bits.
@@ -114,6 +119,7 @@ vecstore
 					end
 					else if (instr[2:0] == 3'b011)  state <= c3_shift;
 					else if (instr[2:0] == 3'b111)  state <= c3_ori;
+					else if (instr[2:0] == 3'b100)  state <= c3_li;
 					else if (instr[3:0] == 4'b1101) state <= c3_bpz;
 					else if (instr[3:0] == 4'b0101) state <= c3_bz;
 					else if (instr[3:0] == 4'b1001) state <= c3_bnz;
@@ -132,6 +138,7 @@ vecstore
 				c3_bpz:		state <= c1; 		// cycle 3: BPZ
 				c3_bz:		state <= c1; 		// cycle 3: BZ
 				c3_bnz:		state <= c1; 		// cycle 3: BNZ
+				c3_li:      state <= c1;
 				c3_stop_nop:  begin	
 								if (msbInstr == 1'b1) state <= c3_nop;
 								else if (msbInstr == 1'b0) state <= c3_stop;
@@ -168,7 +175,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -200,7 +207,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -235,7 +242,7 @@ vecstore
 					ALUop       = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite     = 0;
-					RegIn       = 0;
+					RegIn 		= 2'b00;
 					FlagWrite   = 0;
 					stop        = 0;
 
@@ -282,7 +289,7 @@ vecstore
 						ALUop = 3'b000;
 						ALUOutWrite = 1;
 						RFWrite = 0;
-						RegIn = 0;
+						RegIn = 2'b00;
 						FlagWrite = 1;
 						stop = 0;
 											
@@ -317,7 +324,7 @@ vecstore
 						ALUop = 3'b001;
 						ALUOutWrite = 1;
 						RFWrite = 0;
-						RegIn = 0;
+						RegIn = 2'b00;
 						FlagWrite = 1;
 						stop = 0;						
 					
@@ -351,7 +358,7 @@ vecstore
 						ALUop = 3'b011;
 						ALUOutWrite = 1;
 						RFWrite = 0;
-						RegIn = 0;
+						RegIn = 2'b00;
 						FlagWrite = 1;
 						stop = 0;						
 					
@@ -386,7 +393,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 1;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -420,8 +427,42 @@ vecstore
 					ALUop = 3'b100;
 					ALUOutWrite = 1;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 1;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
+				end
+				
+			c3_li: 	
+				begin
+					PCwrite = 0;
+					MemRead = 0;
+					MemWrite = 0;
+					IRload = 0;
+					R1Sel = 0;
+					MDRload = 0;
+					R1R2Load = 0;
+					ALU1 = 0;
+					ALU2 = 3'b000;
+					ALUop = 3'b000;
+					ALUOutWrite = 0;
+					RFWrite = 1;
+					RegIn = 2'b10;
+					FlagWrite = 0;
 					stop = 0;						
 					
 					// v0
@@ -454,7 +495,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -488,7 +529,7 @@ vecstore
 					ALUop = 3'b010;
 					ALUOutWrite = 1;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 1;
 					stop = 0;						
 					
@@ -522,7 +563,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 1;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -556,7 +597,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -590,7 +631,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 1;
 					RFWrite = 1;
-					RegIn = 1;
+					RegIn = 2'b01;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -624,7 +665,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -658,7 +699,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -691,7 +732,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -724,7 +765,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -757,7 +798,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 1;						
 					
@@ -790,7 +831,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;						
 					
@@ -824,7 +865,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -858,7 +899,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -892,7 +933,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -926,7 +967,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -960,7 +1001,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -993,7 +1034,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -1026,7 +1067,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -1059,7 +1100,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -1092,7 +1133,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					
@@ -1125,7 +1166,7 @@ vecstore
 					ALUop = 3'b000;
 					ALUOutWrite = 0;
 					RFWrite = 0;
-					RegIn = 0;
+					RegIn = 2'b00;
 					FlagWrite = 0;
 					stop = 0;
 					

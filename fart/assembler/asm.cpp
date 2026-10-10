@@ -27,7 +27,7 @@ Change P.Poolad updated with new instruction codes for nop/stop and vector instr
 using namespace std;
 
 #define MEM_SIZE 256
-#define NUM_KEYWORDS 25
+#define NUM_KEYWORDS 26
 
 typedef struct instruction
 {
@@ -39,7 +39,7 @@ typedef struct instruction
 
 bool isKeyword(string str)
 {
-	string keywords[NUM_KEYWORDS] = {"load", "store", "add", "sub", "nand", "ori",
+	string keywords[NUM_KEYWORDS] = {"li", "load", "store", "add", "sub", "nand", "ori",
 						  "shift", "shiftl", "shiftr", "bz", "bnz", "bpz",
 					 "org", "db", "stop", "nop", "vload", "vstore", "vadd", "vsub", "vmul", "vcmplt", "vcmpgt", "vcmpeq", "vcmclr"};
 
@@ -372,6 +372,17 @@ int main(int argc, char* argv[])
                 encoding = vector_reg
                     ? ((op1 << 13) | (op2 << 10) | (opcodes.at(col2) << 4))
                     : ((op1 << 14) | (op2 << 12) | (opcodes.at(col2) << 6));
+            }
+            else if (col2 == "li")
+            {
+                const size_t comma = col3.find(',');
+                if (comma == string::npos ||
+                    !registerIndex(col3.substr(0, comma), false, op1))
+                    throw "LI expects a scalar register and immediate: li k0,123";
+                const int immediate = processNumber(col3.substr(comma + 1));
+                if (immediate < 0 || immediate > 2047)
+                    throw "LI immediate must be between 0 and 2047";
+                encoding = (op1 << 14) | (immediate << 3) | 4;
             }
 			else if (col2 == "ori")
 			{

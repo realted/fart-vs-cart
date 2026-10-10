@@ -1,12 +1,12 @@
-Fitter Status : Successful - Sat Oct 10 13:20:47 2026
+Fitter Status : Successful - Sat Oct 10 16:02:24 2026
 Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : multicycle
 Top-level Entity Name : gpu
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 1,044 / 32,070 ( 3 % )
-Total registers : 944
+Logic utilization (in ALMs) : 1,041 / 32,070 ( 3 % )
+Total registers : 939
 Total pins : 72 / 457 ( 16 % )
 Total virtual pins : 0
 Total block memory bits : 20,480 / 4,065,280 ( < 1 % )

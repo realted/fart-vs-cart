@@ -43,7 +43,7 @@ output reg [17:0] LEDR;
 
 // ------------------------- Registers/Wires ------------------------ //
 wire	clock, reset;
-wire	IRLoad, MDRLoad, MemRead, PCWrite, RegIn;
+wire	IRLoad, MDRLoad, MemRead, PCWrite;
 wire	ALU1, ALUOutWrite, FlagWrite, R1R2Load, R1Sel, RFWrite, stop;
 wire	[DATA_BIT_WIDTH-1:0] R2wire, PCwire, R1wire, RFout1wire, RFout2wire;
 wire	[DATA_BIT_WIDTH-1:0] ALU1wire, ALU2wire, ALUwire, ALUOut, MDRwire, Instr_out;
@@ -52,7 +52,7 @@ wire    [DATA_BIT_WIDTH-1:0] SE4wire, ZE5wire, ZE3wire, RegWire;
 wire	[DATA_BIT_WIDTH-1:0] reg0, reg1, reg2, reg3;
 wire	[DATA_BIT_WIDTH-1:0] constant;
 wire	[2:0] ALUOp, ALU2;
-wire	[1:0] R1_in;
+wire	[1:0] R1_in, RegIn;
 wire    [15:0] counterOut;
 wire	Nwire, Zwire;
 reg		N, Z;
@@ -101,6 +101,8 @@ wire	[DATA_BIT_WIDTH-1:0] M0_in, M1_in, M2_in, M3_in;
 wire	[DATA_BIT_WIDTH-1:0] M0_out, M1_out, M2_out, M3_out; 
 wire	[DATA_BIT_WIDTH-1:0] MDR_IN;
 
+// GPU v0.5 additions
+wire	[DATA_BIT_WIDTH-1:0] ZE3_LIwire;
 
 always @(posedge CLOCK_50 or posedge reset) begin
     if (reset) begin
@@ -338,8 +340,9 @@ mux2to1_2bit		R1Sel_mux(
 //	.sel(AddrSel),.result(AddrWire)
 //);
 
-mux2to1_nbit 		RegMux(
+mux4to1_nbit 		RegMux(
 	.data0x(ALUOut),.data1x(MDRwire),
+	.data2x(ZE3_LIwire),.data3x(constant),
 	.sel(RegIn),.result(RegWire)
 );
 
@@ -357,6 +360,31 @@ mux5to1_nbit 		ALU2_mux(
 counter             counter(
 	.clock(clock), .reset(reset), .stop(stop), .counterOut(counterOut)
 );
+
+sExtend		SE4(.in(IR[15:4]),.out(SE4wire));
+zExtend		ZE3(.in(IR[13:3]),.out(ZE3wire));
+zExtend		ZE5(.in(IR[15:3]),.out(ZE5wire));
+// define parameter for the data size to be extended
+defparam	SE4.n = 12;
+defparam	ZE3.n = 11;
+defparam	ZE5.n = 13;
+
+always@(posedge clock or posedge reset)
+begin
+if (reset)
+	begin
+	N <= 0;
+	Z <= 0;
+	end
+else
+if (FlagWrite)
+	begin
+	N <= Nwire;
+	Z <= Zwire;
+	end
+end
+
+
 
 // New additions GPU v0.4
 mux4to1_4bit 		scalar_wren_mux(
@@ -419,29 +447,10 @@ mux4to1_nbit 		mdr_in_mux(
 	.sel(R2wire[1:0]),.result(MDR_IN)
 );
 
+// New additions GPU v0.5 (LI)
+zExtend		ZE3_LI(.in(IR[13:3]),.out(ZE3_LIwire));
+defparam	ZE3_LI.n = 11;
 
-sExtend		SE4(.in(IR[15:4]),.out(SE4wire));
-zExtend		ZE3(.in(IR[13:3]),.out(ZE3wire));
-zExtend		ZE5(.in(IR[15:3]),.out(ZE5wire));
-// define parameter for the data size to be extended
-defparam	SE4.n = 12;
-defparam	ZE3.n = 11;
-defparam	ZE5.n = 13;
-
-always@(posedge clock or posedge reset)
-begin
-if (reset)
-	begin
-	N <= 0;
-	Z <= 0;
-	end
-else
-if (FlagWrite)
-	begin
-	N <= Nwire;
-	Z <= Zwire;
-	end
-end
 
 // ------------------------ Assign Constant 1 ----------------------- //
 assign	constant = 1;
@@ -471,7 +480,7 @@ begin
       LEDR[5:3] = ALUOp[2:0];
       LEDR[2] = ALUOutWrite;
       LEDR[1] = RFWrite;
-      LEDR[0] = RegIn;
+      //LEDR[0] = RegIn;
     end
 
     2'b10:

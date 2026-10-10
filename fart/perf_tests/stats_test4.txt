@@ -1,0 +1,90 @@
+
+File: assembler\test4_8vreg_li.s
+Total recognized instructions: 87
+Total estimated cycles (static): 262
+Each instruction is counted once; loops/branches are not simulated.
+Reset cycles and repeated STOP halt cycles are excluded.
+
+Instruction       Count    Percent Cycles/instr     Cycles    Cycle %
+-------------------------------------------------------------------------------
+LOAD                  0      0.00%            4          0      0.00%
+STORE                 0      0.00%            3          0      0.00%
+ADD                   0      0.00%            4          0      0.00%
+SUB                   0      0.00%            4          0      0.00%
+NAND                  0      0.00%            4          0      0.00%
+ORI                   0      0.00%            5          0      0.00%
+SHIFT                 0      0.00%            4          0      0.00%
+LI                   16     18.39%            3         48     18.32%
+BZ                    0      0.00%            3          0      0.00%
+BNZ                   0      0.00%            3          0      0.00%
+BPZ                   0      0.00%            3          0      0.00%
+STOP                  1      1.15%            4          4      1.53%
+NOP                   0      0.00%            4          0      0.00%
+VLOAD                11     12.64%            3         33     12.60%
+VSTORE                5      5.75%            3         15      5.73%
+VADD                 20     22.99%            3         60     22.90%
+VSUB                 17     19.54%            3         51     19.47%
+VMUL                 13     14.94%            3         39     14.89%
+VCMPLT                1      1.15%            3          3      1.15%
+VCMPGT                1      1.15%            3          3      1.15%
+VCMPEQ                0      0.00%            3          0      0.00%
+VCMCLR                2      2.30%            3          6      2.29%
+-------------------------------------------------------------------------------
+TOTAL                87    100.00%                     262    100.00%
+
+Unknown statements (excluded from percentages):
+  Line 120: org 192
+  Line 121: ox0    db $0000
+  Line 122: ox1    db $0000
+  Line 123: ox2    db $0100
+  Line 124: ox3    db $FF00
+  Line 127: org 196
+  Line 128: oy0    db $0000
+  Line 129: oy1    db $0000
+  Line 130: oy2    db $0100
+  Line 131: oy3    db $0000
+  Line 134: org 200
+  Line 135: oz0    db $FB00
+  Line 136: oz1    db $FB00
+  Line 137: oz2    db $FC00
+  Line 138: oz3    db $FD00
+  Line 141: org 204
+  Line 142: cx0    db $0000
+  Line 143: cx1    db $0300
+  Line 144: cx2    db $0180
+  Line 145: cx3    db $0100
+  Line 148: org 208
+  Line 149: cy0    db $0000
+  Line 150: cy1    db $0000
+  Line 151: cy2    db $0100
+  Line 152: cy3    db $0100
+  Line 155: org 212
+  Line 156: cz0    db $0000
+  Line 157: cz1    db $0000
+  Line 158: cz2    db $0000
+  Line 159: cz3    db $0000
+  Line 162: org 216
+  Line 163: dx0    db $0000
+  Line 164: dx1    db $0000
+  Line 165: dx2    db $0000
+  Line 166: dx3    db $0000
+  Line 169: org 220
+  Line 170: dy0    db $0000
+  Line 171: dy1    db $0000
+  Line 172: dy2    db $0000
+  Line 173: dy3    db $0000
+  Line 176: org 224
+  Line 177: dz0    db $0100
+  Line 178: dz1    db $0100
+  Line 179: dz2    db $0100
+  Line 180: dz3    db $0100
+  Line 183: org 228
+  Line 184: radius0    db $0100
+  Line 185: radius1    db $0100
+  Line 186: radius2    db $00C0
+  Line 187: radius3    db $0140
+  Line 190: org 252
+  Line 191: ones0    db $0100
+  Line 192: ones1    db $0100
+  Line 193: ones2    db $0100
+  Line 194: ones3    db $0100

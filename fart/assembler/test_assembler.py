@@ -47,6 +47,18 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
     data = assemble(''.join('    ' + op + '\n' for op, _ in golden))
     assert [data[i] for i in range(len(golden))] == [value for _, value in golden]
 
+    # Check every LI destination and 11-bit immediate in memory-sized batches.
+    for reg in range(4):
+        for start in range(0, 2048, 256):
+            data = assemble(''.join(f'    li k{reg},{imm}\n' for imm in range(start, start + 256)))
+            for offset in range(256):
+                word = data[offset]
+                assert word >> 14 == reg
+                assert (word >> 3) & 2047 == start + offset
+                assert word & 7 == 4
+    data = assemble('    li k0,0\n    li k1,$7FF\n    li k2,%10000000000\n    li k3,017\n')
+    assert [data[i] for i in range(4)] == [0x0004, 0x7FFC, 0xA004, 0xC07C]
+
     aliases = assemble('    vsub x1,x2\n    vmul x1,x2\n    vcmplt x1,x2\n    vcmpgt x1,x2\n    vcmpeq x1,x2\n')
     assert [aliases[i] for i in range(5)] == [0x2A50,0x2A60,0x2A80,0x2A90,0x2AA0]
 
@@ -77,6 +89,8 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
 
     for text in ['vcmclr v0', 'vload v7,(k4)', 'vstore v8,(k0)', 'vadd x8,x0', 'vmul k0,v1', 'vsub v0,k1', 'vcmplt v0,v8',
                  'vcmpgt v0', 'vcmpeq k0,k1', 'ori -1', 'ori 8192', 'shiftl k0,4', 'shiftr k0,-1', 'shift k0,8',
+                 'li k0,-1', 'li k0,2048', 'li k4,1', 'li v0,1', 'li k0',
+                 'li k0,', 'li k0,1,2', 'li k0,abc', 'li k0,4294967296',
                  'bz -2049', 'bnz 2048', 'db -32769', 'db 65536', 'db 4294967296',
                  'load v0,(k1)', 'vload k0,(k1)', 'vload v0,(v1)', 'vadd v0,k1',
                  'add k4,k1', 'add k1', 'org 256', 'org -1', 'bz missing',

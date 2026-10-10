@@ -27,6 +27,7 @@ The SHIFT clarification below was confirmed by the processor author.
 | VSUB, VMUL, VCMPLT, VCMPGT, VCMPEQ | Same vector layout; opcodes 37, 38, 40, 41, 42 |
 | VCMCLR | No operands; fixed word `FEF0`, enables all lanes |
 | ORI | `(imm13 << 3) \| 7`; immediate 0..8191 |
+| LI | `(R1 << 14) \| (imm11 << 3) \| 4`; immediate 0..2047; e.g. `li k2,123` |
 | SHIFT | `(R1 << 14) \| (imm11 << 3) \| 3`; only low 3 immediate bits are used |
 | BZ, BNZ, BPZ | `((offset & 0xFFF) << 4) \| tag`; tags 5, 9, 13; offset -2048..2047 |
 | STOP / NOP | `0001` / `8001` |

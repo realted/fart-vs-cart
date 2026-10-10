@@ -1,5 +1,5 @@
 Analysis & Synthesis report for multicycle
-Sat Oct 10 13:16:46 2026
+Sat Oct 10 15:58:10 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -29,45 +29,46 @@ Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
  21. Parameter Settings for User Entity Instance: HEXs:HEX_display
  22. Parameter Settings for User Entity Instance: FSM:Control
  23. Parameter Settings for User Entity Instance: InstructionMemory:InstructionMemory|altsyncram:altsyncram_component
- 24. Parameter Settings for User Entity Instance: memory:M0
- 25. Parameter Settings for User Entity Instance: memory:M0|DataMemory:b2v_inst
- 26. Parameter Settings for User Entity Instance: memory:M0|DataMemory:b2v_inst|altsyncram:altsyncram_component
- 27. Parameter Settings for User Entity Instance: memory:M1
- 28. Parameter Settings for User Entity Instance: memory:M1|DataMemory:b2v_inst
- 29. Parameter Settings for User Entity Instance: memory:M1|DataMemory:b2v_inst|altsyncram:altsyncram_component
- 30. Parameter Settings for User Entity Instance: memory:M2
- 31. Parameter Settings for User Entity Instance: memory:M2|DataMemory:b2v_inst
- 32. Parameter Settings for User Entity Instance: memory:M2|DataMemory:b2v_inst|altsyncram:altsyncram_component
- 33. Parameter Settings for User Entity Instance: memory:M3
- 34. Parameter Settings for User Entity Instance: memory:M3|DataMemory:b2v_inst
- 35. Parameter Settings for User Entity Instance: memory:M3|DataMemory:b2v_inst|altsyncram:altsyncram_component
- 36. Parameter Settings for User Entity Instance: sExtend:SE4
- 37. Parameter Settings for User Entity Instance: zExtend:ZE3
- 38. Parameter Settings for User Entity Instance: zExtend:ZE5
- 39. altsyncram Parameter Settings by Entity Instance
- 40. Port Connectivity Checks: "memory:M3|mux2to1_nbit:b2v_inst3"
- 41. Port Connectivity Checks: "memory:M3|DataMemory:b2v_inst"
- 42. Port Connectivity Checks: "memory:M3"
- 43. Port Connectivity Checks: "memory:M2|mux2to1_nbit:b2v_inst3"
- 44. Port Connectivity Checks: "memory:M2|DataMemory:b2v_inst"
- 45. Port Connectivity Checks: "memory:M2"
- 46. Port Connectivity Checks: "memory:M1|mux2to1_nbit:b2v_inst3"
- 47. Port Connectivity Checks: "memory:M1|DataMemory:b2v_inst"
- 48. Port Connectivity Checks: "memory:M1"
- 49. Port Connectivity Checks: "memory:M0|mux2to1_nbit:b2v_inst3"
- 50. Port Connectivity Checks: "memory:M0|DataMemory:b2v_inst"
- 51. Port Connectivity Checks: "memory:M0"
- 52. Port Connectivity Checks: "mux2to1_4bit:scalar_vector_wren_mux"
- 53. Port Connectivity Checks: "mux4to1_4bit:scalar_wren_mux"
- 54. Port Connectivity Checks: "mux5to1_nbit:ALU2_mux"
- 55. Port Connectivity Checks: "mux2to1_2bit:R1Sel_mux"
- 56. Port Connectivity Checks: "InstructionMemory:InstructionMemory"
- 57. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[5].decoder"
- 58. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[4].decoder"
- 59. Post-Synthesis Netlist Statistics for Top Partition
- 60. Elapsed Time Per Partition
- 61. Analysis & Synthesis Messages
- 62. Analysis & Synthesis Suppressed Messages
+ 24. Parameter Settings for User Entity Instance: sExtend:SE4
+ 25. Parameter Settings for User Entity Instance: zExtend:ZE3
+ 26. Parameter Settings for User Entity Instance: zExtend:ZE5
+ 27. Parameter Settings for User Entity Instance: memory:M0
+ 28. Parameter Settings for User Entity Instance: memory:M0|DataMemory:b2v_inst
+ 29. Parameter Settings for User Entity Instance: memory:M0|DataMemory:b2v_inst|altsyncram:altsyncram_component
+ 30. Parameter Settings for User Entity Instance: memory:M1
+ 31. Parameter Settings for User Entity Instance: memory:M1|DataMemory:b2v_inst
+ 32. Parameter Settings for User Entity Instance: memory:M1|DataMemory:b2v_inst|altsyncram:altsyncram_component
+ 33. Parameter Settings for User Entity Instance: memory:M2
+ 34. Parameter Settings for User Entity Instance: memory:M2|DataMemory:b2v_inst
+ 35. Parameter Settings for User Entity Instance: memory:M2|DataMemory:b2v_inst|altsyncram:altsyncram_component
+ 36. Parameter Settings for User Entity Instance: memory:M3
+ 37. Parameter Settings for User Entity Instance: memory:M3|DataMemory:b2v_inst
+ 38. Parameter Settings for User Entity Instance: memory:M3|DataMemory:b2v_inst|altsyncram:altsyncram_component
+ 39. Parameter Settings for User Entity Instance: zExtend:ZE3_LI
+ 40. altsyncram Parameter Settings by Entity Instance
+ 41. Port Connectivity Checks: "memory:M3|mux2to1_nbit:b2v_inst3"
+ 42. Port Connectivity Checks: "memory:M3|DataMemory:b2v_inst"
+ 43. Port Connectivity Checks: "memory:M3"
+ 44. Port Connectivity Checks: "memory:M2|mux2to1_nbit:b2v_inst3"
+ 45. Port Connectivity Checks: "memory:M2|DataMemory:b2v_inst"
+ 46. Port Connectivity Checks: "memory:M2"
+ 47. Port Connectivity Checks: "memory:M1|mux2to1_nbit:b2v_inst3"
+ 48. Port Connectivity Checks: "memory:M1|DataMemory:b2v_inst"
+ 49. Port Connectivity Checks: "memory:M1"
+ 50. Port Connectivity Checks: "memory:M0|mux2to1_nbit:b2v_inst3"
+ 51. Port Connectivity Checks: "memory:M0|DataMemory:b2v_inst"
+ 52. Port Connectivity Checks: "memory:M0"
+ 53. Port Connectivity Checks: "mux2to1_4bit:scalar_vector_wren_mux"
+ 54. Port Connectivity Checks: "mux4to1_4bit:scalar_wren_mux"
+ 55. Port Connectivity Checks: "mux4to1_nbit:RegMux"
+ 56. Port Connectivity Checks: "mux2to1_2bit:R1Sel_mux"
+ 57. Port Connectivity Checks: "InstructionMemory:InstructionMemory"
+ 58. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[5].decoder"
+ 59. Port Connectivity Checks: "HEXs:HEX_display|HEX:decode_digits[4].decoder"
+ 60. Post-Synthesis Netlist Statistics for Top Partition
+ 61. Elapsed Time Per Partition
+ 62. Analysis & Synthesis Messages
+ 63. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -94,13 +95,13 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sat Oct 10 13:16:46 2026           ;
+; Analysis & Synthesis Status     ; Successful - Sat Oct 10 15:58:10 2026           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; multicycle                                      ;
 ; Top-level Entity Name           ; gpu                                             ;
 ; Family                          ; Cyclone V                                       ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 866                                             ;
+; Total registers                 ; 867                                             ;
 ; Total pins                      ; 72                                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 20,480                                          ;
@@ -279,16 +280,16 @@ on the Quartus Prime software download page.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimate of Logic utilization (ALMs needed) ; 1054      ;
+; Estimate of Logic utilization (ALMs needed) ; 1053      ;
 ;                                             ;           ;
-; Combinational ALUT usage for logic          ; 1342      ;
-;     -- 7 input functions                    ; 2         ;
-;     -- 6 input functions                    ; 688       ;
-;     -- 5 input functions                    ; 161       ;
-;     -- 4 input functions                    ; 60        ;
-;     -- <=3 input functions                  ; 431       ;
+; Combinational ALUT usage for logic          ; 1349      ;
+;     -- 7 input functions                    ; 3         ;
+;     -- 6 input functions                    ; 678       ;
+;     -- 5 input functions                    ; 176       ;
+;     -- 4 input functions                    ; 73        ;
+;     -- <=3 input functions                  ; 419       ;
 ;                                             ;           ;
-; Dedicated logic registers                   ; 866       ;
+; Dedicated logic registers                   ; 867       ;
 ;                                             ;           ;
 ; I/O pins                                    ; 72        ;
 ; Total MLAB memory bits                      ; 0         ;
@@ -297,8 +298,8 @@ on the Quartus Prime software download page.
 ; Total DSP Blocks                            ; 4         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; cpu_clock ;
-; Maximum fan-out                             ; 928       ;
-; Total fan-out                               ; 11101     ;
+; Maximum fan-out                             ; 929       ;
+; Total fan-out                               ; 11141     ;
 ; Average fan-out                             ; 4.56      ;
 +---------------------------------------------+-----------+
 
@@ -308,13 +309,13 @@ on the Quartus Prime software download page.
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------+-------------------+--------------+
 ; Compilation Hierarchy Node                   ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                     ; Entity Name       ; Library Name ;
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------+-------------------+--------------+
-; |gpu                                         ; 1342 (58)           ; 866 (21)                  ; 20480             ; 4          ; 72   ; 0            ; |gpu                                                                                                    ; gpu               ; work         ;
-;    |ALU:ALU|                                 ; 95 (95)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|ALU:ALU                                                                                            ; ALU               ; work         ;
+; |gpu                                         ; 1349 (61)           ; 867 (21)                  ; 20480             ; 4          ; 72   ; 0            ; |gpu                                                                                                    ; gpu               ; work         ;
+;    |ALU:ALU|                                 ; 93 (93)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|ALU:ALU                                                                                            ; ALU               ; work         ;
 ;    |ALU_V:a0|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |gpu|ALU_V:a0                                                                                           ; ALU_V             ; work         ;
 ;    |ALU_V:a1|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |gpu|ALU_V:a1                                                                                           ; ALU_V             ; work         ;
 ;    |ALU_V:a2|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |gpu|ALU_V:a2                                                                                           ; ALU_V             ; work         ;
 ;    |ALU_V:a3|                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 1          ; 0    ; 0            ; |gpu|ALU_V:a3                                                                                           ; ALU_V             ; work         ;
-;    |FSM:Control|                             ; 44 (44)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |gpu|FSM:Control                                                                                        ; FSM               ; work         ;
+;    |FSM:Control|                             ; 49 (49)             ; 26 (26)                   ; 0                 ; 0          ; 0    ; 0            ; |gpu|FSM:Control                                                                                        ; FSM               ; work         ;
 ;    |HEXs:HEX_display|                        ; 240 (212)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|HEXs:HEX_display                                                                                   ; HEXs              ; work         ;
 ;       |HEX:decode_digits[0].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|HEXs:HEX_display|HEX:decode_digits[0].decoder                                                      ; HEX               ; work         ;
 ;       |HEX:decode_digits[1].decoder|         ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|HEXs:HEX_display|HEX:decode_digits[1].decoder                                                      ; HEX               ; work         ;
@@ -353,13 +354,13 @@ on the Quartus Prime software download page.
 ;    |mux2to1_nbit:M1_in_mux|                  ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:M1_in_mux                                                                             ; mux2to1_nbit      ; work         ;
 ;    |mux2to1_nbit:M2_in_mux|                  ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:M2_in_mux                                                                             ; mux2to1_nbit      ; work         ;
 ;    |mux2to1_nbit:M3_in_mux|                  ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:M3_in_mux                                                                             ; mux2to1_nbit      ; work         ;
-;    |mux2to1_nbit:RegMux|                     ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:RegMux                                                                                ; mux2to1_nbit      ; work         ;
 ;    |mux2to1_nbit:voutSel_mux0|               ; 17 (17)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:voutSel_mux0                                                                          ; mux2to1_nbit      ; work         ;
 ;    |mux2to1_nbit:voutSel_mux1|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:voutSel_mux1                                                                          ; mux2to1_nbit      ; work         ;
 ;    |mux2to1_nbit:voutSel_mux2|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:voutSel_mux2                                                                          ; mux2to1_nbit      ; work         ;
 ;    |mux2to1_nbit:voutSel_mux3|               ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux2to1_nbit:voutSel_mux3                                                                          ; mux2to1_nbit      ; work         ;
+;    |mux4to1_nbit:RegMux|                     ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux4to1_nbit:RegMux                                                                                ; mux4to1_nbit      ; work         ;
 ;    |mux4to1_nbit:mdr_in_mux|                 ; 16 (16)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux4to1_nbit:mdr_in_mux                                                                            ; mux4to1_nbit      ; work         ;
-;    |mux5to1_nbit:ALU2_mux|                   ; 20 (20)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux5to1_nbit:ALU2_mux                                                                              ; mux5to1_nbit      ; work         ;
+;    |mux5to1_nbit:ALU2_mux|                   ; 21 (21)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |gpu|mux5to1_nbit:ALU2_mux                                                                              ; mux5to1_nbit      ; work         ;
 ;    |register_nbit:ALUOut_reg|                ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |gpu|register_nbit:ALUOut_reg                                                                           ; register_nbit     ; work         ;
 ;    |register_nbit:IR_reg|                    ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |gpu|register_nbit:IR_reg                                                                               ; register_nbit     ; work         ;
 ;    |register_nbit:MDR_reg|                   ; 0 (0)               ; 16 (16)                   ; 0                 ; 0          ; 0    ; 0            ; |gpu|register_nbit:MDR_reg                                                                              ; register_nbit     ; work         ;
@@ -398,39 +399,40 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 
 
 Encoding Type:  One-Hot
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |gpu|FSM:Control|state                                                                                                                                                                                                                                                                                                                                                                                                                           ;
-+-------------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+-----------------+----------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
-; Name              ; state.c2_vcmclr ; state.c3_vcmpeq ; state.c3_vcmpgt ; state.c3_vcmplt ; state.c3_vmul ; state.c3_vsub ; state.c3_vadd ; state.c3_vstore ; state.c3_vload ; state.c3_nop ; state.c3_stop ; state.c3_stop_nop ; state.c3_bnz ; state.c3_bz ; state.c3_bpz ; state.c3_store ; state.c4_load ; state.c3_load ; state.c5_ori ; state.c4_ori ; state.c3_ori ; state.c3_shift ; state.c4_asnsh ; state.c3_asn ; state.c2 ; state.c1 ; state.reset_s ;
-+-------------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+-----------------+----------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
-; state.reset_s     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 0             ;
-; state.c1          ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 1        ; 1             ;
-; state.c2          ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 1        ; 0        ; 1             ;
-; state.c3_asn      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 1            ; 0        ; 0        ; 1             ;
-; state.c4_asnsh    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 1              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_shift    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 1              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_ori      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 1            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c4_ori      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 1            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c5_ori      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 1            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_load     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 1             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c4_load     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 1             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_store    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 1              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_bpz      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 1            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_bz       ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 1           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_bnz      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 1            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_stop_nop ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 1                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_stop     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 1             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_nop      ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 1            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vload    ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 1              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vstore   ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 1               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vadd     ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 1             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vsub     ; 0               ; 0               ; 0               ; 0               ; 0             ; 1             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vmul     ; 0               ; 0               ; 0               ; 0               ; 1             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vcmplt   ; 0               ; 0               ; 0               ; 1               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vcmpgt   ; 0               ; 0               ; 1               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c3_vcmpeq   ; 0               ; 1               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-; state.c2_vcmclr   ; 1               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
-+-------------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+-----------------+----------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |gpu|FSM:Control|state                                                                                                                                                                                                                                                                                                                                                                                                                                         ;
++-------------------+-------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+-----------------+----------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
+; Name              ; state.c3_li ; state.c2_vcmclr ; state.c3_vcmpeq ; state.c3_vcmpgt ; state.c3_vcmplt ; state.c3_vmul ; state.c3_vsub ; state.c3_vadd ; state.c3_vstore ; state.c3_vload ; state.c3_nop ; state.c3_stop ; state.c3_stop_nop ; state.c3_bnz ; state.c3_bz ; state.c3_bpz ; state.c3_store ; state.c4_load ; state.c3_load ; state.c5_ori ; state.c4_ori ; state.c3_ori ; state.c3_shift ; state.c4_asnsh ; state.c3_asn ; state.c2 ; state.c1 ; state.reset_s ;
++-------------------+-------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+-----------------+----------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
+; state.reset_s     ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 0             ;
+; state.c1          ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 1        ; 1             ;
+; state.c2          ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 1        ; 0        ; 1             ;
+; state.c3_asn      ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 1            ; 0        ; 0        ; 1             ;
+; state.c4_asnsh    ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 1              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_shift    ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 1              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_ori      ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 1            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_ori      ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 1            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c5_ori      ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 1            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_load     ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 1             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c4_load     ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 1             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_store    ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 1              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_bpz      ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 1            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_bz       ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 1           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_bnz      ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 1            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_stop_nop ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 1                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_stop     ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 1             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_nop      ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 1            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vload    ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 1              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vstore   ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 1               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vadd     ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 1             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vsub     ; 0           ; 0               ; 0               ; 0               ; 0               ; 0             ; 1             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vmul     ; 0           ; 0               ; 0               ; 0               ; 0               ; 1             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vcmplt   ; 0           ; 0               ; 0               ; 0               ; 1               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vcmpgt   ; 0           ; 0               ; 0               ; 1               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_vcmpeq   ; 0           ; 0               ; 1               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c2_vcmclr   ; 0           ; 1               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
+; state.c3_li       ; 1           ; 0               ; 0               ; 0               ; 0               ; 0             ; 0             ; 0             ; 0               ; 0              ; 0            ; 0             ; 0                 ; 0            ; 0           ; 0            ; 0              ; 0             ; 0             ; 0            ; 0            ; 0            ; 0              ; 0              ; 0            ; 0        ; 0        ; 1             ;
++-------------------+-------------+-----------------+-----------------+-----------------+-----------------+---------------+---------------+---------------+-----------------+----------------+--------------+---------------+-------------------+--------------+-------------+--------------+----------------+---------------+---------------+--------------+--------------+--------------+----------------+----------------+--------------+----------+----------+---------------+
 
 
 +---------------------------------------------------------------------------------------------------+
@@ -438,9 +440,10 @@ Encoding Type:  One-Hot
 +----------------------------------------------------+---------------------+------------------------+
 ; Latch Name                                         ; Latch Enable Signal ; Free of Timing Hazards ;
 +----------------------------------------------------+---------------------+------------------------+
-; LEDR[4]$latch                                      ; Mux3                ; yes                    ;
-; LEDR[6]$latch                                      ; Mux3                ; yes                    ;
-; Number of user-specified and inferred latches = 2  ;                     ;                        ;
+; LEDR[0]$latch                                      ; Mux3                ; yes                    ;
+; LEDR[4]$latch                                      ; Mux5                ; yes                    ;
+; LEDR[6]$latch                                      ; Mux5                ; yes                    ;
+; Number of user-specified and inferred latches = 3  ;                     ;                        ;
 +----------------------------------------------------+---------------------+------------------------+
 Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
 
@@ -467,10 +470,10 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 866   ;
+; Total registers                              ; 867   ;
 ; Number of registers using Synchronous Clear  ; 34    ;
 ; Number of registers using Synchronous Load   ; 33    ;
-; Number of registers using Asynchronous Clear ; 850   ;
+; Number of registers using Asynchronous Clear ; 851   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
 ; Number of registers using Clock Enable       ; 821   ;
 ; Number of registers using Preset             ; 0     ;
@@ -483,36 +486,38 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; Inverted Register                      ; Fan out ;
 +----------------------------------------+---------+
 ; mask_reg_4b:reg_4b|q[0]                ; 8       ;
-; mask_reg_4b:reg_4b|q[2]                ; 8       ;
 ; mask_reg_4b:reg_4b|q[1]                ; 8       ;
+; mask_reg_4b:reg_4b|q[2]                ; 8       ;
 ; mask_reg_4b:reg_4b|q[3]                ; 8       ;
 ; Total number of inverted registers = 4 ;         ;
 +----------------------------------------+---------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                          ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------+
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |gpu|counter:counter|counterOut[7]        ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |gpu|register_nbit:R1|q[12]               ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |gpu|register_nbit:MDR_reg|q[0]           ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |gpu|register_nbit:R2|q[0]                ;
-; 8:1                ; 64 bits   ; 320 LEs       ; 320 LEs              ; 0 LEs                  ; Yes        ; |gpu|register_nx4bit:X2|q_2[3]            ;
-; 8:1                ; 64 bits   ; 320 LEs       ; 320 LEs              ; 0 LEs                  ; Yes        ; |gpu|register_nx4bit:X1|q_1[10]           ;
-; 10:1               ; 4 bits    ; 24 LEs        ; 20 LEs               ; 4 LEs                  ; Yes        ; |gpu|mask_reg_4b:reg_4b|q[1]              ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |gpu|Mux2                                 ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |gpu|Mux4                                 ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |gpu|Mux3                                 ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |gpu|FSM:Control|state                    ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |gpu|FSM:Control|X2Load                   ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; No         ; |gpu|mux5to1_nbit:ALU2_mux|Mux0           ;
-; 9:1                ; 64 bits   ; 384 LEs       ; 192 LEs              ; 192 LEs                ; No         ; |gpu|mux2to1_nbit:voutSel_mux0|result[14] ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 30 LEs               ; 10 LEs                 ; No         ; |gpu|mux5to1_nbit:ALU2_mux|Mux9           ;
-; 65:1               ; 16 bits   ; 688 LEs       ; 416 LEs              ; 272 LEs                ; No         ; |gpu|HEXs:HEX_display|display_value[8]    ;
-; 12:1               ; 10 bits   ; 80 LEs        ; 70 LEs               ; 10 LEs                 ; No         ; |gpu|ALU:ALU|tmp_out[11]                  ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                         ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------+
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |gpu|counter:counter|counterOut[9]       ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |gpu|register_nbit:R1|q[9]               ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |gpu|register_nbit:MDR_reg|q[0]          ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |gpu|register_nbit:R2|q[1]               ;
+; 8:1                ; 64 bits   ; 320 LEs       ; 320 LEs              ; 0 LEs                  ; Yes        ; |gpu|register_nx4bit:X2|q_2[8]           ;
+; 8:1                ; 64 bits   ; 320 LEs       ; 320 LEs              ; 0 LEs                  ; Yes        ; |gpu|register_nx4bit:X1|q_1[6]           ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 20 LEs               ; 4 LEs                  ; Yes        ; |gpu|mask_reg_4b:reg_4b|q[1]             ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |gpu|mux4to1_nbit:RegMux|Mux2            ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; No         ; |gpu|mux4to1_nbit:RegMux|Mux14           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |gpu|Mux1                                ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |gpu|Mux8                                ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |gpu|Mux5                                ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |gpu|FSM:Control|state                   ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |gpu|FSM:Control|X1Load                  ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; No         ; |gpu|mux5to1_nbit:ALU2_mux|Mux1          ;
+; 9:1                ; 64 bits   ; 384 LEs       ; 192 LEs              ; 192 LEs                ; No         ; |gpu|mux2to1_nbit:voutSel_mux0|result[2] ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 30 LEs               ; 10 LEs                 ; No         ; |gpu|mux5to1_nbit:ALU2_mux|Mux9          ;
+; 65:1               ; 16 bits   ; 688 LEs       ; 416 LEs              ; 272 LEs                ; No         ; |gpu|HEXs:HEX_display|display_value[8]   ;
+; 12:1               ; 10 bits   ; 80 LEs        ; 70 LEs               ; 10 LEs                 ; No         ; |gpu|ALU:ALU|tmp_out[6]                  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------+
@@ -603,6 +608,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; c3_vcmpgt      ; 011000 ; Unsigned Binary                ;
 ; c3_vcmpeq      ; 011001 ; Unsigned Binary                ;
 ; c2_vcmclr      ; 011010 ; Unsigned Binary                ;
+; c3_li          ; 011011 ; Unsigned Binary                ;
 +----------------+--------+--------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -665,6 +671,36 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; DEVICE_FAMILY                      ; Cyclone V            ; Untyped                                              ;
 ; CBXI_PARAMETER                     ; altsyncram_roi1      ; Untyped                                              ;
 +------------------------------------+----------------------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------+
+; Parameter Settings for User Entity Instance: sExtend:SE4 ;
++----------------+-------+---------------------------------+
+; Parameter Name ; Value ; Type                            ;
++----------------+-------+---------------------------------+
+; n              ; 12    ; Signed Integer                  ;
++----------------+-------+---------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------+
+; Parameter Settings for User Entity Instance: zExtend:ZE3 ;
++----------------+-------+---------------------------------+
+; Parameter Name ; Value ; Type                            ;
++----------------+-------+---------------------------------+
+; n              ; 11    ; Signed Integer                  ;
++----------------+-------+---------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------+
+; Parameter Settings for User Entity Instance: zExtend:ZE5 ;
++----------------+-------+---------------------------------+
+; Parameter Name ; Value ; Type                            ;
++----------------+-------+---------------------------------+
+; n              ; 13    ; Signed Integer                  ;
++----------------+-------+---------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -992,33 +1028,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+----------------------------------------------------------+
-; Parameter Settings for User Entity Instance: sExtend:SE4 ;
-+----------------+-------+---------------------------------+
-; Parameter Name ; Value ; Type                            ;
-+----------------+-------+---------------------------------+
-; n              ; 12    ; Signed Integer                  ;
-+----------------+-------+---------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+----------------------------------------------------------+
-; Parameter Settings for User Entity Instance: zExtend:ZE3 ;
-+----------------+-------+---------------------------------+
-; Parameter Name ; Value ; Type                            ;
-+----------------+-------+---------------------------------+
-; n              ; 11    ; Signed Integer                  ;
-+----------------+-------+---------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+----------------------------------------------------------+
-; Parameter Settings for User Entity Instance: zExtend:ZE5 ;
-+----------------+-------+---------------------------------+
-; Parameter Name ; Value ; Type                            ;
-+----------------+-------+---------------------------------+
-; n              ; 13    ; Signed Integer                  ;
-+----------------+-------+---------------------------------+
++-------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: zExtend:ZE3_LI ;
++----------------+-------+------------------------------------+
+; Parameter Name ; Value ; Type                               ;
++----------------+-------+------------------------------------+
+; n              ; 11    ; Signed Integer                     ;
++----------------+-------+------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -1221,13 +1237,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 +--------------+-------+----------+------------------------+
 
 
-+---------------------------------------------------+
-; Port Connectivity Checks: "mux5to1_nbit:ALU2_mux" ;
-+---------------+-------+----------+----------------+
-; Port          ; Type  ; Severity ; Details        ;
-+---------------+-------+----------+----------------+
-; data1x[15..2] ; Input ; Info     ; Stuck at GND   ;
-+---------------+-------+----------+----------------+
++-------------------------------------------------+
+; Port Connectivity Checks: "mux4to1_nbit:RegMux" ;
++---------------+-------+----------+--------------+
+; Port          ; Type  ; Severity ; Details      ;
++---------------+-------+----------+--------------+
+; data3x[15..2] ; Input ; Info     ; Stuck at GND ;
++---------------+-------+----------+--------------+
 
 
 +----------------------------------------------------+
@@ -1274,26 +1290,26 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 866                         ;
-;     CLR               ; 27                          ;
+; arriav_ff             ; 867                         ;
+;     CLR               ; 28                          ;
 ;     CLR SCLR          ; 18                          ;
 ;     ENA CLR           ; 772                         ;
 ;     ENA CLR SLD       ; 33                          ;
 ;     ENA SCLR          ; 16                          ;
-; arriav_lcell_comb     ; 1343                        ;
+; arriav_lcell_comb     ; 1350                        ;
 ;     arith             ; 119                         ;
 ;         1 data inputs ; 39                          ;
 ;         3 data inputs ; 64                          ;
 ;         5 data inputs ; 16                          ;
-;     extend            ; 2                           ;
-;         7 data inputs ; 2                           ;
-;     normal            ; 1222                        ;
+;     extend            ; 3                           ;
+;         7 data inputs ; 3                           ;
+;     normal            ; 1228                        ;
 ;         0 data inputs ; 2                           ;
-;         2 data inputs ; 15                          ;
-;         3 data inputs ; 312                         ;
-;         4 data inputs ; 60                          ;
-;         5 data inputs ; 145                         ;
-;         6 data inputs ; 688                         ;
+;         2 data inputs ; 16                          ;
+;         3 data inputs ; 299                         ;
+;         4 data inputs ; 73                          ;
+;         5 data inputs ; 160                         ;
+;         6 data inputs ; 678                         ;
 ; arriav_mac            ; 4                           ;
 ; boundary_port         ; 72                          ;
 ; stratixv_ram_block    ; 80                          ;
@@ -1318,7 +1334,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sat Oct 10 13:16:36 2026
+    Info: Processing started: Sat Oct 10 15:57:59 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off gpu_v0 -c multicycle
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
@@ -1376,15 +1392,16 @@ Info (12021): Found 1 design units, including 1 entities, in source file counter
 Info (12021): Found 1 design units, including 1 entities, in source file alu.sv
     Info (12023): Found entity 1: ALU File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/ALU.sv Line: 25
 Info (12127): Elaborating entity "gpu" for the top level hierarchy
-Warning (10240): Verilog HDL Always Construct warning at gpu.sv(453): inferring latch(es) for variable "LEDR", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 453
+Warning (10240): Verilog HDL Always Construct warning at gpu.sv(462): inferring latch(es) for variable "LEDR", which holds its previous value in one or more paths through the always construct File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 462
 Warning (10034): Output port "LEDR[17..10]" at gpu.sv(42) has no driver File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 42
-Info (10041): Inferred latch for "LEDR[4]" at gpu.sv(453) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 453
-Info (10041): Inferred latch for "LEDR[6]" at gpu.sv(453) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 453
-Info (12128): Elaborating entity "HEXs" for hierarchy "HEXs:HEX_display" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 141
+Info (10041): Inferred latch for "LEDR[0]" at gpu.sv(462) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 462
+Info (10041): Inferred latch for "LEDR[4]" at gpu.sv(462) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 462
+Info (10041): Inferred latch for "LEDR[6]" at gpu.sv(462) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 462
+Info (12128): Elaborating entity "HEXs" for hierarchy "HEXs:HEX_display" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 143
 Info (12128): Elaborating entity "HEX" for hierarchy "HEXs:HEX_display|HEX:decode_digits[0].decoder" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/HEX.sv Line: 123
-Info (12128): Elaborating entity "FSM" for hierarchy "FSM:Control" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 171
-Info (10264): Verilog HDL Case Statement information at FSM.sv(157): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 157
-Info (12128): Elaborating entity "InstructionMemory" for hierarchy "InstructionMemory:InstructionMemory" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 181
+Info (12128): Elaborating entity "FSM" for hierarchy "FSM:Control" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 173
+Info (10264): Verilog HDL Case Statement information at FSM.sv(164): all case item expressions in this case statement are onehot File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/FSM.sv Line: 164
+Info (12128): Elaborating entity "InstructionMemory" for hierarchy "InstructionMemory:InstructionMemory" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 183
 Info (12128): Elaborating entity "altsyncram" for hierarchy "InstructionMemory:InstructionMemory|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/InstructionMemory.sv Line: 45
 Info (12130): Elaborated megafunction instantiation "InstructionMemory:InstructionMemory|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/InstructionMemory.sv Line: 45
 Info (12133): Instantiated megafunction "InstructionMemory:InstructionMemory|altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/InstructionMemory.sv Line: 45
@@ -1405,22 +1422,26 @@ Info (12133): Instantiated megafunction "InstructionMemory:InstructionMemory|alt
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_roi1.tdf
     Info (12023): Found entity 1: altsyncram_roi1 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_roi1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_roi1" for hierarchy "InstructionMemory:InstructionMemory|altsyncram:altsyncram_component|altsyncram_roi1:auto_generated" File: c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "ALU" for hierarchy "ALU:ALU" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 186
-Info (12128): Elaborating entity "RF" for hierarchy "RF:RF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 199
-Info (12128): Elaborating entity "VRF" for hierarchy "VRF:VRF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 217
-Info (12128): Elaborating entity "register_nx4bit" for hierarchy "register_nx4bit:X1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 225
-Info (12128): Elaborating entity "mask_reg_4b" for hierarchy "mask_reg_4b:reg_4b" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 241
-Info (12128): Elaborating entity "ALU_V" for hierarchy "ALU_V:a0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 247
+Info (12128): Elaborating entity "ALU" for hierarchy "ALU:ALU" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 188
+Info (12128): Elaborating entity "RF" for hierarchy "RF:RF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 201
+Info (12128): Elaborating entity "VRF" for hierarchy "VRF:VRF_block" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 219
+Info (12128): Elaborating entity "register_nx4bit" for hierarchy "register_nx4bit:X1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 227
+Info (12128): Elaborating entity "mask_reg_4b" for hierarchy "mask_reg_4b:reg_4b" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 243
+Info (12128): Elaborating entity "ALU_V" for hierarchy "ALU_V:a0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 249
 Warning (10230): Verilog HDL assignment warning at alu_v.sv(31): truncated value with size 32 to match size of target (16) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/alu_v.sv Line: 31
-Info (12128): Elaborating entity "mux2to1_nbit" for hierarchy "mux2to1_nbit:voutSel_mux0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 266
-Info (12128): Elaborating entity "register_nbit" for hierarchy "register_nbit:IR_reg" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 303
-Info (12128): Elaborating entity "mux2to1_2bit" for hierarchy "mux2to1_2bit:R1Sel_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 334
-Info (12128): Elaborating entity "mux5to1_nbit" for hierarchy "mux5to1_nbit:ALU2_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 354
-Info (12128): Elaborating entity "counter" for hierarchy "counter:counter" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 359
+Info (12128): Elaborating entity "mux2to1_nbit" for hierarchy "mux2to1_nbit:voutSel_mux0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 268
+Info (12128): Elaborating entity "register_nbit" for hierarchy "register_nbit:IR_reg" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 305
+Info (12128): Elaborating entity "mux2to1_2bit" for hierarchy "mux2to1_2bit:R1Sel_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 336
+Info (12128): Elaborating entity "mux4to1_nbit" for hierarchy "mux4to1_nbit:RegMux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 347
+Info (12128): Elaborating entity "mux5to1_nbit" for hierarchy "mux5to1_nbit:ALU2_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 357
+Info (12128): Elaborating entity "counter" for hierarchy "counter:counter" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 362
 Warning (10230): Verilog HDL assignment warning at counter.sv(16): truncated value with size 32 to match size of target (16) File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/counter.sv Line: 16
-Info (12128): Elaborating entity "mux4to1_4bit" for hierarchy "mux4to1_4bit:scalar_wren_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 366
-Info (12128): Elaborating entity "mux2to1_4bit" for hierarchy "mux2to1_4bit:scalar_vector_wren_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 371
-Info (12128): Elaborating entity "memory" for hierarchy "memory:M0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 376
+Info (12128): Elaborating entity "sExtend" for hierarchy "sExtend:SE4" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 364
+Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 365
+Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE5" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 366
+Info (12128): Elaborating entity "mux4to1_4bit" for hierarchy "mux4to1_4bit:scalar_wren_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 394
+Info (12128): Elaborating entity "mux2to1_4bit" for hierarchy "mux2to1_4bit:scalar_vector_wren_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 399
+Info (12128): Elaborating entity "memory" for hierarchy "memory:M0" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 404
 Info (12128): Elaborating entity "DataMemory" for hierarchy "memory:M0|DataMemory:b2v_inst" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 53
 Info (12128): Elaborating entity "altsyncram" for hierarchy "memory:M0|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
 Info (12130): Elaborated megafunction instantiation "memory:M0|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
@@ -1442,7 +1463,7 @@ Info (12133): Instantiated megafunction "memory:M0|DataMemory:b2v_inst|altsyncra
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_4kj1.tdf
     Info (12023): Found entity 1: altsyncram_4kj1 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_4kj1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_4kj1" for hierarchy "memory:M0|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_4kj1:auto_generated" File: c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "memory" for hierarchy "memory:M1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 381
+Info (12128): Elaborating entity "memory" for hierarchy "memory:M1" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 409
 Info (12128): Elaborating entity "DataMemory" for hierarchy "memory:M1|DataMemory:b2v_inst" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 53
 Info (12128): Elaborating entity "altsyncram" for hierarchy "memory:M1|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
 Info (12130): Elaborated megafunction instantiation "memory:M1|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
@@ -1464,7 +1485,7 @@ Info (12133): Instantiated megafunction "memory:M1|DataMemory:b2v_inst|altsyncra
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_5kj1.tdf
     Info (12023): Found entity 1: altsyncram_5kj1 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_5kj1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_5kj1" for hierarchy "memory:M1|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_5kj1:auto_generated" File: c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "memory" for hierarchy "memory:M2" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 386
+Info (12128): Elaborating entity "memory" for hierarchy "memory:M2" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 414
 Info (12128): Elaborating entity "DataMemory" for hierarchy "memory:M2|DataMemory:b2v_inst" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 53
 Info (12128): Elaborating entity "altsyncram" for hierarchy "memory:M2|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
 Info (12130): Elaborated megafunction instantiation "memory:M2|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
@@ -1486,7 +1507,7 @@ Info (12133): Instantiated megafunction "memory:M2|DataMemory:b2v_inst|altsyncra
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_6kj1.tdf
     Info (12023): Found entity 1: altsyncram_6kj1 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_6kj1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_6kj1" for hierarchy "memory:M2|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_6kj1:auto_generated" File: c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "memory" for hierarchy "memory:M3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 391
+Info (12128): Elaborating entity "memory" for hierarchy "memory:M3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 419
 Info (12128): Elaborating entity "DataMemory" for hierarchy "memory:M3|DataMemory:b2v_inst" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/memory.sv Line: 53
 Info (12128): Elaborating entity "altsyncram" for hierarchy "memory:M3|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
 Info (12130): Elaborated megafunction instantiation "memory:M3|DataMemory:b2v_inst|altsyncram:altsyncram_component" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/DataMemory.sv Line: 80
@@ -1508,14 +1529,12 @@ Info (12133): Instantiated megafunction "memory:M3|DataMemory:b2v_inst|altsyncra
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_7kj1.tdf
     Info (12023): Found entity 1: altsyncram_7kj1 File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/db/altsyncram_7kj1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_7kj1" for hierarchy "memory:M3|DataMemory:b2v_inst|altsyncram:altsyncram_component|altsyncram_7kj1:auto_generated" File: c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "mux4to1_nbit" for hierarchy "mux4to1_nbit:mdr_in_mux" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 420
-Info (12128): Elaborating entity "sExtend" for hierarchy "sExtend:SE4" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 423
-Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE3" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 424
-Info (12128): Elaborating entity "zExtend" for hierarchy "zExtend:ZE5" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 425
 Warning (12241): 9 hierarchies have connectivity warnings - see the Connectivity Checks report folder
-Warning (13012): Latch LEDR[4]$latch has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 453
+Warning (13012): Latch LEDR[0]$latch has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 462
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[3] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 39
+Warning (13012): Latch LEDR[4]$latch has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 462
     Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[4] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 39
-Warning (13012): Latch LEDR[6]$latch has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 453
+Warning (13012): Latch LEDR[6]$latch has unsafe behavior File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 462
     Warning (13013): Ports D and ENA on the latch are fed by the same signal SW[4] File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 39
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "HEX4[0]" is stuck at VCC File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 41
@@ -2121,17 +2140,17 @@ Warning (21074): Design contains 3 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 39
     Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 39
     Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/gpu.sv Line: 37
-Info (21057): Implemented 2127 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 2134 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 12 input pins
     Info (21059): Implemented 60 output pins
-    Info (21061): Implemented 1971 logic cells
+    Info (21061): Implemented 1978 logic cells
     Info (21064): Implemented 80 RAM segments
     Info (21062): Implemented 4 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 609 warnings
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 611 warnings
     Info: Peak virtual memory: 4924 megabytes
-    Info: Processing ended: Sat Oct 10 13:16:46 2026
-    Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:22
+    Info: Processing ended: Sat Oct 10 15:58:10 2026
+    Info: Elapsed time: 00:00:11
+    Info: Total CPU time (on all processors): 00:00:21
 
 
 +------------------------------------------+

@@ -4,7 +4,7 @@ from collections import Counter
 from pathlib import Path
 
 ISA = (
-    "LOAD STORE ADD SUB NAND ORI SHIFT BZ BNZ BPZ "
+    "LOAD STORE ADD SUB NAND ORI SHIFT LI BZ BNZ BPZ "
     "STOP NOP "
     "VLOAD VSTORE VADD VSUB VMUL VCMPLT VCMPGT VCMPEQ VCMCLR"
 ).split()
@@ -12,7 +12,7 @@ ISA = (
 # Clock states per instruction in FSM.sv, including c1/c2 and vector
 # decode states. STOP includes its first halt state, not indefinite halt time.
 CYCLES_PER_INSTRUCTION = dict(zip(ISA, (
-    4, 3, 4, 4, 4, 5, 4, 3, 3, 3,
+    4, 3, 4, 4, 4, 5, 4, 3, 3, 3, 3,
     4, 4,
     3, 3, 3, 3, 3, 3, 3, 3, 3,
 )))
