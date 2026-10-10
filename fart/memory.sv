@@ -19,7 +19,7 @@
 
 import params::*;
 
-module memory(
+module memory #(parameter INIT_FILE = "data.mif") (
 	wren,
 	clock,
 	MemRead,
@@ -45,7 +45,7 @@ assign	SYNTHESIZED_WIRE_1 = 0;
 
 
 
-DataMemory	b2v_inst(
+DataMemory #(.INIT_FILE(INIT_FILE)) b2v_inst(
 	.wren(wren),
 	.clock(SYNTHESIZED_WIRE_0),
 	.address(address),

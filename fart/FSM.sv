@@ -1,8 +1,3 @@
-// ---------------------------------------------------------------------
-// Copyright (c) 2007 by University of Toronto ECE 243 development team 
-// ---------------------------------------------------------------------
-//
-// Major Functions:	control processor's datapath
 // 
 // Input(s):	1. instr: input is used to determine states
 //				2. N: if branches, input is used to determine if
@@ -14,48 +9,42 @@
 //
 //				** More detail can be found on the course note under
 //				   "Multi-Cycle Implementation: The Control Unit"
-//
-// ---------------------------------------------------------------------
-
 module FSM
 (
 reset, instr, msbInstr, clock,
 N, Z,
-PCwrite, AddrSel, MemRead,
-MemWrite, IRload, R1Sel, MDRload,
+PCwrite, MemRead,
+MemWrite, IRload, R1Sel, MDRload, 
 R1R2Load, ALU1, ALU2, ALUop,
 ALUOutWrite, RFWrite, RegIn, FlagWrite, stop, //, state
 // New control signals
-VRFWrite, v_op, ldMask, vmaskreset, X1Load, X2Load, MemInSel, VoutSel, 
-t0load, t1load, t2load, t3load, R2sel
-
+VRFWrite, v_op, ldMask, vmaskreset, X1Load, X2Load, VoutSel,
+vecstore
 );
 	input   [11:0] instr;
 	input   msbInstr;
 	input	N, Z;
 	input	reset, clock;
-	output	PCwrite, AddrSel, MemRead, MemWrite, IRload, R1Sel, MDRload;
+	output	PCwrite, MemRead, IRload, R1Sel, MDRload, MemWrite;
 	output	R1R2Load, ALU1, ALUOutWrite, RFWrite, RegIn, FlagWrite, stop;
 	output	[2:0] ALU2, ALUop;
-	//output	[3:0] state;
-	
+
 	// New Control Signals
-	output  VRFWrite, X1Load, X2Load, VoutSel, t0load, t1load, t2load, t3load, R2sel;
-	output [2:0] MemInSel;
+	output  VRFWrite, X1Load, X2Load, VoutSel;
 	
 	// v0.2
 	output logic ldMask, vmaskreset;
 	output logic [3:0] v_op;
 	
+	//v0.4
+	output logic vecstore;
 	reg [5:0]	state;
-	reg	PCwrite, AddrSel, MemRead, MemWrite, IRload, R1Sel, MDRload;
+	reg	PCwrite, MemRead, IRload, R1Sel, MDRload;
 	reg	R1R2Load, ALU1, ALUOutWrite, RFWrite, RegIn, FlagWrite, stop;
 	reg	[2:0] ALU2, ALUop;
 	
 	// New wires
-	reg  VRFWrite, X1Load, X2Load, VoutSel, t0load, t1load, t2load, t3load, R2sel;
-	reg [2:0] MemInSel;
-	
+	reg  VRFWrite, X1Load, X2Load, VoutSel, MemWrite;
 	
 	// state constants (note: asn = add/sub/nand, asnsh = add/sub/nand/shift)
 	parameter [5:0] reset_s = 0, c1 = 1, c2 = 2, c3_asn = 3,
@@ -64,139 +53,112 @@ t0load, t1load, t2load, t3load, R2sel
 					c3_store = 11, c3_bpz = 12, c3_bz = 13, c3_bnz = 14, c3_stop_nop = 15, c3_stop = 16, c3_nop = 17,
 					
 					// Define New States
-					c2_vls = 18, c2_vop_regld = 19, 
-					c3_vload = 20, c4_vload = 21, c5_vload = 22, c6_vload = 23, c7_vload = 24,
-					c3_vstore = 25, c4_vstore = 26, c5_vstore = 27, c6_vstore = 28, 
-					c3_vadd = 29, c4_vadd = 30,
+					c3_vload = 18, c3_vstore = 19, c3_vadd = 20,
 					
 					// New states (v0.2)
-					c3_vsub = 31, c4_vsub = 32, c3_vmul = 33, c4_vmul = 34, c3_vcmplt = 35, 
-					c3_vcmpgt = 36, c3_vcmpeq = 37, c2_vcmclr = 38;
+					c3_vsub = 21, c3_vmul = 22, c3_vcmplt = 23, 
+					c3_vcmpgt = 24, c3_vcmpeq = 25, c2_vcmclr = 26;
+					
     // Scalars retain opcode [11:6] and six reserved low bits.
     // Eight-register vectors use opcode [9:4] and four reserved low bits.
+	
     localparam [5:0] VLOAD_OP = 6'b100001, VSTORE_OP = 6'b100010,
                      VADD_OP = 6'b100100, VSUB_OP = 6'b100101,
                      VMUL_OP = 6'b100110, VCMPLT_OP = 6'b101000,
                      VCMPGT_OP = 6'b101001, VCMPEQ_OP = 6'b101010,
                      VCMCLR_OP = 6'b101111;
+					 
     wire [5:0] vector_opcode = instr[9:4];
+	
     wire vector_instruction = (instr[3:0] == 4'b0000) &&
         ((vector_opcode == VLOAD_OP) || (vector_opcode == VSTORE_OP) ||
          (vector_opcode == VADD_OP) || (vector_opcode == VSUB_OP) ||
          (vector_opcode == VMUL_OP) || (vector_opcode == VCMPLT_OP) ||
          (vector_opcode == VCMPGT_OP) || (vector_opcode == VCMPEQ_OP) ||
          (vector_opcode == VCMCLR_OP));
-
+		 
 	// determines the next state based upon the current state; supports
 	// asynchronous reset
 	always @(posedge clock or posedge reset)
 	begin
-		if (reset) state = reset_s;
+		if (reset) state <= reset_s;
 		else
 		begin
 			case(state)
-				reset_s:	state = c1; 		// reset state
-				c1: 	    state = c2;
-						
-						
+				reset_s:	state <= c1; 		// reset state
+				c1: 	    state <= c2;
                 c2: begin
-                    if (vector_instruction) begin
-                        case (vector_opcode)
-                            VLOAD_OP, VSTORE_OP: state = c2_vls;
-                            VADD_OP, VSUB_OP, VMUL_OP,
-                            VCMPLT_OP, VCMPGT_OP, VCMPEQ_OP: state = c2_vop_regld;
-                            VCMCLR_OP: state = c2_vcmclr;
-                            default: state = reset_s;
-                        endcase
-                    end
-                    else if (instr[5:0] == 6'b000000) begin
-                        case (instr[11:6])
-                            6'b000000: state = c3_load;
-                            6'b000010: state = c3_store;
-                            6'b000100, 6'b000110, 6'b001000: state = c3_asn;
-                            default: state = reset_s;
-                        endcase
-                    end
-                    else if (instr[2:0] == 3'b011) state = c3_shift;
-                    else if (instr[2:0] == 3'b111) state = c3_ori;
-                    else if (instr[3:0] == 4'b1101) state = c3_bpz;
-                    else if (instr[3:0] == 4'b0101) state = c3_bz;
-                    else if (instr[3:0] == 4'b1001) state = c3_bnz;
-                    else if (instr == 12'h001) state = c3_stop_nop;
-                    else state = reset_s;
-                end
-				c3_asn:		state = c4_asnsh;	// cycle 3: ADD SUB NAND
-				c4_asnsh:	state = c1;			// cycle 4: ADD SUB NAND/SHIFT
-				c3_shift:	state = c4_asnsh;	// cycle 3: SHIFT
-				c3_ori:		state = c4_ori;		// cycle 3: ORI
-				c4_ori:		state = c5_ori;		// cycle 4: ORI
-				c5_ori:		state = c1;			// cycle 5: ORI
-				c3_load:	state = c4_load;	// cycle 3: LOAD
-				c4_load:	state = c1; 		// cycle 4: LOAD
-				c3_store:	state = c1; 		// cycle 3: STORE
-				c3_bpz:		state = c1; 		// cycle 3: BPZ
-				c3_bz:		state = c1; 		// cycle 3: BZ
-				c3_bnz:		state = c1; 		// cycle 3: BNZ
+					if (vector_instruction) begin
+						case (vector_opcode)
+							VLOAD_OP:  state <= c3_vload;
+							VSTORE_OP: state <= c3_vstore;
+							VADD_OP:   state <= c3_vadd;
+							VSUB_OP:   state <= c3_vsub;
+							VMUL_OP:   state <= c3_vmul;
+							VCMPLT_OP: state <= c3_vcmplt;
+							VCMPGT_OP: state <= c3_vcmpgt;
+							VCMPEQ_OP: state <= c3_vcmpeq;
+							VCMCLR_OP: state <= c2_vcmclr;
+							default:  state <= reset_s;
+						endcase
+					end
+					else if (instr[5:0] == 6'b000000) begin
+						case (instr[11:6])
+							6'b000000: state <= c3_load;
+							6'b000010: state <= c3_store;
+							6'b000100,
+							6'b000110,
+							6'b001000: state <= c3_asn;
+							default:  state <= reset_s;
+						endcase
+					end
+					else if (instr[2:0] == 3'b011)  state <= c3_shift;
+					else if (instr[2:0] == 3'b111)  state <= c3_ori;
+					else if (instr[3:0] == 4'b1101) state <= c3_bpz;
+					else if (instr[3:0] == 4'b0101) state <= c3_bz;
+					else if (instr[3:0] == 4'b1001) state <= c3_bnz;
+					else if (instr == 12'h001)     state <= c3_stop_nop;
+					else                          state <= reset_s;
+				end
+				c3_asn:		state <= c4_asnsh;	// cycle 3: ADD SUB NAND
+				c4_asnsh:	state <= c1;			// cycle 4: ADD SUB NAND/SHIFT
+				c3_shift:	state <= c4_asnsh;	// cycle 3: SHIFT
+				c3_ori:		state <= c4_ori;		// cycle 3: ORI
+				c4_ori:		state <= c5_ori;		// cycle 4: ORI
+				c5_ori:		state <= c1;			// cycle 5: ORI
+				c3_load:	state <= c4_load;	// cycle 3: LOAD
+				c4_load:	state <= c1; 		// cycle 4: LOAD
+				c3_store:	state <= c1; 		// cycle 3: STORE
+				c3_bpz:		state <= c1; 		// cycle 3: BPZ
+				c3_bz:		state <= c1; 		// cycle 3: BZ
+				c3_bnz:		state <= c1; 		// cycle 3: BNZ
 				c3_stop_nop:  begin	
-								if (msbInstr == 1'b1) state = c3_nop;
-								else if (msbInstr == 1'b0) state = c3_stop;
+								if (msbInstr == 1'b1) state <= c3_nop;
+								else if (msbInstr == 1'b0) state <= c3_stop;
 							  end
-				c3_stop:    state = c3_stop;
-				c3_nop:     state = c1;
-				
-				// More New instructions
-                c2_vls: begin
-                    case (vector_opcode)
-                        VLOAD_OP: state = c3_vload;
-                        VSTORE_OP: state = c3_vstore;
-                        default: state = reset_s;
-                    endcase
-                end
-                c2_vop_regld: begin
-                    case (vector_opcode)
-                        VADD_OP: state = c3_vadd;
-                        VSUB_OP: state = c3_vsub;
-                        VMUL_OP: state = c3_vmul;
-                        VCMPLT_OP: state = c3_vcmplt;
-                        VCMPGT_OP: state = c3_vcmpgt;
-                        VCMPEQ_OP: state = c3_vcmpeq;
-                        default: state = reset_s;
-                    endcase
-                end
-				c3_vload:	state = c4_vload;
-				c4_vload:	state = c5_vload;
-				c5_vload:	state = c6_vload;
-				c6_vload:	state = c7_vload;
-				c7_vload:	state = c1;
-				c3_vstore:	state = c4_vstore;
-				c4_vstore:	state = c5_vstore;
-				c5_vstore:	state = c6_vstore;
-				c6_vstore:	state = c1;
-				c3_vadd:    state = c4_vadd;
-				c4_vadd:    state = c1;
-				c3_vsub:    state = c4_vsub;
-				c4_vsub:    state = c1;
-				c3_vmul:    state = c4_vmul;
-				c4_vmul:    state = c1;
-				c3_vcmplt:    state = c1;
-				c3_vcmpgt:    state = c1;
-				c3_vcmpeq:    state = c1;
-				c2_vcmclr:	  state = c1;
-				
+				c3_stop:    state <= c3_stop;
+				c3_nop:     state <= c1;
+				c3_vload:	state <= c1;
+				c3_vstore:	state <= c1;
+				c3_vadd:    state <= c1;
+				c3_vsub:    state <= c1;
+				c3_vmul:    state <= c1;
+				c3_vcmplt:    state <= c1;
+				c3_vcmpgt:    state <= c1;
+				c3_vcmpeq:    state <= c1;
+				c2_vcmclr:	  state <= c1;
+				default: state <= reset_s;
 			endcase
 		end
 	end
-
 	// sets the control sequences based upon the current state and instruction
 	always @(*)
 	begin
 		case (state)
 			reset_s:	//control = 19'b0000000000000000000;
 				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					PCwrite = 0;					
+					MemRead = 0;			
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -209,31 +171,26 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
 					
-					// New Part
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0; 
 					
 					// v0.2
 					v_op  = 4'b0000;
 					ldMask = 0;
 					vmaskreset = 0;
+					
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
 				end					
-			c1: 		//control = 19'b1110100000010000000;
+			c1: 		// PC = PC + 1
 				begin
 					PCwrite = 1;
-					AddrSel = 1;
-					MemRead = 1;
-					MemWrite = 0;
+					MemRead = 0; // Memread not necessary for PC anymore
 					IRload = 1;
 					R1Sel = 0;
 					MDRload = 0;
@@ -246,119 +203,178 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
 					
-					// New Part
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0; 
 					
 					// v0.2
 					v_op  = 4'b0000;
 					ldMask = 0;
 					vmaskreset = 0;
-					
-				end	
-			c2: 		//control = 19'b0000000100000000000;
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
+										
+					// v0.4
+					vecstore = 0;
 					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 1;
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
+				end	
+				
+			c2: 		// Load R1 R2 for scalar, Load X1, X2 based on the vector operation
+				begin
+					PCwrite     = 0;
+					MemRead     = 0;
+					MemWrite    = 0;
+					IRload      = 0;
+					R1Sel       = 0;
+					MDRload     = 0;
+					R1R2Load    = 1;
+
+					ALU1        = 0;
+					ALU2        = 3'b000;
+					ALUop       = 3'b000;
 					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					RFWrite     = 0;
+					RegIn       = 0;
+					FlagWrite   = 0;
+					stop        = 0;
+
+					VRFWrite    = 0;
+					X1Load      = 0;
+					X2Load      = 0;
+					VoutSel     = 0;
+					v_op        = 4'b0000;
+					ldMask      = 0;
+					vmaskreset  = 0;
+					vecstore    = 0;
+
+					if (vector_instruction) begin
+						case (vector_opcode)
+							VSTORE_OP: begin
+								X1Load = 1;
+							end
+
+							VADD_OP, VSUB_OP, VMUL_OP,
+							VCMPLT_OP, VCMPGT_OP, VCMPEQ_OP: begin
+								X1Load = 1;
+								X2Load = 1;
+							end
+
+							default: begin end
+						endcase
+					end
 				end
-			c3_asn:		begin
-							if ( instr[11:6] == 6'b000100 ) 		// add
-								//control = 19'b0000000010000001001;
-							begin
-								PCwrite = 0;
-								AddrSel = 0;
-								MemRead = 0;
-								MemWrite = 0;
-								IRload = 0;
-								R1Sel = 0;
-								MDRload = 0;
-								R1R2Load = 0;
-								ALU1 = 1;
-								ALU2 = 3'b000;
-								ALUop = 3'b000;
-								ALUOutWrite = 1;
-								RFWrite = 0;
-								RegIn = 0;
-								FlagWrite = 1;
-								stop = 0;
-								MemInSel = 3'b100;
-								R2sel = 0;
-							end	
-							else if ( instr[11:6] == 6'b000110 ) 	// sub
-								//control = 19'b0000000010000011001;
-							begin
-								PCwrite = 0;
-								AddrSel = 0;
-								MemRead = 0;
-								MemWrite = 0;
-								IRload = 0;
-								R1Sel = 0;
-								MDRload = 0;
-								R1R2Load = 0;
-								ALU1 = 1;
-								ALU2 = 3'b000;
-								ALUop = 3'b001;
-								ALUOutWrite = 1;
-								RFWrite = 0;
-								RegIn = 0;
-								FlagWrite = 1;
-								stop = 0;
-								MemInSel = 3'b100;
-								R2sel = 0;
-							end
-							else 							// nand
-								//control = 19'b0000000010000111001;
-							begin
-								PCwrite = 0;
-								AddrSel = 0;
-								MemRead = 0;
-								MemWrite = 0;
-								IRload = 0;
-								R1Sel = 0;
-								MDRload = 0;
-								R1R2Load = 0;
-								ALU1 = 1;
-								ALU2 = 3'b000;
-								ALUop = 3'b011;
-								ALUOutWrite = 1;
-								RFWrite = 0;
-								RegIn = 0;
-								FlagWrite = 1;
-								stop = 0;
-								MemInSel = 3'b100;
-								R2sel = 0;
-							end
-				   		end
+				
+			c3_asn:		
+				begin
+					if ( instr[11:6] == 6'b000100 ) 		// add
+						//control = 19'b0000000010000001001;
+					begin
+						PCwrite = 0;
+						MemRead = 0;
+						MemWrite = 0;
+						IRload = 0;
+						R1Sel = 0;
+						MDRload = 0;
+						R1R2Load = 0;
+						ALU1 = 1;
+						ALU2 = 3'b000;
+						ALUop = 3'b000;
+						ALUOutWrite = 1;
+						RFWrite = 0;
+						RegIn = 0;
+						FlagWrite = 1;
+						stop = 0;
+											
+						// v0
+						VRFWrite = 0;
+						X1Load = 0;
+						X2Load = 0;
+						VoutSel = 0;
+						
+						// v0.2
+						v_op  = 4'b0000;
+						ldMask = 0;
+						vmaskreset = 0;
+											
+						// v0.4
+						vecstore = 0;
+
+
+					end	
+					else if ( instr[11:6] == 6'b000110 ) 	// sub
+						//control = 19'b0000000010000011001;
+					begin
+						PCwrite = 0;
+						MemRead = 0;
+						MemWrite = 0;
+						IRload = 0;
+						R1Sel = 0;
+						MDRload = 0;
+						R1R2Load = 0;
+						ALU1 = 1;
+						ALU2 = 3'b000;
+						ALUop = 3'b001;
+						ALUOutWrite = 1;
+						RFWrite = 0;
+						RegIn = 0;
+						FlagWrite = 1;
+						stop = 0;						
+					
+						// v0
+						VRFWrite = 0;
+						X1Load = 0;
+						X2Load = 0;
+						VoutSel = 0;
+						
+						// v0.2
+						v_op  = 4'b0000;
+						ldMask = 0;
+						vmaskreset = 0;
+											
+						// v0.4
+						vecstore = 0;
+
+					end
+					else 							// nand
+						//control = 19'b0000000010000111001;
+					begin
+						PCwrite = 0;
+						MemRead = 0;
+						MemWrite = 0;
+						IRload = 0;
+						R1Sel = 0;
+						MDRload = 0;
+						R1R2Load = 0;
+						ALU1 = 1;
+						ALU2 = 3'b000;
+						ALUop = 3'b011;
+						ALUOutWrite = 1;
+						RFWrite = 0;
+						RegIn = 0;
+						FlagWrite = 1;
+						stop = 0;						
+					
+						// v0
+						VRFWrite = 0;
+						X1Load = 0;
+						X2Load = 0;
+						VoutSel = 0;
+						
+						// v0.2
+						v_op  = 4'b0000;
+						ldMask = 0;
+						vmaskreset = 0;
+											
+						// v0.4
+						vecstore = 0;
+
+					end
+				end
+				
 			c4_asnsh: 	//control = 19'b0000000000000000100;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -372,14 +388,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 1;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c3_shift: 	//control = 19'b0000000011001001001;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -393,14 +422,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 1;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c3_ori: 	//control = 19'b0000010100000000000;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -414,14 +456,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c4_ori: 	//control = 19'b0000000010110101001;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -435,14 +490,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 1;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c5_ori: 	//control = 19'b0000010000000000100;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -456,14 +524,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 1;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c3_load: 	//control = 19'b0010001000000000000;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 1;
 					MemWrite = 0;
 					IRload = 0;
@@ -477,14 +558,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c4_load: 	//control = 19'b0000000000000001110;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -498,14 +592,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 1;
 					RegIn = 1;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c3_store: 	//control = 19'b0001000000000000000;
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 1;
 					IRload = 0;
@@ -519,14 +626,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
+
 				end
+				
 			c3_bpz: 	//control = {~N,18'b000000000100000000};
 				begin
 					PCwrite = ~N;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -540,14 +660,26 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
 				end
+				
 			c3_bz: 		//control = {Z,18'b000000000100000000};
 				begin
 					PCwrite = Z;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -561,14 +693,26 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
 				end
+				
 			c3_bnz: 	//control = {~Z,18'b000000000100000000};
 				begin
 					PCwrite = ~Z;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -582,14 +726,26 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
 				end
+				
 			c3_stop: 	//control = {~Z,18'b000000000100000000};
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -603,14 +759,26 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 1;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 1;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
 				end
+				
 			c3_nop: 	//control = {~Z,18'b000000000100000000};
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
 					MemRead = 0;
 					MemWrite = 0;
 					IRload = 0;
@@ -624,102 +792,33 @@ t0load, t1load, t2load, t3load, R2sel
 					RFWrite = 0;
 					RegIn = 0;
 					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					R2sel = 0;
+					stop = 0;						
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+						
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+											
+					// v0.4
+					vecstore = 0;
 				end
-				
-				// New Control Instructions 
-			c2_vls: 
-				// X1 captures VRF[IR[15:13]].
-				// R2 captures the scalar base address (top-level RF selection).			
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 1;    // R1 value should not matter...
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					
-					// New Part
-					VRFWrite = 0;
-					X1Load = 1;
-					X2Load = 0;
-					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
+
 			
-			c2_vop_regld: 
-				// X1 captures VRF[IR[15:13]].
-				// X2 captures VRF[IR[12:10]].			
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 0;    // R1 value should not matter...
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					
-					// New Part
-					VRFWrite = 0;
-					X1Load = 1;
-					X2Load = 1;
-					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-				
 			c3_vload: 
-				// MEM[R2] = T0
-				// MEM[R2] = MEM[R2 + 1]
+				// MEM[R2...R2+3] ->VRF[IR[15:3]]
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 1;
-					MemWrite = 0;
+					MemRead = 1; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
-					R1R2Load = 1;    
+					R1R2Load = 0;
 					ALU1 = 0;
 					ALU2 = 3'b000;
 					ALUop = 3'b000;
@@ -728,301 +827,28 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
 					
-					// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 1;
-					t0load = 1;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 1;   //Enable new r value
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-				
-			c4_vload: 
-				// MEM[R2 + 1] = T1
-				// MEM[R2 + 1] = MEM[R2 + 2]
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 1;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 1;    // R1 value should not matter...
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					
-					// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 1;
-					t0load = 0;
-					t1load = 1;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 1;   //Enable new r value
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-			
-			c5_vload: 
-				// MEM[R2 + 2] = T2
-				// MEM[R2 + 2] = MEM[R2 + 3]
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 1;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 1;    // R1 value should not matter...
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					
-					// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 1;
-					t0load = 0;
-					t1load = 0;
-					t2load = 1;
-					t3load = 0;
-					R2sel = 1;   //Enable new r value
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-				
-			c6_vload: 
-				// MEM[R2 + 3] = T3
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 1;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 0;    
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					
-					// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 1;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 1;
-					R2sel = 0;   //Dont care
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-				
-			c7_vload: 
-				// VRF[T0[7..0]...T3[7..0]] = X1
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 0;    
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-					
-					// New Part
+					// v0
 					VRFWrite = 1;
 					X1Load = 0;
 					X2Load = 0;
-					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 1;
-					R2sel = 0;   //Dont care
+					VoutSel = 1;
 					
 					// v0.2
 					v_op  = 4'b0000;
 					ldMask = 0;
 					vmaskreset = 0;
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
 				end	
-			
 			
 			c3_vstore: 	
-				// MEM[R2] = X1_0
+				// MEM[R2...R2+3] <- X1
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 1;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 1;
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b000;
-				
-				// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 1;  
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-			
-			c4_vstore: 	
-				// MEM[R2+1] = X1_1
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 1;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 1;
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b001;
-				
-				// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 1;   
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-			
-			c5_vstore: 	
-				// MEM[R2+2] = X1_2
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 1;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 1;
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b010;
-				
-				// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 1;   
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-			
-			c6_vstore: 	
-				// MEM[R2+3] = X1_3
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 1;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1035,32 +861,28 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b011;
-				
-				// New Part
+					
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   //Dont care
 					
 					// v0.2
 					v_op  = 4'b0000;
 					ldMask = 0;
 					vmaskreset = 0;
+										
+					// v0.4
+					vecstore = 1;
+					MemWrite = 1;
 				end	
-			
+
 			c3_vadd: 	
-				// T[0] ... T[3] = X1_0 + X2_0 ... X1_3 + X2_3
+				// X1 = X1 + X2
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1073,69 +895,28 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-				
-				// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 0;
-					t0load = 1;
-					t1load = 1;
-					t2load = 1;
-					t3load = 1;
-					R2sel = 0;   
 					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-			
-			c4_vadd: 	
-				// X1 = [T[0] ... T[3]]
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 0;
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-				
-					// New Part
+					// v0
 					VRFWrite = 1;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0000;
 					ldMask = 0;
 					vmaskreset = 0;
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
 				end	
-							
+			
 			c3_vsub: 	
+				// X1 = X1 - X2
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1148,32 +929,28 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-				
-				// New Part
-					VRFWrite = 0;
+					
+					// v0
+					VRFWrite = 1;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 1;
-					t1load = 1;
-					t2load = 1;
-					t3load = 1;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0001;
 					ldMask = 0;
 					vmaskreset = 0;
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
 				end	
-			
-							
-			c4_vsub: 	
+				
+			c3_vmul: 	
+				// X1 = X1 * X2
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1186,106 +963,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-				
-					// New Part
+					
+					// v0
 					VRFWrite = 1;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-			
-			c3_vmul: 	
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 0;
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
-				
-				// New Part
-					VRFWrite = 0;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 0;
-					t0load = 1;
-					t1load = 1;
-					t2load = 1;
-					t3load = 1;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0010;
 					ldMask = 0;
 					vmaskreset = 0;
-				end	
-			
-							
-			c4_vmul: 	
-				begin
-					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
+										
+					// v0.4
+					vecstore = 0;
 					MemWrite = 0;
-					IRload = 0;
-					R1Sel = 0;
-					MDRload = 0;
-					R1R2Load = 0;
-					ALU1 = 0;
-					ALU2 = 3'b000;
-					ALUop = 3'b000;
-					ALUOutWrite = 0;
-					RFWrite = 0;
-					RegIn = 0;
-					FlagWrite = 0;
-					stop = 0;
-					MemInSel = 3'b100;
+				end
 				
-					// New Part
-					VRFWrite = 1;
-					X1Load = 0;
-					X2Load = 0;
-					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
-					
-					// v0.2
-					v_op  = 4'b0000;
-					ldMask = 0;
-					vmaskreset = 0;
-				end	
-			
 			c3_vcmplt: 	
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1298,31 +996,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-				
-				// New Part
+					
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0011;
 					ldMask = 1;
 					vmaskreset = 0;
-				end	
-			
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
+				end
+				
 			c3_vcmpgt: 	
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1335,31 +1029,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-				
-				// New Part
+					
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0100;
 					ldMask = 1;
 					vmaskreset = 0;
-				end		
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
+				end
 				
 			c3_vcmpeq: 	
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1372,31 +1062,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-				
-				// New Part
+					
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0101;
 					ldMask = 1;
 					vmaskreset = 0;
-				end	
-			
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
+				end
+				
 			c2_vcmclr: 	
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1409,31 +1095,27 @@ t0load, t1load, t2load, t3load, R2sel
 					RegIn = 0;
 					FlagWrite = 0;
 					stop = 0;
-					MemInSel = 3'b100;
-				
-				// New Part
+					
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0000;
 					ldMask = 0;
 					vmaskreset = 1;
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
 				end	
-			
-			default:	//control = 19'b0000000000000000000;
+				
+			default:	
 				begin
 					PCwrite = 0;
-					AddrSel = 0;
-					MemRead = 0;
-					MemWrite = 0;
+					MemRead = 0; 
 					IRload = 0;
 					R1Sel = 0;
 					MDRload = 0;
@@ -1447,27 +1129,21 @@ t0load, t1load, t2load, t3load, R2sel
 					FlagWrite = 0;
 					stop = 0;
 					
-					// New Part
+					// v0
 					VRFWrite = 0;
 					X1Load = 0;
 					X2Load = 0;
 					VoutSel = 0;
-					t0load = 0;
-					t1load = 0;
-					t2load = 0;
-					t3load = 0;
-					R2sel = 0;   
 					
 					// v0.2
 					v_op  = 4'b0000;
 					ldMask = 0;
 					vmaskreset = 0;
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
 				end
-							
-			
-			
-			
 		endcase
 	end
-	
 endmodule

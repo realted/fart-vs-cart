@@ -38,7 +38,7 @@ import params::*;
 // synopsys translate_off
 `timescale 1 ps / 1 ps
 // synopsys translate_on
-module DataMemory (
+module DataMemory #(parameter INIT_FILE = "data.mif") (
 	address,
 	clock,
 	data,
@@ -81,8 +81,8 @@ module DataMemory (
 	defparam
 		altsyncram_component.clock_enable_input_a = "BYPASS",
 		altsyncram_component.clock_enable_output_a = "BYPASS",
-		altsyncram_component.init_file = "data.mif",
-		altsyncram_component.intended_device_family = "Cyclone II",
+		altsyncram_component.init_file = INIT_FILE,
+		altsyncram_component.intended_device_family = "Cyclone V",
 		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=NO",
 		altsyncram_component.lpm_type = "altsyncram",
 		altsyncram_component.numwords_a = 256,

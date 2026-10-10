@@ -26,7 +26,7 @@
 import params::*;
 
 
-module multicycle
+module gpu
 (
 CLOCK_50,
 SW, KEY, HEX0, HEX1, HEX2, HEX3,
@@ -43,12 +43,12 @@ output reg [17:0] LEDR;
 
 // ------------------------- Registers/Wires ------------------------ //
 wire	clock, reset;
-wire	IRLoad, MDRLoad, MemRead, MemWrite, PCWrite, RegIn, AddrSel;
+wire	IRLoad, MDRLoad, MemRead, PCWrite, RegIn;
 wire	ALU1, ALUOutWrite, FlagWrite, R1R2Load, R1Sel, RFWrite, stop;
 wire	[DATA_BIT_WIDTH-1:0] R2wire, PCwire, R1wire, RFout1wire, RFout2wire;
-wire	[DATA_BIT_WIDTH-1:0] ALU1wire, ALU2wire, ALUwire, ALUOut, MDRwire, MEMwire;
+wire	[DATA_BIT_WIDTH-1:0] ALU1wire, ALU2wire, ALUwire, ALUOut, MDRwire, Instr_out;
 wire	[IR_BIT_WIDTH-1:0] IR;
-wire    [DATA_BIT_WIDTH-1:0] SE4wire, ZE5wire, ZE3wire, AddrWire, RegWire;
+wire    [DATA_BIT_WIDTH-1:0] SE4wire, ZE5wire, ZE3wire, RegWire;
 wire	[DATA_BIT_WIDTH-1:0] reg0, reg1, reg2, reg3;
 wire	[DATA_BIT_WIDTH-1:0] constant;
 wire	[2:0] ALUOp, ALU2;
@@ -77,10 +77,6 @@ wire    X1Load, X2Load;   // Control
 wire	[DATA_BIT_WIDTH-1:0] X1out_0, X1out_1, X1out_2, X1out_3;
 wire	[DATA_BIT_WIDTH-1:0] X2out_0, X2out_1, X2out_2, X2out_3;
 
-// 5 -1 Mux
-wire	[2:0] MemInSel;    // Control
-wire    [DATA_BIT_WIDTH-1:0] MemInWire;
-
 // Mask Register
 wire	ldMask; // Control
 wire    vmaskreset; // Control
@@ -93,18 +89,18 @@ wire    [3:0] v_op;     	// Control
 wire    VoutSel;            // Control
 wire	[DATA_BIT_WIDTH-1:0] vMux0, vMux1, vMux2, vMux3;
 
-// Temp Reg Wire
-wire    t0load, t1load, t2load, t3load;  // Control
-
-// R2 adder, Mux
-wire	[DATA_BIT_WIDTH-1:0] plus1Wire;
-wire	[DATA_BIT_WIDTH-1:0] R2MuxOut;
-wire    R2sel;           // Control
-
 // CLOCK Auto advance
 localparam integer HALF_PERIOD = 250_000;
 reg [17:0] divider;
 reg cpu_clock;
+
+// GPU v0.4 additions
+wire	[3:0] scalar_wren_mux_out, mem_wren_out;
+wire	vecstore, MemWrite;
+wire	[DATA_BIT_WIDTH-1:0] M0_in, M1_in, M2_in, M3_in; 
+wire	[DATA_BIT_WIDTH-1:0] M0_out, M1_out, M2_out, M3_out; 
+wire	[DATA_BIT_WIDTH-1:0] MDR_IN;
+
 
 always @(posedge CLOCK_50 or posedge reset) begin
     if (reset) begin
@@ -163,21 +159,25 @@ assign HEX7 = 7'b1111111;
 
 FSM		Control(
 	.reset(reset),.clock(clock),.N(N),.Z(Z),.instr(IR[11:0]), .msbInstr(IR[15]),
-	.PCwrite(PCWrite),.AddrSel(AddrSel),.MemRead(MemRead),.MemWrite(MemWrite),
+	.PCwrite(PCWrite),.MemRead(MemRead),
 	.IRload(IRLoad),.R1Sel(R1Sel),.MDRload(MDRLoad),.R1R2Load(R1R2Load),
 	.ALU1(ALU1),.ALUOutWrite(ALUOutWrite),.RFWrite(RFWrite),.RegIn(RegIn),
 	.FlagWrite(FlagWrite),.ALU2(ALU2),.ALUop(ALUOp), .stop(stop), 
 	// New
-	.VRFWrite(VRFWrite), .v_op(v_op), .ldMask(ldMask), .vmaskreset(vmaskreset), .X1Load(X1Load), .X2Load(X2Load), .MemInSel(MemInSel),
-	.VoutSel(VoutSel), .t0load(t0load), .t1load(t1load), .t2load(t2load), .t3load(t3load), .R2sel(R2sel)
+	.VRFWrite(VRFWrite), .v_op(v_op), .ldMask(ldMask), .vmaskreset(vmaskreset), .X1Load(X1Load), .X2Load(X2Load), .VoutSel(VoutSel),
+	.vecstore(vecstore), .MemWrite(MemWrite)
 	
 	
 );
 
 // Change R1wire to output of Mux so it is MemInWire
-memory	DataMem(
-	.MemRead(MemRead),.wren(MemWrite),.clock(clock),
-	.address(AddrWire),.data(MemInWire),.q(MEMwire)
+//memory	DataMem(
+//	.MemRead(MemRead),.wren(MemWrite),.clock(clock),
+//	.address(AddrWire),.data(MemInWire),.q(MEMwire)
+//);
+
+InstructionMemory	InstructionMemory(
+	.address(PCwire),.clock(~clock),.q(Instr_out)
 );
 
 ALU		ALU(
@@ -203,7 +203,7 @@ RF		RF_block(
 VRF		VRF_block(
 	.clock(clock),.reset(reset),.VRFWrite(VRFWrite),.VRFLaneWrite(VRFLaneWrite),
 	.vreg1(IR[15:13]),.vreg2(IR[12:10]),.vregw(IR[15:13]),
-	.vdataw_0(vdataw_0wire), .vdataw_1(vdataw_1wire), .vdataw_2(vdataw_2wire), .vdataw_3(vdataw_3wire),
+	.vdataw_0(vMux0), .vdataw_1(vMux1), .vdataw_2(vMux2), .vdataw_3(vMux3),
 	.vdata1_0(VRFout1_0wire), .vdata1_1(VRFout1_1wire), .vdata1_2(VRFout1_2wire), .vdata1_3(VRFout1_3wire),
 	.vdata2_0(VRFout2_0wire), .vdata2_1(VRFout2_1wire), .vdata2_2(VRFout2_2wire), .vdata2_3(VRFout2_3wire),
 	.vr0_0(vreg0_0),.vr0_1(vreg0_1),.vr0_2(vreg0_2),.vr0_3(vreg0_3),
@@ -232,10 +232,10 @@ register_nx4bit  X2(
 
 // Mux 5-1 to Data_in of memory
 
-mux5to1_nbit 		Mem_mux(
-	.data0x(X1out_0),.data1x(X1out_1),.data2x(X1out_2),
-	.data3x(X1out_3),.data4x(R1wire),.sel(MemInSel),.result(MemInWire)
-);
+//mux5to1_nbit 		Mem_mux(
+//	.data0x(X1out_0),.data1x(X1out_1),.data2x(X1out_2),
+//	.data3x(X1out_3),.data4x(R1wire),.sel(MemInSel),.result(MemInWire)
+//);
 
 // Mask Register
 mask_reg_4b reg_4b(.clock(clock), .aclr(reset), .d({mask3, mask2, mask1, mask0}), .ldMask(ldMask), .vmaskreset(vmaskreset), .q(VRFLaneWrite));
@@ -261,72 +261,50 @@ ALU_V a3(
 // 4 2-1 Muxes PLEASE
 
 mux2to1_nbit 		voutSel_mux0(
-	.data0x(vq0),.data1x(MEMwire),
+	.data0x(vq0),.data1x(M0_out),
 	.sel(VoutSel),.result(vMux0)
 );
 
 mux2to1_nbit 		voutSel_mux1(
-	.data0x(vq1),.data1x(MEMwire),
+	.data0x(vq1),.data1x(M1_out),
 	.sel(VoutSel),.result(vMux1)
 );
 
 mux2to1_nbit 		voutSel_mux2(
-	.data0x(vq2),.data1x(MEMwire),
+	.data0x(vq2),.data1x(M2_out),
 	.sel(VoutSel),.result(vMux2)
 );
 
 mux2to1_nbit 		voutSel_mux3(
-	.data0x(vq3),.data1x(MEMwire),
+	.data0x(vq3),.data1x(M3_out),
 	.sel(VoutSel),.result(vMux3)
 );
 
-// 4 Temp Registers PLEASE
-
-register_nbit	temp0(
-	.clock(clock),.aclr(reset),.enable(t0load),
-	.data(vMux0),.q(vdataw_0wire)
-);
-
-register_nbit	temp1(
-	.clock(clock),.aclr(reset),.enable(t1load),
-	.data(vMux1),.q(vdataw_1wire)
-);
-
-register_nbit	temp2(
-	.clock(clock),.aclr(reset),.enable(t2load),
-	.data(vMux2),.q(vdataw_2wire)
-);
-
-register_nbit	temp3(
-	.clock(clock),.aclr(reset),.enable(t3load),
-	.data(vMux3),.q(vdataw_3wire)
-);
 
 // Now for editing R2... 
 
 // Start with Adder
-adder_n plusOne(
-	.in1(R2wire), .in2(constant), .out(plus1Wire) 
-);
+//adder_n plusOne(
+//	.in1(R2wire), .in2(constant), .out(plus1Wire) 
+//);
 
 // Selection Mux for R2
-mux2to1_nbit 		r2Sel_mux(
-	.data0x(RFout2wire),.data1x(plus1Wire),
-	.sel(R2sel),.result(R2MuxOut)
-);
+//mux2to1_nbit 		r2Sel_mux(
+//	.data0x(RFout2wire),.data1x(plus1Wire),
+//	.sel(R2sel),.result(R2MuxOut)
+//);
 
 // DONE NEW ADDITIONS
 
 
-
 register_nbit	IR_reg(
 	.clock(clock),.aclr(reset),.enable(IRLoad),
-	.data(MEMwire[IR_BIT_WIDTH-1:0]),.q(IR)
+	.data(Instr_out),.q(IR)
 );
 
 register_nbit	MDR_reg(
 	.clock(clock),.aclr(reset),.enable(MDRLoad),
-	.data(MEMwire),.q(MDRwire)
+	.data(MDR_IN),.q(MDRwire)
 );
 
 register_nbit	PC(
@@ -342,7 +320,7 @@ register_nbit	R1(
 // Edit this to be inputted from MuxOut not RF2 directly may have to edit enable...
 register_nbit	R2(
 	.clock(clock),.aclr(reset),.enable(R1R2Load),
-	.data(R2MuxOut),.q(R2wire)
+	.data(RFout2wire),.q(R2wire)
 );
 
 register_nbit	ALUOut_reg(
@@ -355,10 +333,10 @@ mux2to1_2bit		R1Sel_mux(
 	.sel(R1Sel),.result(R1_in)
 );
 
-mux2to1_nbit 		AddrSel_mux(
-	.data0x(R2wire),.data1x(PCwire),
-	.sel(AddrSel),.result(AddrWire)
-);
+//mux2to1_nbit 		AddrSel_mux(
+//	.data0x(R2wire),.data1x(PCwire),
+//	.sel(AddrSel),.result(AddrWire)
+//);
 
 mux2to1_nbit 		RegMux(
 	.data0x(ALUOut),.data1x(MDRwire),
@@ -380,6 +358,66 @@ counter             counter(
 	.clock(clock), .reset(reset), .stop(stop), .counterOut(counterOut)
 );
 
+// New additions GPU v0.4
+mux4to1_4bit 		scalar_wren_mux(
+	.data0x(4'b0001),.data1x(4'b0010),
+	.data2x(4'b0100),.data3x(4'b1000),
+	.sel(R2wire[1:0]),.result(scalar_wren_mux_out)
+);
+
+mux2to1_4bit 		scalar_vector_wren_mux(
+	.data0x(scalar_wren_mux_out),.data1x(4'b1111),
+	.sel(vecstore),.result(mem_wren_out)
+);
+
+memory #(.INIT_FILE("data_bank0.mif")) M0(
+	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[0]),.clock(clock),
+	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M0_in),.q(M0_out)
+);
+
+memory #(.INIT_FILE("data_bank1.mif")) M1(
+	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[1]),.clock(clock),
+	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M1_in),.q(M1_out)
+);
+
+memory #(.INIT_FILE("data_bank2.mif")) M2(
+	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[2]),.clock(clock),
+	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M2_in),.q(M2_out)
+);
+
+memory #(.INIT_FILE("data_bank3.mif")) M3(
+	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[3]),.clock(clock),
+	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M3_in),.q(M3_out)
+);
+
+// Muxes to D_in of mem0 - 3
+mux2to1_nbit 		M0_in_mux(
+	.data0x(R1wire),.data1x(X1out_0),
+	.sel(vecstore),.result(M0_in)
+);
+
+mux2to1_nbit 		M1_in_mux(
+	.data0x(R1wire),.data1x(X1out_1),
+	.sel(vecstore),.result(M1_in)
+);
+
+mux2to1_nbit 		M2_in_mux(
+	.data0x(R1wire),.data1x(X1out_2),
+	.sel(vecstore),.result(M2_in)
+);
+
+mux2to1_nbit 		M3_in_mux(
+	.data0x(R1wire),.data1x(X1out_3),
+	.sel(vecstore),.result(M3_in)
+);
+
+// Mux to MDR
+
+mux4to1_nbit 		mdr_in_mux(
+	.data0x(M0_out),.data1x(M1_out),
+	.data2x(M2_out),.data3x(M3_out),
+	.sel(R2wire[1:0]),.result(MDR_IN)
+);
 
 
 sExtend		SE4(.in(IR[15:4]),.out(SE4wire));
@@ -418,9 +456,8 @@ begin
       LEDR[9] = 0;
       LEDR[8] = 0;
       LEDR[7] = PCWrite;
-      LEDR[6] = AddrSel;
       LEDR[5] = MemRead;
-      LEDR[4] = MemWrite;
+      //LEDR[4] = MemWrite;
       LEDR[3] = IRLoad;
       LEDR[2] = R1Sel;
       LEDR[1] = MDRLoad;
