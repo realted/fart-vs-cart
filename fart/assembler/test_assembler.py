@@ -40,7 +40,8 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
         ('vsub v1,v2', 0x2A50), ('vmul v1,v2', 0x2A60),
         ('vcmplt v1,v2', 0x2A80), ('vcmpgt v1,v2', 0x2A90),
         ('vcmpeq v1,v2', 0x2AA0), ('vcmclr', 0xFEF0),
-        ('vcmclr ; enable all lanes', 0xFEF0), ('nop', 0x8001), ('stop', 0x0001),
+        ('vcmclr ; enable all lanes', 0xFEF0), ('nop', 0x8001), ('stop', 0x0001), ('kend', 0x0002),
+        ('kend ; kernel complete', 0x0002),
         ('db 256', 0x0100), ('db 65535', 0xFFFF), ('db -32768', 0x8000),
         ('db -1', 0xFFFF), ('db $ABCD', 0xABCD), ('db %100000000', 0x0100),
     ]
@@ -146,3 +147,10 @@ with tempfile.TemporaryDirectory(prefix='isa16_') as tmp:
     assert mem[72:76] == [0x0100, 0x0101, 0x0100, 0x012C], mem[72:76]
     print('PASS: encodings, register combinations, immediate bounds, labels, errors, both output formats.')
     print('PASS: test1_16bit_path.s halts; ISA model memory[72:76] = 0100 0101 0100 012C.')
+    data = assemble('    bnz end\n    nop\nend    kend\n    stop\n')
+    assert [data[i] for i in range(4)] == [0x0019, 0x8001, 0x0002, 0x0001]
+    source.write_text('    kend k0\n')
+    output.write_text('KEEP MIF')
+    result = subprocess.run([str(EXE), str(source), str(output)], capture_output=True, text=True)
+    assert result.returncode != 0 and output.read_text() == 'KEEP MIF'
+

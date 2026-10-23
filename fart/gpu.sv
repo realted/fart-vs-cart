@@ -104,6 +104,45 @@ wire	[DATA_BIT_WIDTH-1:0] MDR_IN;
 // GPU v0.5 additions
 wire	[DATA_BIT_WIDTH-1:0] ZE3_LIwire;
 
+// GPU v0.6 kend
+wire	kend_send;
+wire    restart_kernel;
+wire 	[DATA_BIT_WIDTH-1:0] group_index;
+wire 	workload_busy;
+wire    workload_done;
+
+// Configuration: replace these constants when configuration is available.
+localparam [DATA_BIT_WIDTH-1:0] NUM_GROUPS   = 16'd3;
+localparam [DATA_BIT_WIDTH-1:0] PROGRAM_ENTRY = 16'd0; // Set to actual kernel start address.
+localparam [DATA_BIT_WIDTH-1:0] KERNEL_ENTRY  = 16'd0; // Verify against final assembly.
+
+// start automatically after reset
+wire 	workload_start = 1'b1;
+
+// PC control with work controller
+assign  pc_enable = restart_kernel | PCWrite;
+wire [DATA_BIT_WIDTH-1:0] pc_next;
+
+wire [DATA_BIT_WIDTH-1:0] launch_address;
+assign launch_address = (group_index == 0)
+                      ? PROGRAM_ENTRY
+                      : KERNEL_ENTRY;
+
+assign pc_next = restart_kernel ? launch_address : ALUwire;
+
+// RF Write Overwrite for work controller
+wire        rf_write_enable;
+wire [1:0]  rf_write_address;
+wire [DATA_BIT_WIDTH-1:0] rf_write_data;
+wire [DATA_BIT_WIDTH-1:0] current_group_address;
+
+assign rf_write_enable  = restart_kernel | RFWrite;
+assign rf_write_address = restart_kernel ? 2'd0 : R1_in;
+assign rf_write_data    = restart_kernel
+                        ? current_group_address
+                        : RegWire;
+
+
 always @(posedge CLOCK_50 or posedge reset) begin
     if (reset) begin
         divider   <= 0;
@@ -167,9 +206,24 @@ FSM		Control(
 	.FlagWrite(FlagWrite),.ALU2(ALU2),.ALUop(ALUOp), .stop(stop), 
 	// New
 	.VRFWrite(VRFWrite), .v_op(v_op), .ldMask(ldMask), .vmaskreset(vmaskreset), .X1Load(X1Load), .X2Load(X2Load), .VoutSel(VoutSel),
-	.vecstore(vecstore), .MemWrite(MemWrite)
+	.vecstore(vecstore), .MemWrite(MemWrite), .kend_send(kend_send), .restart_kernel(restart_kernel)
 	
 	
+);
+
+work_controller WorkControl (
+    .clock          (clock),
+    .reset          (reset),
+    .workload_start (workload_start),
+    .num_groups     (NUM_GROUPS),
+	
+    .kernel_done    (kend_send),
+
+    .restart_kernel (restart_kernel),
+    .group_index    (group_index),
+	.current_group_address(current_group_address),
+    .workload_busy  (workload_busy),
+    .workload_done  (workload_done)
 );
 
 // Change R1wire to output of Mux so it is MemInWire
@@ -194,9 +248,9 @@ wire vector_mem = (IR[3:0] == 4'b0000) &&
 wire [1:0] rf_read2 = vector_mem ? IR[11:10] : IR[13:12];
 
 RF		RF_block(
-	.clock(clock),.reset(reset),.RFWrite(RFWrite),
-	.dataw(RegWire),.reg1(R1_in),.reg2(rf_read2),
-	.regw(R1_in),.data1(RFout1wire),.data2(RFout2wire),
+	.clock(clock),.reset(reset),.RFWrite(rf_write_enable),
+	.dataw(rf_write_data),.reg1(R1_in),.reg2(rf_read2),
+	.regw(rf_write_address),.data1(RFout1wire),.data2(RFout2wire),
 	.r0(reg0),.r1(reg1),.r2(reg2),.r3(reg3)
 );
 
@@ -310,8 +364,8 @@ register_nbit	MDR_reg(
 );
 
 register_nbit	PC(
-	.clock(clock),.aclr(reset),.enable(PCWrite),
-	.data(ALUwire),.q(PCwire)
+	.clock(clock),.aclr(reset),.enable(pc_enable),
+	.data(pc_next),.q(PCwire)
 );
 
 register_nbit	R1(
@@ -358,7 +412,7 @@ mux5to1_nbit 		ALU2_mux(
 
 // Add Counter here 
 counter             counter(
-	.clock(clock), .reset(reset), .stop(stop), .counterOut(counterOut)
+	.clock(clock), .reset(reset), .stop(stop | ~workload_busy), .counterOut(counterOut)
 );
 
 sExtend		SE4(.in(IR[15:4]),.out(SE4wire));

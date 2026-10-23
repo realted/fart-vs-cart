@@ -27,7 +27,7 @@ Change P.Poolad updated with new instruction codes for nop/stop and vector instr
 using namespace std;
 
 #define MEM_SIZE 256
-#define NUM_KEYWORDS 26
+#define NUM_KEYWORDS 27
 
 typedef struct instruction
 {
@@ -41,7 +41,7 @@ bool isKeyword(string str)
 {
 	string keywords[NUM_KEYWORDS] = {"li", "load", "store", "add", "sub", "nand", "ori",
 						  "shift", "shiftl", "shiftr", "bz", "bnz", "bpz",
-					 "org", "db", "stop", "nop", "vload", "vstore", "vadd", "vsub", "vmul", "vcmplt", "vcmpgt", "vcmpeq", "vcmclr"};
+					 "org", "db", "stop", "nop", "kend", "vload", "vstore", "vadd", "vsub", "vmul", "vcmplt", "vcmpgt", "vcmpeq", "vcmclr"};
 
 	for (int i = 0; i < NUM_KEYWORDS; i++)
 	{
@@ -224,13 +224,13 @@ int main(int argc, char* argv[])
 
 			if (e == string::npos) {
 			  col2 = line.substr(b);
-			  if (col2 != "stop" && col2 != "nop" && col2 != "vcmclr")
+			  if (col2 != "kend" && col2 != "stop" && col2 != "nop" && col2 != "vcmclr")
 			    throw "parse error";
 			  
 			}
 			else col2 = line.substr(b, e-b);
 
-			if (col2 != "stop" && col2 != "nop" && col2 != "vcmclr") 
+			if (col2 != "kend" && col2 != "stop" && col2 != "nop" && col2 != "vcmclr") 
 			  {
 			    b = line.find_first_not_of(" \t", e);
 			
@@ -253,7 +253,7 @@ int main(int argc, char* argv[])
 				col3 = line.substr(b, e-b);
 			      }
 			  }
-            if (col2 == "stop" || col2 == "nop" || col2 == "vcmclr") {
+            if (col2 == "kend" || col2 == "stop" || col2 == "nop" || col2 == "vcmclr") {
                 const size_t tail = (e == string::npos) ? string::npos : line.find_first_not_of(" \t", e);
                 if (tail != string::npos && line[tail] != ';')
                     throw "instruction takes no operands";
@@ -464,6 +464,10 @@ int main(int argc, char* argv[])
             else if (col2 == "vcmclr")
             {
                 encoding = 0xFEF0; // 111 111 101111 0000: enable all lanes.
+            }
+			else if (col2 == "kend")
+            {
+                encoding = 0x0002; // Kernel completion pulse; execution continues.
             }
 			else if (col2 == "stop")
 			{

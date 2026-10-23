@@ -30,7 +30,7 @@ The SHIFT clarification below was confirmed by the processor author.
 | LI | `(R1 << 14) \| (imm11 << 3) \| 4`; immediate 0..2047; e.g. `li k2,123` |
 | SHIFT | `(R1 << 14) \| (imm11 << 3) \| 3`; only low 3 immediate bits are used |
 | BZ, BNZ, BPZ | `((offset & 0xFFF) << 4) \| tag`; tags 5, 9, 13; offset -2048..2047 |
-| STOP / NOP | `0001` / `8001` |
+| STOP / NOP / KEND | `0001` / `8001` / `0002` |
 
 Scalar registers: `k0` through `k3`. Vector registers: `v0` through `v7`, with
 `x0` through `x7` accepted as aliases. Loads/stores use a scalar address register:
@@ -86,3 +86,13 @@ The comparisons produce mask bits, not vector-register arithmetic results.
 `x0`..`x7` aliases also work. Q8.8 data uses integer literals representing
 scaled values: `db 384` represents 1.5. The assembler does not convert decimal
 floating-point literals. Multiplication scaling/truncation happens in the ALU.
+
+## Kernel completion (KEND)
+
+`kend` takes no operands and emits `0002`. The FSM asserts `kend_send` for
+one execution cycle, restores the vector mask to `1111`, preserves scalar
+flags and registers, and continues to the next instruction (three cycles
+including fetch/decode). Use `stop` separately when execution should halt.
+
+The current top level does not connect `kend_send` to a workload controller.
+KEND alone does not restart the kernel or advance the ray-group pointers.

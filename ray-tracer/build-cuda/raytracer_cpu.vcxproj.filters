@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\src\render.cpp">
+    <ClCompile Include="C:\Users\Ted\Desktop\y4proj\fart_vs_cart\ray-tracer\src\CPU\render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

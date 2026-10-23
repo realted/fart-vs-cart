@@ -19,7 +19,7 @@ R1R2Load, ALU1, ALU2, ALUop,
 ALUOutWrite, RFWrite, RegIn, FlagWrite, stop, //, state
 // New control signals
 VRFWrite, v_op, ldMask, vmaskreset, X1Load, X2Load, VoutSel,
-vecstore
+vecstore, kend_send, restart_kernel
 );
 	input   [11:0] instr;
 	input   msbInstr;
@@ -48,6 +48,10 @@ vecstore
 	// New wires
 	reg  VRFWrite, X1Load, X2Load, VoutSel, MemWrite;
 	
+	//v0.6
+	input		 restart_kernel;
+	output logic kend_send;
+	
 	// state constants (note: asn = add/sub/nand, asnsh = add/sub/nand/shift)
 	parameter [5:0] reset_s = 0, c1 = 1, c2 = 2, c3_asn = 3,
 					c4_asnsh = 4, c3_shift = 5, c3_ori = 6,
@@ -62,7 +66,10 @@ vecstore
 					c3_vcmpgt = 24, c3_vcmpeq = 25, c2_vcmclr = 26,
 					
 					// New states (v0.5)
-					c3_li = 27;
+					c3_li = 27, 
+					
+					// Work controller (v0.6)
+					c3_kend = 28, c1_wait_work = 29;
 					
     // Scalars retain opcode [11:6] and six reserved low bits.
     // Eight-register vectors use opcode [9:4] and four reserved low bits.
@@ -90,7 +97,12 @@ vecstore
 		else
 		begin
 			case(state)
-				reset_s:	state <= c1; 		// reset state
+				reset_s:	state <= c1_wait_work; 		// reset state
+				c1_wait_work:
+					if (restart_kernel)
+						state <= c1;
+					else
+						state <= c1_wait_work;
 				c1: 	    state <= c2;
                 c2: begin
 					if (vector_instruction) begin
@@ -124,6 +136,7 @@ vecstore
 					else if (instr[3:0] == 4'b0101) state <= c3_bz;
 					else if (instr[3:0] == 4'b1001) state <= c3_bnz;
 					else if (instr == 12'h001)     state <= c3_stop_nop;
+					else if (instr == 12'h002)     state <= c3_kend;
 					else                          state <= reset_s;
 				end
 				c3_asn:		state <= c4_asnsh;	// cycle 3: ADD SUB NAND
@@ -154,6 +167,7 @@ vecstore
 				c3_vcmpgt:    state <= c1;
 				c3_vcmpeq:    state <= c1;
 				c2_vcmclr:	  state <= c1;
+				c3_kend:	  state <= c1_wait_work;
 				default: state <= reset_s;
 			endcase
 		end
@@ -161,6 +175,8 @@ vecstore
 	// sets the control sequences based upon the current state and instruction
 	always @(*)
 	begin
+        // Pulse only during c3_kend; default prevents inferred latch.
+        kend_send = 1'b0;
 		case (state)
 			reset_s:	//control = 19'b0000000000000000000;
 				begin
@@ -193,6 +209,9 @@ vecstore
 					// v0.4
 					vecstore = 0;
 					MemWrite = 0;
+					
+					//v0.6
+
 				end					
 			c1: 		// PC = PC + 1
 				begin
@@ -225,6 +244,45 @@ vecstore
 					// v0.4
 					vecstore = 0;
 					MemWrite = 0;
+					
+					//v0.6
+
+				end	
+			
+			c1_wait_work: 		// PC = PC + 1
+				begin
+					PCwrite = 0;
+					MemRead = 0; // Memread not necessary for PC anymore
+					IRload = 0;
+					R1Sel = 0;
+					MDRload = 0;
+					R1R2Load = 0;
+					ALU1 = 0;
+					ALU2 = 3'b001;
+					ALUop = 3'b000;
+					ALUOutWrite = 0;
+					RFWrite = 0;
+					RegIn = 2'b00;
+					FlagWrite = 0;
+					stop = 0;
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+					
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 0;
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
+					
+					//v0.6
+
 				end	
 				
 			c2: 		// Load R1 R2 for scalar, Load X1, X2 based on the vector operation
@@ -306,6 +364,8 @@ vecstore
 											
 						// v0.4
 						vecstore = 0;
+						
+						//v0.6
 
 
 					end	
@@ -341,6 +401,9 @@ vecstore
 											
 						// v0.4
 						vecstore = 0;
+						
+						//v0.6
+
 
 					end
 					else 							// nand
@@ -375,6 +438,9 @@ vecstore
 											
 						// v0.4
 						vecstore = 0;
+						
+												//v0.6
+
 
 					end
 				end
@@ -1153,6 +1219,42 @@ vecstore
 					MemWrite = 0;
 				end	
 				
+			c3_kend: 	
+				begin
+					PCwrite = 0;
+					MemRead = 0; 
+					IRload = 0;
+					R1Sel = 0;
+					MDRload = 0;
+					R1R2Load = 0;
+					ALU1 = 0;
+					ALU2 = 3'b000;
+					ALUop = 3'b000;
+					ALUOutWrite = 0;
+					RFWrite = 0;
+					RegIn = 2'b00;
+					FlagWrite = 0;
+					stop = 0;
+					
+					// v0
+					VRFWrite = 0;
+					X1Load = 0;
+					X2Load = 0;
+					VoutSel = 0;
+					
+					// v0.2
+					v_op  = 4'b0000;
+					ldMask = 0;
+					vmaskreset = 1;
+										
+					// v0.4
+					vecstore = 0;
+					MemWrite = 0;
+					
+					//v0.6
+					kend_send = 1;
+				end	
+				
 			default:	
 				begin
 					PCwrite = 0;
@@ -1184,6 +1286,9 @@ vecstore
 					// v0.4
 					vecstore = 0;
 					MemWrite = 0;
+					
+					// v0.6
+
 				end
 		endcase
 	end

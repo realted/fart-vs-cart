@@ -1,1 +1,2 @@
 Warning (10268): Verilog HDL information at VRF.sv(185): always construct contains both blocking and non-blocking assignments File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/VRF.sv Line: 185
+Info (10281): Verilog HDL Declaration information at work_controller.sv(19): object "num_groups" differs only in case from object "NUM_GROUPS" in the same scope File: C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/work_controller.sv Line: 19

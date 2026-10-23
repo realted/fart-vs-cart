@@ -1,0 +1,37 @@
+
+File: ..\assembler\test5_12rays.s
+Total source instructions (static): 97
+Total instructions (executed): 279
+Total estimated cycles (executed): 889
+Reset cycles and repeated STOP halt cycles are excluded.
+ISA execution from reset; separate program/data images; not an RTL timing simulation.
+
+Instruction       Count    Percent Cycles/instr     Cycles    Cycle %
+-------------------------------------------------------------------------------
+LOAD                  0      0.00%            4          0      0.00%
+STORE                 0      0.00%            3          0      0.00%
+ADD                  48     17.20%            4        192     21.60%
+SUB                   3      1.08%            4         12      1.35%
+NAND                  0      0.00%            4          0      0.00%
+ORI                   0      0.00%            5          0      0.00%
+SHIFT                 0      0.00%            4          0      0.00%
+LI                   20      7.17%            3         60      6.75%
+BZ                    0      0.00%            3          0      0.00%
+BNZ                   3      1.08%            3          9      1.01%
+BPZ                   0      0.00%            3          0      0.00%
+STOP                  1      0.36%            4          4      0.45%
+NOP                   0      0.00%            4          0      0.00%
+VLOAD                33     11.83%            3         99     11.14%
+VSTORE               15      5.38%            3         45      5.06%
+VADD                 60     21.51%            3        180     20.25%
+VSUB                 49     17.56%            3        147     16.54%
+VMUL                 39     13.98%            3        117     13.16%
+VCMPLT                3      1.08%            3          9      1.01%
+VCMPGT                1      0.36%            3          3      0.34%
+VCMPEQ                0      0.00%            3          0      0.00%
+VCMCLR                4      1.43%            3         12      1.35%
+-------------------------------------------------------------------------------
+TOTAL               279    100.00%                     889    100.00%
+
+Branches (PC and target are decimal word addresses):
+  PC 94: BNZ -> 4: taken=2, not taken=1
