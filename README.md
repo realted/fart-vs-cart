@@ -10,5 +10,8 @@ Milestone Progress Images:
 Final CPU and GPU Renders
 <img width="675" height="327" alt="image" src="https://github.com/user-attachments/assets/0c201ab0-0c37-4e56-a852-3c464c654096" />
 
+Current GPU_v1 Full architecture with 4 Lane SIMD, Vector ISA, 4 lane memory bank, UART control interface
+<img width="2160" height="2160" alt="image" src="https://github.com/user-attachments/assets/69593b9b-7495-4b71-91af-a0450695577b" />
+
 Initial GPU_v0 architecture with 4 Lane SIMD
 <img width="8770" height="5156" alt="image" src="https://github.com/user-attachments/assets/40a2c563-60ec-44e8-ac7e-a4eaa3576ed3" />
