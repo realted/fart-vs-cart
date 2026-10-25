@@ -156,6 +156,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "tx",
+					"strict" : false
+				},
+				{
 					"name" : "SW[6]",
 					"strict" : false
 				},
@@ -189,6 +193,10 @@
 				},
 				{
 					"name" : "CLOCK_50",
+					"strict" : false
+				},
+				{
+					"name" : "rx",
 					"strict" : false
 				}
 			]

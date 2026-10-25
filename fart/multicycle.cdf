@@ -5,8 +5,8 @@ JedecChain;
 
 	P ActionCode(Ign)
 		Device PartName(5CSEBA5) MfrSpec(OpMask(0));
-	P ActionCode(Cfg)
-		Device PartName(5CSEMA5F31) Path("C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/") File("multicycle.sof") MfrSpec(OpMask(1));
+	P ActionCode(Ign)
+		Device PartName(5CSEMA5F31) MfrSpec(OpMask(0) FullPath("C:/Users/Ted/Desktop/y4proj/fart_vs_cart/fart/multicycle.sof"));
 
 ChainEnd;
 

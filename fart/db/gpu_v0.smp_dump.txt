@@ -1,4 +1,34 @@
 
+State Machine - |gpu|uart_tx:uart_tx_inst|state
+Name state.STOP_BIT state.DATA_BITS state.START_BIT state.IDLE 
+state.IDLE 0 0 0 0 
+state.START_BIT 0 0 1 1 
+state.DATA_BITS 0 1 0 1 
+state.STOP_BIT 1 0 0 1 
+
+State Machine - |gpu|uart_rx:uart_rx_inst|state
+Name state.CHECK_STOP state.DATA_BITS state.CHECK_START state.IDLE 
+state.IDLE 0 0 0 0 
+state.CHECK_START 0 0 1 1 
+state.DATA_BITS 0 1 0 1 
+state.CHECK_STOP 1 0 0 1 
+
+State Machine - |gpu|uart_gpu_bridge:uart_gpu_bridge_inst|tx_state
+Name tx_state.TX_WAIT_DONE tx_state.TX_WAIT_BUSY tx_state.TX_SEND tx_state.TX_IDLE 
+tx_state.TX_IDLE 0 0 0 0 
+tx_state.TX_SEND 0 0 1 1 
+tx_state.TX_WAIT_BUSY 0 1 0 1 
+tx_state.TX_WAIT_DONE 1 0 0 1 
+
+State Machine - |gpu|uart_gpu_bridge:uart_gpu_bridge_inst|copy_state
+Name copy_state.READ_RESPONSE copy_state.READ_REQUEST copy_state.WAIT_GPU_CLEAR copy_state.WAIT_GPU_DONE copy_state.COPY_INPUT copy_state.WAIT_INPUT 
+copy_state.WAIT_INPUT 0 0 0 0 0 0 
+copy_state.COPY_INPUT 0 0 0 0 1 1 
+copy_state.WAIT_GPU_DONE 0 0 0 1 0 1 
+copy_state.WAIT_GPU_CLEAR 0 0 1 0 0 1 
+copy_state.READ_REQUEST 0 1 0 0 0 1 
+copy_state.READ_RESPONSE 1 0 0 0 0 1 
+
 State Machine - |gpu|work_controller:WorkControl|wc_state
 Name wc_state.WC_NEXT wc_state.WC_RUN wc_state.WC_LAUNCH wc_state.WC_IDLE wc_state.WC_DONE 
 wc_state.WC_IDLE 0 0 0 0 0 

@@ -26,11 +26,11 @@
 import params::*;
 
 
-module gpu
+module gpu #(parameter bit UART_MODE = 1'b1)
 (
 CLOCK_50,
 SW, KEY, HEX0, HEX1, HEX2, HEX3,
-HEX4, HEX5, LEDR
+HEX4, HEX5, LEDR, rx, tx
 );
 
 // ------------------------ PORT declaration ------------------------ //
@@ -39,7 +39,7 @@ input CLOCK_50;
 input [8:0] SW;          // Original Multicycle Uses 4 Switches... Just add all 9
 output	[6:0] HEX0, HEX1, HEX2, HEX3;
 output	[6:0] HEX4, HEX5;
-output reg [17:0] LEDR;
+output reg [9:0] LEDR; // DE1-SoC has ten red LEDs.
 
 // ------------------------- Registers/Wires ------------------------ //
 wire	clock, reset;
@@ -111,15 +111,89 @@ wire 	[DATA_BIT_WIDTH-1:0] group_index;
 wire 	workload_busy;
 wire    workload_done;
 
+// GPU v1.0 New MEM Connections
+wire 	[DATA_BIT_WIDTH-1:0] M0_in2, M1_in2, M2_in2, M3_in2; 
+wire	[DATA_BIT_WIDTH-1:0] M0_out2, M1_out2, M2_out2, M3_out2;
+wire	[DATA_BIT_WIDTH-1:0] host_addr_out, host_wdata, host_rdata;
+wire 	host_write, host_read, host_ready, host_rvalid;
+
+wire	[7:0] rx_data, tx_data;
+wire	rx_valid, rx_ready, rx_overflow, tx_start, tx_busy;
+wire	gpu_start_req, gpu_done, group_done;
+
+input wire rx;
+output wire tx;
+wire	[3:0] wren2, rden2;
+
+// GPU v1.0 Handshake and memory read timing
+// UART_MODE=1: one group per bridge request. UART_MODE=0: original MIF run.
+// Request stays high until done, so neither crossing can lose a short pulse.
+(* ASYNC_REG = "TRUE" *) reg start_meta, start_sync;
+(* ASYNC_REG = "TRUE" *) reg done_meta, done_sync;
+(* ASYNC_REG = "TRUE" *) reg busy_meta, busy_sync;
+reg [1:0] read_bank;
+reg read_pending;
+wire host_access_en;
+wire accept_read;
+
+always @(posedge clock or posedge reset) begin
+    if (reset) begin
+        start_meta <= 1'b0;
+        start_sync <= 1'b0;
+    end else begin
+        start_meta <= gpu_start_req;
+        start_sync <= start_meta;
+    end
+end
+
+always @(posedge CLOCK_50 or posedge reset) begin
+    if (reset) begin
+        done_meta <= 1'b0;
+        done_sync <= 1'b0;
+        busy_meta <= 1'b0;
+        busy_sync <= 1'b0;
+    end else begin
+        done_meta <= workload_done;
+        done_sync <= done_meta;
+        busy_meta <= workload_busy;
+        busy_sync <= busy_meta;
+    end
+end
+assign gpu_done = done_sync;
+
+// Block immediately on a start request, including the CDC delay before busy.
+// Completion remains high until the CPU has accepted request deassertion.
+assign host_access_en = UART_MODE && !gpu_start_req && !busy_sync && !done_sync;
+assign host_ready = !reset && host_access_en && !read_pending
+                  && (host_addr_out[15:10] == 0)
+                  && !(host_read && host_write);
+assign accept_read = host_read && host_ready;
+
+// RAM port 2 samples its address on this edge and settles afterwards.
+// During the next cycle, select the saved bank and assert valid; the bridge
+// captures the word at the following edge. No extra read FSM is necessary.
+always @(posedge CLOCK_50 or posedge reset) begin
+    if (reset) begin
+        read_bank <= 2'd0;
+        read_pending <= 1'b0;
+    end else begin
+        read_pending <= accept_read;
+        if (accept_read)
+            read_bank <= host_addr_out[1:0];
+    end
+end
+assign host_rvalid = read_pending && !reset;
+
 // Configuration: replace these constants when configuration is available.
 localparam [DATA_BIT_WIDTH-1:0] NUM_GROUPS   = 16'd3;
 localparam [DATA_BIT_WIDTH-1:0] PROGRAM_ENTRY = 16'd0; // Set to actual kernel start address.
 localparam [DATA_BIT_WIDTH-1:0] KERNEL_ENTRY  = 16'd0; // Verify against final assembly.
 
 // start automatically after reset
-wire 	workload_start = 1'b1;
+wire workload_start = UART_MODE ? start_sync : 1'b1;
 
 // PC control with work controller
+wire pc_enable;
 assign  pc_enable = restart_kernel | PCWrite;
 wire [DATA_BIT_WIDTH-1:0] pc_next;
 
@@ -215,7 +289,7 @@ work_controller WorkControl (
     .clock          (clock),
     .reset          (reset),
     .workload_start (workload_start),
-    .num_groups     (NUM_GROUPS),
+    .num_groups     (UART_MODE ? 16'd1 : NUM_GROUPS),
 	
     .kernel_done    (kend_send),
 
@@ -440,7 +514,7 @@ end
 
 
 
-// New additions GPU v0.4
+// New additions GPU v0.4, Revised in v1.0
 mux4to1_4bit 		scalar_wren_mux(
 	.data0x(4'b0001),.data1x(4'b0010),
 	.data2x(4'b0100),.data3x(4'b1000),
@@ -452,24 +526,36 @@ mux2to1_4bit 		scalar_vector_wren_mux(
 	.sel(vecstore),.result(mem_wren_out)
 );
 
-memory #(.INIT_FILE("data_bank0.mif")) M0(
-	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[0]),.clock(clock),
-	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M0_in),.q(M0_out)
+memory_dual_port #(.INIT_FILE("data_bank0.mif")) M0(
+	.rden_1(MemRead),.wren_1(MemWrite & mem_wren_out[0]),.clock_1(clock),
+	.address_1(R2wire[9:2]),.data_1(M0_in),.q_1(M0_out),
+    // Port 2 requests are enabled only when accepted by the v1.0 adapter.
+    .clock_2(CLOCK_50), .rden_2(rden2[0]), .wren_2(wren2[0]),
+    .address_2(host_addr_out[9:2]), .data_2(host_wdata), .q_2(M0_out2)
 );
 
-memory #(.INIT_FILE("data_bank1.mif")) M1(
-	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[1]),.clock(clock),
-	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M1_in),.q(M1_out)
+memory_dual_port #(.INIT_FILE("data_bank1.mif")) M1(
+	.rden_1(MemRead),.wren_1(MemWrite & mem_wren_out[1]),.clock_1(clock),
+	.address_1(R2wire[9:2]),.data_1(M1_in),.q_1(M1_out),
+    // Port 2 requests are enabled only when accepted by the v1.0 adapter.
+    .clock_2(CLOCK_50), .rden_2(rden2[1]), .wren_2(wren2[1]),
+    .address_2(host_addr_out[9:2]), .data_2(host_wdata), .q_2(M1_out2)
 );
 
-memory #(.INIT_FILE("data_bank2.mif")) M2(
-	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[2]),.clock(clock),
-	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M2_in),.q(M2_out)
+memory_dual_port #(.INIT_FILE("data_bank2.mif")) M2(
+	.rden_1(MemRead),.wren_1(MemWrite & mem_wren_out[2]),.clock_1(clock),
+	.address_1(R2wire[9:2]),.data_1(M2_in),.q_1(M2_out),
+    // Port 2 requests are enabled only when accepted by the v1.0 adapter.
+    .clock_2(CLOCK_50), .rden_2(rden2[2]), .wren_2(wren2[2]),
+    .address_2(host_addr_out[9:2]), .data_2(host_wdata), .q_2(M2_out2)
 );
 
-memory #(.INIT_FILE("data_bank3.mif")) M3(
-	.MemRead(MemRead),.wren(MemWrite & mem_wren_out[3]),.clock(clock),
-	.address(R2wire[DATA_BIT_WIDTH-1:2]),.data(M3_in),.q(M3_out)
+memory_dual_port #(.INIT_FILE("data_bank3.mif")) M3(
+	.rden_1(MemRead),.wren_1(MemWrite & mem_wren_out[3]),.clock_1(clock),
+	.address_1(R2wire[9:2]),.data_1(M3_in),.q_1(M3_out),
+    // Port 2 requests are enabled only when accepted by the v1.0 adapter.
+    .clock_2(CLOCK_50), .rden_2(rden2[3]), .wren_2(wren2[3]),
+    .address_2(host_addr_out[9:2]), .data_2(host_wdata), .q_2(M3_out2)
 );
 
 // Muxes to D_in of mem0 - 3
@@ -504,6 +590,40 @@ mux4to1_nbit 		mdr_in_mux(
 // New additions GPU v0.5 (LI)
 zExtend		ZE3_LI(.in(IR[13:3]),.out(ZE3_LIwire));
 defparam	ZE3_LI.n = 11;
+
+// All new addition for GPU v1.0
+mux4to1_nbit host_read_mux(
+	.data0x(M0_out2),.data1x(M1_out2),
+	.data2x(M2_out2),.data3x(M3_out2),
+	.sel(read_bank),.result(host_rdata)
+);
+
+decoder2to4			dec0(
+	.in(host_addr_out[1:0]), .en(host_write && host_ready), .result(wren2)
+);
+
+decoder2to4			dec1(
+	.in(host_addr_out[1:0]), .en(host_read && host_ready), .result(rden2)
+);
+
+uart_gpu_bridge #(
+    .INPUT_BASE(128), .RESULT_BASE(128)
+) uart_gpu_bridge_inst (
+    .clk(CLOCK_50), .reset(reset), .rx_data(rx_data), .rx_valid(rx_valid), .rx_ready(rx_ready), .rx_overflow(rx_overflow),
+    .tx_data(tx_data), .tx_start(tx_start), .tx_busy(tx_busy),
+    .host_addr(host_addr_out), .host_wdata(host_wdata), .host_write(host_write), .host_read(host_read), 
+	.host_ready(host_ready), .host_rdata(host_rdata), .host_rvalid(host_rvalid), 
+	.gpu_start_req(gpu_start_req), .gpu_done(gpu_done), .group_done(group_done)
+);
+
+uart_rx uart_rx_inst (
+    .clk(CLOCK_50), .reset(reset), .rx(rx), .data(rx_data), .data_valid(rx_valid)
+);
+
+uart_tx uart_tx_inst (
+    .clk(CLOCK_50), .start(tx_start), .reset(reset), .data(tx_data), .tx(tx), .busy(tx_busy)
+);
+
 
 
 // ------------------------ Assign Constant 1 ----------------------- //
